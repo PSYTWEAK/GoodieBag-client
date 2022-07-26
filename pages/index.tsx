@@ -5,10 +5,13 @@ import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import EtherAmount from "../components/EtherInput/EtherAmount";
 import { SwapperCard } from "../components/SwapperCard";
+import useArbitrumSubgraph from "../hooks/subgraph/useArbitrumSubgraph";
+import useStratergy from "../hooks/useStratergy";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("Randomly Selected");
   const [tokens, setTokens] = useState([]);
+  const [result, loading] = useStratergy(stratergy);
 
   return (
     <div className={styles.container}>
