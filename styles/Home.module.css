@@ -1,9 +1,15 @@
 .container {
   padding: 0 2rem;
 }
+.header {
+  display: flex;
+  padding: 1rem 0;
+  border-top: 1px solid #eaeaea;
+  justify-content: right;
+  align-items: center;
+}
 
 .main {
-  min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
@@ -62,6 +68,7 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+  padding: 1rem;
 }
 
 .card {
@@ -74,14 +81,16 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 350px;
+  display: flex;
+  flex-direction: column;
 }
 
-.card:hover,
+/* .card:hover,
 .card:focus,
 .card:active {
   color: #0d76fc;
   border-color: #0d76fc;
-}
+} */
 
 .card h2 {
   margin: 0 0 1rem 0;

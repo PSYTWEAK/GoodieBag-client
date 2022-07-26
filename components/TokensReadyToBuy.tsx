@@ -1,13 +1,23 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
 
 export default function TokensReadyToBuy(tokens: any) {
+  const handleTable = (tokens: any) => {
+    return tokens.map((_tokens: any, i: number) => {
+      try {
+        return (
+          <Grid item xs={6}>
+            <p>token</p>
+          </Grid>
+        );
+      } catch (err) {
+        console.log("Couldn't show token " + i + err);
+      }
+    });
+  };
   return (
-    <div>
-      <p></p>
-    </div>
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      {handleTable(tokens)}
+    </Grid>
   );
 }

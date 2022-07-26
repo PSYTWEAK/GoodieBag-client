@@ -9,12 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/material": "^5.9.2",
     "@rainbow-me/rainbowkit": "^0.4.4",
     "@uniswap/v3-periphery": "^1.4.1",
     "ethers": "^5.0.0",
+    "graphql": "^16.5.0",
     "next": "^12.1.6",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "urql": "^2.2.3",
     "wagmi": "^0.5.3"
   },
   "devDependencies": {
