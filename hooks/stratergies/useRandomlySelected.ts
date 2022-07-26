@@ -1,6 +1,6 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useArbitrumSubgraph from "./subgraph/useArbitrumSubgraph";
+import useArbitrumSubgraph from "../subgraphQuerys/useArbitrumSubgraph";
 
 export default async function useRandomlySelected() {
   const result = await useArbitrumSubgraph();
@@ -10,6 +10,9 @@ export default async function useRandomlySelected() {
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
   pools = removeLowVolume(pools);
+  pools = format(pools);
+
+  console.log(pools);
 
   return pools;
 }
@@ -66,9 +69,9 @@ function removeBlueChips(pools: any): any {
       i--;
     }
   }
-
   return _pools;
 }
+
 function removeLowVolume(pools: any): any {
   let _pools = pools;
   const index = _pools.findIndex((data: any) => data.pool.volumeUSD < lowVolume);
@@ -78,4 +81,19 @@ function removeLowVolume(pools: any): any {
   } else {
     return _pools;
   }
+}
+
+function format(pools: any): any {
+  let _pools = pools;
+  for (let i = 0; i < pools.length; i++) {
+    if (pools[i].pool.token0.id != weth) {
+      _pools[i].pool.token0.id = pools[i].pool.token1.id;
+      _pools[i].pool.token0.name = pools[i].pool.token1.name;
+      _pools[i].pool.token0.symbol = pools[i].pool.token1.symbol;
+      _pools[i].pool.token1.id = pools[i].pool.token0.id;
+      _pools[i].pool.token1.name = pools[i].pool.token0.name;
+      _pools[i].pool.token1.symbol = pools[i].pool.token0.symbol;
+    }
+  }
+  return _pools;
 }

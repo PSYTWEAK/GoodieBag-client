@@ -26,7 +26,7 @@ interface State {
   unlocked: boolean;
 }
 
-async function useUniswapTrade(poolAddress: string, quoterAddress: string, token0: any, token1: any) {
+async function useUniswapTrade(poolAddress: string, quoterAddress: string, token0: any, token1: any, amountIn: string) {
   const provider = new ethers.providers.JsonRpcProvider("<YOUR-ENDPOINT-HERE>");
 
   const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, provider);
@@ -89,9 +89,6 @@ async function useUniswapTrade(poolAddress: string, quoterAddress: string, token
     state.tick
   );
 
-  // assign an input amount for the swap
-  const amountIn = 1500;
-
   // call the quoter contract to determine the amount out of a swap, given an amount in
   const quotedAmountOut = await quoterContract.callStatic.quoteExactInputSingle(immutables.token0, immutables.token1, immutables.fee, amountIn.toString(), 0);
 
@@ -101,7 +98,7 @@ async function useUniswapTrade(poolAddress: string, quoterAddress: string, token
   // create an unchecked trade instance
   const uncheckedTradeExample = await Trade.createUncheckedTrade({
     route: swapRoute,
-    inputAmount: CurrencyAmount.fromRawAmount(TokenA, amountIn.toString()),
+    inputAmount: CurrencyAmount.fromRawAmount(TokenA, amountIn),
     outputAmount: CurrencyAmount.fromRawAmount(TokenB, quotedAmountOut.toString()),
     tradeType: TradeType.EXACT_INPUT,
   });

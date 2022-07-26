@@ -1,13 +1,12 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useArbitrumSubgraph from "./subgraph/useArbitrumSubgraph";
-import useRandomlySelected from "./useRandomlySelected";
+import useRandomlySelected from "./stratergies/useRandomlySelected";
 
 const GRAPHURL = "https://api.thegraph.com/subgraphs/name/benjaminlu/arbitrum-one-uniswap-v3";
 
 async function _executeStratergy(stratergy: string) {
   switch (stratergy) {
-    case "Randomly Selected":
+    case "Randomly selected tokens with minimum $100 volume":
       return await useRandomlySelected();
     case "Newly Added Tokens":
       break;

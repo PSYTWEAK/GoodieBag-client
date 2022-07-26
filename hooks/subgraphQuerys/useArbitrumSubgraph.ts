@@ -1,6 +1,6 @@
 import { createClient } from "urql";
 
-const GRAPHURL = "https://api.thegraph.com/subgraphs/name/benjaminlu/arbitrum-one-uniswap-v3";
+import { GRAPHURL } from "../../globals";
 
 export default async function useArbitrumSubgraph() {
   try {

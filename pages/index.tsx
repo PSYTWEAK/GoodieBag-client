@@ -5,7 +5,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import EtherAmount from "../components/EtherInput/EtherAmount";
-import useArbitrumSubgraph from "../hooks/subgraph/useArbitrumSubgraph";
+import useArbitrumSubgraph from "../hooks/subgraphQuerys/useArbitrumSubgraph";
 import useStratergy from "../hooks/useStratergy";
 import { EtherInput } from "../components/EtherInput/EtherInput";
 import { FindTokensButton } from "../components/FindTokensButton";
@@ -13,7 +13,7 @@ import TokensReadyToBuy from "../components/TokensReadyToBuy";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 const Home: NextPage = () => {
-  const [stratergy, setStratergy] = useState("Randomly Selected");
+  const [stratergy, setStratergy] = useState("Randomly selected tokens with minimum $100 volume");
   const [tokens, setTokens] = useState([]);
 
   const [result, loading] = useStratergy(stratergy);
