@@ -11,11 +11,6 @@ export default async function useRandomlySelected() {
   pools = removeStables(pools);
   pools = removeLowVolume(pools);
 
-  for (let i = 0; i < pools.length; i++) {
-    pools[i].pool.token0.name ? console.log(pools[i].pool.token0.name) : null;
-    pools[i].pool.token1.name ? console.log(pools[i].pool.token1.name) : null;
-  }
-
   return pools;
 }
 

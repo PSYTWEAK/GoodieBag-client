@@ -1,3 +1,4 @@
+import { SelectStratergy } from "./../components/SelectStratergy";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
@@ -9,6 +10,7 @@ import useStratergy from "../hooks/useStratergy";
 import { EtherInput } from "../components/EtherInput/EtherInput";
 import { FindTokensButton } from "../components/FindTokensButton";
 import TokensReadyToBuy from "../components/TokensReadyToBuy";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("Randomly Selected");
@@ -30,8 +32,9 @@ const Home: NextPage = () => {
         {" "}
         <h1 className={styles.title}>Token Eater</h1>
         <div className={styles.card}>
+          <SelectStratergy setStratergy={setStratergy} />
           <EtherInput />
-          <TokensReadyToBuy tokens={result} loading={loading} stratergy={stratergy} />
+          <TokensReadyToBuy tokens={result} loading={loading} />
           <FindTokensButton />
         </div>
       </main>

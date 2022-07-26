@@ -2,7 +2,7 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import styles from "../styles/Home.module.css";
 
-export default function TokensReadyToBuy({ tokens, loading }: { tokens: any; loading: string }) {
+export default function TokensReadyToBuy({ tokens, loading }: { tokens: any; loading: any }) {
   React.useEffect(() => {
     console.log(tokens);
   }, [tokens]);
