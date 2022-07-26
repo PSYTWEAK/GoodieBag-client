@@ -9,8 +9,12 @@ export default async function useRandomlySelected() {
 
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
-  pools = removeNoneEthPools(pools);
   pools = removeLowVolume(pools);
+
+  for (let i = 0; i < pools.length; i++) {
+    pools[i].pool.token0.name ? console.log(pools[i].pool.token0.name) : null;
+    pools[i].pool.token1.name ? console.log(pools[i].pool.token1.name) : null;
+  }
 
   return pools;
 }
@@ -32,6 +36,8 @@ const stables = [
   "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
 ];
 const weth = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1";
+
+const lowVolume = "100";
 
 function removeNoneEthPools(pools: any): any {
   let _pools = pools;
@@ -70,7 +76,7 @@ function removeBlueChips(pools: any): any {
 }
 function removeLowVolume(pools: any): any {
   let _pools = pools;
-  const index = _pools.findIndex((data: any) => data.pool.volumeUSD < 1000);
+  const index = _pools.findIndex((data: any) => data.pool.volumeUSD < lowVolume);
   if (index > -1) {
     _pools.splice(index, 1);
     return removeLowVolume(_pools);

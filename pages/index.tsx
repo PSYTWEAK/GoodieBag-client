@@ -4,13 +4,16 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import EtherAmount from "../components/EtherInput/EtherAmount";
-import { SwapperCard } from "../components/SwapperCard";
 import useArbitrumSubgraph from "../hooks/subgraph/useArbitrumSubgraph";
 import useStratergy from "../hooks/useStratergy";
+import { EtherInput } from "../components/EtherInput/EtherInput";
+import { FindTokensButton } from "../components/FindTokensButton";
+import TokensReadyToBuy from "../components/TokensReadyToBuy";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("Randomly Selected");
   const [tokens, setTokens] = useState([]);
+
   const [result, loading] = useStratergy(stratergy);
 
   return (
@@ -26,7 +29,11 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         {" "}
         <h1 className={styles.title}>Token Eater</h1>
-        <SwapperCard tokens={tokens} />
+        <div className={styles.card}>
+          <EtherInput />
+          <TokensReadyToBuy tokens={result} loading={loading} stratergy={stratergy} />
+          <FindTokensButton />
+        </div>
       </main>
 
       <footer className={styles.footer}></footer>
