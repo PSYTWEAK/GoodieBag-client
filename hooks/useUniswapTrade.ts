@@ -5,6 +5,7 @@ import { abi as IUniswapV3PoolABI } from "@uniswap/v3-core/artifacts/contracts/i
 import { Route } from "@uniswap/v3-sdk";
 import { Trade } from "@uniswap/v3-sdk";
 import { abi as QuoterABI } from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json";
+import { useProvider } from "wagmi";
 
 interface Immutables {
   factory: string;
@@ -26,8 +27,12 @@ interface State {
   unlocked: boolean;
 }
 
-async function useUniswapTrade(provider: any, poolAddress: string, quoterAddress: string, token0: any, token1: any, amountIn: string) {
-  const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, provider);
+const quoterAddress = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
+
+export default async function useUniswapTrade(provider: any, pools: any, amountIn: number) {
+  const pool = pools[0];
+
+  const poolContract = new ethers.Contract(pool.pool.id, IUniswapV3PoolABI, provider);
 
   const quoterContract = new ethers.Contract(quoterAddress, QuoterABI, provider);
 
@@ -48,41 +53,11 @@ async function useUniswapTrade(provider: any, poolAddress: string, quoterAddress
 
     return PoolState;
   }
-  /* -------------------------------to do-------------------------------------------------------
-  This data can be grabbed by the graph as it is immutable data and will not change between blocks 
 
-
-    async function getPoolImmutables() {
-    const [factory, token0, token1, fee, tickSpacing, maxLiquidityPerTick] = await Promise.all([
-      poolContract.factory(),
-      poolContract.token0(),
-      poolContract.token1(),
-      poolContract.fee(),
-      poolContract.tickSpacing(),
-      poolContract.maxLiquidityPerTick(),
-    ]);
-
-    const immutables: Immutables = {
-      factory,
-      token0,
-      token1,
-      fee,
-      tickSpacing,
-      maxLiquidityPerTick,
-    };
-    return immutables;
-  }
-  ----------------------------------------------------------------------------------------------
-  */
   async function getPoolImmutables() {
-    const [factory, token0, token1, fee, tickSpacing, maxLiquidityPerTick] = await Promise.all([
-      poolContract.factory(),
-      poolContract.token0(),
-      poolContract.token1(),
-      poolContract.fee(),
-      poolContract.tickSpacing(),
-      poolContract.maxLiquidityPerTick(),
-    ]);
+    const [factory, fee, tickSpacing, maxLiquidityPerTick] = await Promise.all([poolContract.factory(), poolContract.fee(), poolContract.tickSpacing(), poolContract.maxLiquidityPerTick()]);
+    const token0 = pool.pool.token0.id;
+    const token1 = pool.pool.token1.id;
 
     const immutables: Immutables = {
       factory, // chain
@@ -96,18 +71,11 @@ async function useUniswapTrade(provider: any, poolAddress: string, quoterAddress
   }
   // query the state and immutable variables of the pool
   const [immutables, state] = await Promise.all([getPoolImmutables(), getPoolState(poolContract)]);
-  /* -------------------------------to do-------------------------------------------------------
-  6 and 18 are token decimals, they need to be hard coded for ETH but taken from the graph for each token
 
-  const TokenA = new Token(3, immutables.token0, 6, token0.symbol, token0.name);
-
-  const TokenB = new Token(3, immutables.token1, 18, token1.symbol, token1.name);
-  ----------------------------------------------------------------------------------------------
-  */
   // create instances of the Token object to represent the two tokens in the given pool
-  const TokenA = new Token(3, immutables.token0, 6, token0.symbol, token0.name);
+  const TokenA = new Token(3, immutables.token0, 18, pool.pool.token0.symbol, pool.pool.token0.name);
 
-  const TokenB = new Token(3, immutables.token1, 18, token1.symbol, token1.name);
+  const TokenB = new Token(3, immutables.token1, 18, pool.pool.token1.symbol, pool.pool.token1.name);
 
   // create an instance of the pool object for the given pool
   const poolExample = new Pool(
@@ -118,6 +86,7 @@ async function useUniswapTrade(provider: any, poolAddress: string, quoterAddress
     state.liquidity.toString(),
     state.tick
   );
+  console.log(poolExample);
 
   // call the quoter contract to determine the amount out of a swap, given an amount in
   const quotedAmountOut = await quoterContract.callStatic.quoteExactInputSingle(immutables.token0, immutables.token1, immutables.fee, amountIn.toString(), 0);

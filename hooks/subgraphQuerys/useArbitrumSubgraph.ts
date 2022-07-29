@@ -12,6 +12,8 @@ export default async function useArbitrumSubgraph() {
                     pool {
                      id
                     liquidity
+                    feeTier
+    
                       token0 {
                         id
                         name

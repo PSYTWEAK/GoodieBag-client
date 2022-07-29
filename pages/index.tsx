@@ -9,18 +9,15 @@ import EtherAmount from "../components/EtherInput/EtherAmount";
 import useArbitrumSubgraph from "../hooks/subgraphQuerys/useArbitrumSubgraph";
 import useStratergy from "../hooks/useStratergy";
 import { EtherInput } from "../components/EtherInput/EtherInput";
-import { FindTokensButton } from "../components/FindTokensButton";
 import TokensReadyToBuy from "../components/TokensReadyToBuy";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { BuyTokens } from "../components/BuyTokens";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-
-import { IconButton } from "@mui/material";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
   const [result, loading] = useStratergy(stratergy);
   const [tokens, setTokens] = useState([]);
+  const [amountETHIn, setAmountETHIn] = useState(0);
 
   return (
     <div className={styles.container}>
@@ -39,8 +36,8 @@ const Home: NextPage = () => {
           {stratergy && (
             <>
               <BackToSelectButton setStratergy={setStratergy} />
-              <EtherInput />
-              <BuyTokens /> <TokensReadyToBuy tokens={result} loading={loading} />
+              <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
+              <BuyTokens pools={result} loading={loading} amountETHIn={amountETHIn} /> <TokensReadyToBuy tokens={result} loading={loading} />
             </>
           )}
           {!stratergy && (
