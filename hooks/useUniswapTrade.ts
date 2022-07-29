@@ -1,11 +1,13 @@
 import { ethers } from "ethers";
 import { Pool } from "@uniswap/v3-sdk";
-import { CurrencyAmount, Token, TradeType } from "@uniswap/sdk-core";
+import { CurrencyAmount, Token, TradeType, Percent, BigintIsh } from "@uniswap/sdk-core";
 import { abi as IUniswapV3PoolABI } from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
 import { Route } from "@uniswap/v3-sdk";
 import { Trade } from "@uniswap/v3-sdk";
 import { abi as QuoterABI } from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json";
 import { useProvider } from "wagmi";
+import { AlphaRouter } from "@uniswap/smart-order-router";
+import JSBI from "jsbi";
 
 interface Immutables {
   factory: string;
@@ -105,4 +107,19 @@ export default async function useUniswapTrade(provider: any, pools: any, amountI
   // print the quote and the unchecked trade instance in the console
   console.log("The quoted amount out is", quotedAmountOut.toString());
   console.log("The unchecked trade object is", uncheckedTradeExample);
+  const percentSlippage = new Percent(5, 100);
+  const router = new AlphaRouter({ chainId: 42161, provider: provider });
+
+  //const wei = ethers.utils.parseUnits(amountIn.toString(), 18);
+  const typedValueParsed = "100000000000000000000";
+  const bn = JSBI.BigInt(typedValueParsed);
+  const wethAmount = CurrencyAmount.fromRawAmount(TokenA, bn);
+
+  /*   const route: any = await router.route(tokenAAmount, TokenB, TradeType.EXACT_INPUT, {
+    recipient: "0x36dE9b454066AE3CafBFff1de5f29F31a8EFC890",
+    slippageTolerance: percentSlippage,
+    deadline: Math.floor(Date.now() / 1000 + 1800),
+  }); */
+  console.log("data");
+  //  console.log(route.methodParameters.calldata);
 }

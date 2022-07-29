@@ -17,7 +17,7 @@ const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
   const [result, loading] = useStratergy(stratergy);
   const [tokens, setTokens] = useState([]);
-  const [amountETHIn, setAmountETHIn] = useState(0);
+  const [amountETHIn, setAmountETHIn] = useState(null);
 
   return (
     <div className={styles.container}>
