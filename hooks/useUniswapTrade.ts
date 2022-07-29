@@ -26,9 +26,7 @@ interface State {
   unlocked: boolean;
 }
 
-async function useUniswapTrade(poolAddress: string, quoterAddress: string, token0: any, token1: any, amountIn: string) {
-  const provider = new ethers.providers.JsonRpcProvider("<YOUR-ENDPOINT-HERE>");
-
+async function useUniswapTrade(provider: any, poolAddress: string, quoterAddress: string, token0: any, token1: any, amountIn: string) {
   const poolContract = new ethers.Contract(poolAddress, IUniswapV3PoolABI, provider);
 
   const quoterContract = new ethers.Contract(quoterAddress, QuoterABI, provider);
@@ -50,8 +48,11 @@ async function useUniswapTrade(poolAddress: string, quoterAddress: string, token
 
     return PoolState;
   }
+  /* -------------------------------to do-------------------------------------------------------
+  This data can be grabbed by the graph as it is immutable data and will not change between blocks 
 
-  async function getPoolImmutables() {
+
+    async function getPoolImmutables() {
     const [factory, token0, token1, fee, tickSpacing, maxLiquidityPerTick] = await Promise.all([
       poolContract.factory(),
       poolContract.token0(),
@@ -71,9 +72,38 @@ async function useUniswapTrade(poolAddress: string, quoterAddress: string, token
     };
     return immutables;
   }
+  ----------------------------------------------------------------------------------------------
+  */
+  async function getPoolImmutables() {
+    const [factory, token0, token1, fee, tickSpacing, maxLiquidityPerTick] = await Promise.all([
+      poolContract.factory(),
+      poolContract.token0(),
+      poolContract.token1(),
+      poolContract.fee(),
+      poolContract.tickSpacing(),
+      poolContract.maxLiquidityPerTick(),
+    ]);
+
+    const immutables: Immutables = {
+      factory, // chain
+      token0, // graph
+      token1, // graph
+      fee, // graph
+      tickSpacing, // chain
+      maxLiquidityPerTick, // chain
+    };
+    return immutables;
+  }
   // query the state and immutable variables of the pool
   const [immutables, state] = await Promise.all([getPoolImmutables(), getPoolState(poolContract)]);
+  /* -------------------------------to do-------------------------------------------------------
+  6 and 18 are token decimals, they need to be hard coded for ETH but taken from the graph for each token
 
+  const TokenA = new Token(3, immutables.token0, 6, token0.symbol, token0.name);
+
+  const TokenB = new Token(3, immutables.token1, 18, token1.symbol, token1.name);
+  ----------------------------------------------------------------------------------------------
+  */
   // create instances of the Token object to represent the two tokens in the given pool
   const TokenA = new Token(3, immutables.token0, 6, token0.symbol, token0.name);
 

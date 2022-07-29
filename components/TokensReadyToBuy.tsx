@@ -7,7 +7,7 @@ export default function TokensReadyToBuy({ tokens, loading }: { tokens: any; loa
     console.log(tokens);
   }, [tokens]);
   return (
-    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
       {loading === "false" ? (
         <></>
       ) : loading === "null" ? (
@@ -16,15 +16,17 @@ export default function TokensReadyToBuy({ tokens, loading }: { tokens: any; loa
         <h1>Loading</h1>
       ) : (
         tokens.map((_token: any, i: number) => {
+          console.log(_token.pool.token1.name);
           try {
             return (
               <Grid item xs={8} width="max">
-                <p>{_token.pool.token0.name}</p>
-                <p>{_token.pool.token0.symbol}</p>
+                <p>{_token.pool.token1.name}</p>
+                <p>{_token.pool.token1.symbol}</p>
               </Grid>
             );
           } catch (err) {
             console.log("Couldn't show token " + i + err);
+            return <></>;
           }
         })
       )}

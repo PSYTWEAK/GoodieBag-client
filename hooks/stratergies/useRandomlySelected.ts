@@ -10,6 +10,7 @@ export default async function useRandomlySelected() {
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
   pools = removeLowVolume(pools);
+  pools = removeNoneEthPools(pools);
   pools = format(pools);
 
   console.log(pools);
@@ -84,15 +85,15 @@ function removeLowVolume(pools: any): any {
 }
 
 function format(pools: any): any {
-  let _pools = pools;
+  let _pools = Object.assign([], pools);
   for (let i = 0; i < pools.length; i++) {
     if (pools[i].pool.token0.id != weth) {
-      _pools[i].pool.token0.id = pools[i].pool.token1.id;
-      _pools[i].pool.token0.name = pools[i].pool.token1.name;
-      _pools[i].pool.token0.symbol = pools[i].pool.token1.symbol;
       _pools[i].pool.token1.id = pools[i].pool.token0.id;
       _pools[i].pool.token1.name = pools[i].pool.token0.name;
       _pools[i].pool.token1.symbol = pools[i].pool.token0.symbol;
+      _pools[i].pool.token0.id = weth;
+      _pools[i].pool.token0.name = "";
+      _pools[i].pool.token0.symbol = "";
     }
   }
   return _pools;
