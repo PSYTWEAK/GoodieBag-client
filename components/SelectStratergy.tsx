@@ -7,17 +7,15 @@ export function SelectStratergy({ setStratergy }: { setStratergy: any }) {
     <div>
       <FormControl
         sx={{
-          m: 1,
+          m: 2,
           width: 300,
         }}
       >
-        <InputLabel id="demo-multiple-name-label">Statergy</InputLabel>
-        <Select labelId="demo-multiple-name-label" id="demo-multiple-name" multiple value={statergys} onChange={(event) => setStratergy(event.target.value)}>
-          {statergys.map((_Statergy) => (
-            <MenuItem key={_Statergy} value={_Statergy}>
-              {_Statergy}
-            </MenuItem>
-          ))}
+        <InputLabel id="demo-multiple-name-label">Select Stratergy</InputLabel>
+        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={"Select"} label="Strategies" onChange={(e) => setStratergy(e.target.value)}>
+          {statergys.map((strat: string) => {
+            return <MenuItem value={strat}>{strat}</MenuItem>;
+          })}
         </Select>
       </FormControl>
     </div>

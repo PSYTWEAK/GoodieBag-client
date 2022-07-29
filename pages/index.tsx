@@ -1,9 +1,10 @@
+import { BackToSelectButton } from "./../components/BackToSelectButton";
 import { SelectStratergy } from "./../components/SelectStratergy";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EtherAmount from "../components/EtherInput/EtherAmount";
 import useArbitrumSubgraph from "../hooks/subgraphQuerys/useArbitrumSubgraph";
 import useStratergy from "../hooks/useStratergy";
@@ -11,12 +12,15 @@ import { EtherInput } from "../components/EtherInput/EtherInput";
 import { FindTokensButton } from "../components/FindTokensButton";
 import TokensReadyToBuy from "../components/TokensReadyToBuy";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { BuyTokens } from "../components/BuyTokens";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+
+import { IconButton } from "@mui/material";
 
 const Home: NextPage = () => {
-  const [stratergy, setStratergy] = useState("Randomly selected tokens with minimum $100 volume");
-  const [tokens, setTokens] = useState([]);
-
+  const [stratergy, setStratergy] = useState("");
   const [result, loading] = useStratergy(stratergy);
+  const [tokens, setTokens] = useState([]);
 
   return (
     <div className={styles.container}>
@@ -32,10 +36,18 @@ const Home: NextPage = () => {
         {" "}
         <h1 className={styles.title}>Token Eater</h1>
         <div className={styles.card}>
-          <SelectStratergy setStratergy={setStratergy} />
-          <EtherInput />
-          <TokensReadyToBuy tokens={result} loading={loading} />
-          <FindTokensButton />
+          {stratergy && (
+            <>
+              <BackToSelectButton setStratergy={setStratergy} />
+              <EtherInput />
+              <BuyTokens /> <TokensReadyToBuy tokens={result} loading={loading} />
+            </>
+          )}
+          {!stratergy && (
+            <>
+              <SelectStratergy setStratergy={setStratergy} />
+            </>
+          )}
         </div>
       </main>
 

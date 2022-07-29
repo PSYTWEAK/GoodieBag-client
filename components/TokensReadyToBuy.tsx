@@ -1,6 +1,7 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import styles from "../styles/Home.module.css";
+import { CircularProgress } from "@mui/material";
 
 export default function TokensReadyToBuy({ tokens, loading }: { tokens: any; loading: any }) {
   React.useEffect(() => {
@@ -13,7 +14,11 @@ export default function TokensReadyToBuy({ tokens, loading }: { tokens: any; loa
       ) : loading === "null" ? (
         <h1>No Tokens Found</h1>
       ) : loading === "true" && !tokens ? (
-        <h1>Loading</h1>
+        <Grid item xs={8} width="max">
+          <div className={styles.div}>
+            <CircularProgress />
+          </div>
+        </Grid>
       ) : (
         tokens.map((_token: any, i: number) => {
           console.log(_token.pool.token1.name);
