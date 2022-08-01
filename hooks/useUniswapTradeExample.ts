@@ -5,7 +5,7 @@ import { abi as IUniswapV3PoolABI } from "@uniswap/v3-core/artifacts/contracts/i
 import { Route } from "@uniswap/v3-sdk";
 import { Trade } from "@uniswap/v3-sdk";
 import { abi as QuoterABI } from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json";
-
+import { arbiUniswapQuoterAddress, arbiUniswapRouterAddress } from "../globals";
 interface Immutables {
   factory: string;
   token0: string;
@@ -26,14 +26,12 @@ interface State {
   unlocked: boolean;
 }
 
-const quoterAddress = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
-
 export default async function useUniswapTradeExample(provider: any, pools: any, amountIn: number) {
   const pool = pools[4];
 
   const poolContract = new ethers.Contract(pool.pool.id, IUniswapV3PoolABI, provider);
 
-  const quoterContract = new ethers.Contract(quoterAddress, QuoterABI, provider);
+  const quoterContract = new ethers.Contract(arbiUniswapQuoterAddress, QuoterABI, provider);
 
   async function getPoolState(poolContract: any) {
     // note that data here can be desynced if the call executes over the span of two or more blocks.

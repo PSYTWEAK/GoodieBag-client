@@ -8,9 +8,7 @@ import { abi as QuoterABI } from "@uniswap/v3-periphery/artifacts/contracts/lens
 import { useProvider } from "wagmi";
 import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
-
-const quoterAddress = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
-const routerAddress = "0xE592427A0AEce92De3Edee1F18E0157C05861564";
+import { arbiUniswapQuoterAddress, arbiUniswapRouterAddress } from "../globals";
 
 export default async function useUniswapTrade(provider: any, pools: any, amountIn: number) {
   const pool = pools[4];
@@ -36,7 +34,7 @@ export default async function useUniswapTrade(provider: any, pools: any, amountI
 
   /*   const transaction = {
     data: route.methodParameters.calldata,
-    to: routerAddress,
+    to: arbiUniswapRouterAddress,
     value: bn,
     from: MY_ADDRESS,
     gasPrice: BigNumber.from(route.gasPriceWei),
