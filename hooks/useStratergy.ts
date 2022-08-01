@@ -2,8 +2,6 @@ import { createClient } from "urql";
 import { useEffect, useState } from "react";
 import useRandomlySelected from "./stratergies/useRandomlySelected";
 
-const GRAPHURL = "https://api.thegraph.com/subgraphs/name/benjaminlu/arbitrum-one-uniswap-v3";
-
 async function _executeStratergy(stratergy: string) {
   switch (stratergy) {
     case "Randomly selected tokens with minimum $100 volume":
