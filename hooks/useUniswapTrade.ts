@@ -5,9 +5,6 @@ import { abi as IUniswapV3PoolABI } from "@uniswap/v3-core/artifacts/contracts/i
 import { Route } from "@uniswap/v3-sdk";
 import { Trade } from "@uniswap/v3-sdk";
 import { abi as QuoterABI } from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json";
-import { useProvider } from "wagmi";
-import { AlphaRouter } from "@uniswap/smart-order-router";
-import JSBI from "jsbi";
 
 interface Immutables {
   factory: string;
@@ -32,7 +29,7 @@ interface State {
 const quoterAddress = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
 
 export default async function useUniswapTrade(provider: any, pools: any, amountIn: number) {
-  const pool = pools[0];
+  const pool = pools[4];
 
   const poolContract = new ethers.Contract(pool.pool.id, IUniswapV3PoolABI, provider);
 
@@ -75,9 +72,9 @@ export default async function useUniswapTrade(provider: any, pools: any, amountI
   const [immutables, state] = await Promise.all([getPoolImmutables(), getPoolState(poolContract)]);
 
   // create instances of the Token object to represent the two tokens in the given pool
-  const TokenA = new Token(3, immutables.token0, 18, pool.pool.token0.symbol, pool.pool.token0.name);
+  const TokenA = new Token(provider._network.chainId, immutables.token0, 18, pool.pool.token0.symbol, pool.pool.token0.name);
 
-  const TokenB = new Token(3, immutables.token1, 18, pool.pool.token1.symbol, pool.pool.token1.name);
+  const TokenB = new Token(provider._network.chainId, immutables.token1, 18, pool.pool.token1.symbol, pool.pool.token1.name);
 
   // create an instance of the pool object for the given pool
   const poolExample = new Pool(
@@ -107,19 +104,4 @@ export default async function useUniswapTrade(provider: any, pools: any, amountI
   // print the quote and the unchecked trade instance in the console
   console.log("The quoted amount out is", quotedAmountOut.toString());
   console.log("The unchecked trade object is", uncheckedTradeExample);
-  const percentSlippage = new Percent(5, 100);
-  const router = new AlphaRouter({ chainId: 42161, provider: provider });
-
-  //const wei = ethers.utils.parseUnits(amountIn.toString(), 18);
-  const typedValueParsed = "100000000000000000000";
-  const bn = JSBI.BigInt(typedValueParsed);
-  const wethAmount = CurrencyAmount.fromRawAmount(TokenA, bn);
-
-  /*   const route: any = await router.route(tokenAAmount, TokenB, TradeType.EXACT_INPUT, {
-    recipient: "0x36dE9b454066AE3CafBFff1de5f29F31a8EFC890",
-    slippageTolerance: percentSlippage,
-    deadline: Math.floor(Date.now() / 1000 + 1800),
-  }); */
-  console.log("data");
-  //  console.log(route.methodParameters.calldata);
 }
