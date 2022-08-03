@@ -17,18 +17,16 @@ export default async function useUniswapTrade(provider: any, pools: any, amountI
   let tokenId = [];
   let value = JSBI.BigInt(0);
 
+  const amountInBN = JSBI.BigInt(amountIn.toString());
+  const amountPerPool = JSBI.divide(amountInBN, JSBI.BigInt(pools.length));
+  const TokenA = new Token(provider._network.chainId, pools[0].pool.token0.id, 18, pools[0].pool.token0.symbol, pools[0].pool.token0.name);
+  const wethAmount = CurrencyAmount.fromRawAmount(TokenA, JSBI.BigInt(amountPerPool.toString()));
   for (let i = 0; i < pools.length; i++) {
     console.log("Pool " + i + " processing");
     try {
       const pool = pools[i];
-      const amountInBN = JSBI.BigInt(amountIn.toString());
-      const amountPerPool = JSBI.divide(amountInBN, JSBI.BigInt(pools.length));
-
-      const TokenA = new Token(provider._network.chainId, pool.pool.token0.id, 18, pool.pool.token0.symbol, pool.pool.token0.name);
 
       const TokenB = new Token(provider._network.chainId, pool.pool.token1.id, 18, pool.pool.token1.symbol, pool.pool.token1.name);
-
-      const wethAmount = CurrencyAmount.fromRawAmount(TokenA, JSBI.BigInt(amountPerPool.toString()));
 
       const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
         recipient: arbiTokenEaterAddress,

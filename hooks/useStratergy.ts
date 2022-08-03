@@ -1,13 +1,14 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
 import useRandomlySelected from "./stratergies/useRandomlySelected";
+import useMostRecent from "./stratergies/useMostRecent";
 
 async function _executeStratergy(stratergy: string) {
   switch (stratergy) {
     case "Randomly selected tokens with minimum $100 volume":
       return await useRandomlySelected();
-    case "Newly Added Tokens":
-      break;
+    case "Tokens added to Uniswap this week":
+      return await useMostRecent();
     default:
   }
 }

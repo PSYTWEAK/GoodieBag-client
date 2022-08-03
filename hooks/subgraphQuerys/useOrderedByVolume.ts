@@ -2,7 +2,7 @@ import { createClient } from "urql";
 
 import { GRAPHURL } from "../../globals";
 
-export default async function useArbitrumSubgraph() {
+export default async function useOrderedByVolume() {
   try {
     const tokensQuery = `
             query {

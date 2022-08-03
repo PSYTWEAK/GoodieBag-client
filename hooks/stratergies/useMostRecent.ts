@@ -1,22 +1,18 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useOrderedByVolume from "../subgraphQuerys/useOrderedByVolume";
+import useMostRecentPools from "../subgraphQuerys/useMostRecentPools";
 
-export default async function useRandomlySelected() {
-  const result = await useOrderedByVolume();
+export default async function useMostRecent() {
+  const result = await useMostRecentPools();
 
-  let pools: any = result.data.poolDayDatas;
-  console.log(pools);
-
+  let pools: any = result.data.pools;
+  pools = format(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
   // pools = removeLowVolume(pools);
   pools = removeNoneEthPools(pools);
-  pools = format(pools);
   pools = shuffle(pools);
-  pools = pools.slice(0, 50);
-
-  console.log(pools);
+  pools = pools.slice(0, 100);
 
   return pools;
 }
@@ -105,16 +101,35 @@ function removeLowVolume(pools: any): any {
 }
 
 function format(pools: any): any {
-  let _pools = Object.assign([], pools);
+  let _pools = [];
+
   for (let i = 0; i < pools.length; i++) {
-    if (pools[i].pool.token0.id != weth) {
-      _pools[i].pool.token1.id = pools[i].pool.token0.id;
-      _pools[i].pool.token1.name = pools[i].pool.token0.name;
-      _pools[i].pool.token1.symbol = pools[i].pool.token0.symbol;
-      _pools[i].pool.token0.id = weth;
-      _pools[i].pool.token0.name = "";
-      _pools[i].pool.token0.symbol = "";
+    if (pools[i].token0.id != weth) {
+      let data = {
+        pool: {
+          feeTier: pools[i].feeTier,
+          id: pools[i].id,
+          volumeUSD: pools[i].volumeUSD,
+          liquidity: pools[i].liquidity,
+          token0: { id: weth, name: "", symbol: "", __typename: "Token" },
+          token1: { id: pools[i].token0.id, name: pools[i].token0.name, symbol: pools[i].token0.symbol, __typename: "Token" },
+        },
+      };
+      _pools.push(data);
+    } else {
+      let data = {
+        pool: {
+          feeTier: pools[i].feeTier,
+          id: pools[i].id,
+          volumeUSD: pools[i].volumeUSD,
+          liquidity: pools[i].liquidity,
+          token0: { id: weth, name: "", symbol: "", __typename: "Token" },
+          token1: { id: pools[i].token1.id, name: pools[i].token1.name, symbol: pools[i].token1.symbol, __typename: "Token" },
+        },
+      };
+      _pools.push(data);
     }
   }
+
   return _pools;
 }
