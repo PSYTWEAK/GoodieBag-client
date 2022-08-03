@@ -9,9 +9,11 @@ export default async function useRandomlySelected() {
 
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
-  pools = removeLowVolume(pools);
+  // pools = removeLowVolume(pools);
   pools = removeNoneEthPools(pools);
   pools = format(pools);
+  pools = shuffle(pools);
+  pools = pools.slice(0, 20);
 
   console.log(pools);
 
@@ -37,6 +39,23 @@ const stables = [
 const weth = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1";
 
 const lowVolume = "100";
+
+function shuffle(array: any) {
+  let currentIndex = array.length,
+    randomIndex;
+
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+  }
+
+  return array;
+}
 
 function removeNoneEthPools(pools: any): any {
   let _pools = pools;

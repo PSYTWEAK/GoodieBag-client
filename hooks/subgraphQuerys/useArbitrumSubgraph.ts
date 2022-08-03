@@ -6,7 +6,7 @@ export default async function useArbitrumSubgraph() {
   try {
     const tokensQuery = `
             query {
-                poolDayDatas(first: 1000 where: {date: 1658707200 } orderBy:volumeUSD orderDirection:desc) {
+                poolDayDatas(first: 1000 where: {date: 1659484800 } orderBy:volumeUSD orderDirection:desc) {
                     date
                     volumeUSD
                     pool {
