@@ -10,6 +10,7 @@ export default async function useMostRecent() {
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
   // pools = removeLowVolume(pools);
+  pools = removeStableInTokenName(pools);
   pools = removeNoneEthPools(pools);
   pools = shuffle(pools);
   pools = pools.slice(0, 100);
@@ -34,6 +35,7 @@ const stables = [
   "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
 ];
 const weth = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1";
+const stablecoinNames = ["USD", "EUR", "JPY"];
 
 const lowVolume = "100";
 
@@ -62,6 +64,16 @@ function removeNoneEthPools(pools: any): any {
     return removeNoneEthPools(_pools);
   } else {
     return _pools;
+  }
+}
+function removeStableInTokenName(pools: any): any {
+  let _pools = pools;
+  for (let i = 0; i < stablecoinNames.length; i++) {
+    const index = _pools.findIndex((data: any) => data.pool.token0.name.includes(stablecoinNames[i]) || data.pool.token1.name.includes(stablecoinNames[i]));
+    if (index > -1) {
+      _pools.splice(index, 1);
+      i--;
+    }
   }
 }
 
