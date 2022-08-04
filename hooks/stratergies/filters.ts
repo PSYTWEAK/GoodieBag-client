@@ -27,7 +27,18 @@ export function removeNoneEthPools(pools: any): any {
 
 export function removeStableInTokenName(pools: any): any {
   let _pools = pools;
-  const index = _pools.findIndex((data: any) => data.pool.token0.symbol.includes("USD") || data.pool.token0.symbol.includes("EUR"));
+  const index = _pools.findIndex(
+    (data: any) =>
+      // do a loop instead
+      data.pool.token0.symbol.includes("USD") ||
+      data.pool.token0.symbol.includes("EUR") ||
+      data.pool.token1.symbol.includes("USD") ||
+      data.pool.token1.symbol.includes("EUR") ||
+      data.pool.token0.name.includes("USD") ||
+      data.pool.token0.name.includes("EUR") ||
+      data.pool.token1.name.includes("USD") ||
+      data.pool.token1.name.includes("EUR")
+  );
   if (index > -1) {
     _pools.splice(index, 1);
     return removeStableInTokenName(_pools);

@@ -8,14 +8,12 @@ export default async function useRandomlySelected() {
   const result = await useOrderedByVolume();
 
   let pools: any = result.data.poolDayDatas;
-  console.log(pools);
 
+  pools = format(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
-  // pools = removeLowVolume(pools);
   pools = removeNoneEthPools(pools);
   pools = removeStableInTokenName(pools);
-  pools = format(pools);
   pools = shuffleTokens(pools);
   pools = pools.slice(0, 10);
 
