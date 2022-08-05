@@ -1,11 +1,34 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useOrderedByVolume from "../subgraphQuerys/useOrderedByVolume";
+import useUniswapSubgraph from "../subgraphQuerys/useUniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from "./globals";
 import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeStableInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
+const query = `
+{
+  pools(first: 300 orderBy:createdAtTimestamp orderDirection:desc) {
+createdAtTimestamp
+      volumeUSD
+  
+       id
+      liquidity
+      feeTier
 
+        token0 {
+          id
+          name
+          symbol
+        }
+     token1{
+        id
+        name
+        symbol
+        
+      }
+
+}
+}`;
 export default async function useRandomlySelected() {
-  const result = await useOrderedByVolume();
+  const result = await useUniswapSubgraph(query);
 
   let pools: any = result.data.poolDayDatas;
 
@@ -16,7 +39,6 @@ export default async function useRandomlySelected() {
   pools = removeStableInTokenName(pools);
   pools = removeDuplicates(pools);
   pools = shuffleTokens(pools);
-
   pools = pools.slice(0, 10);
 
   return pools;

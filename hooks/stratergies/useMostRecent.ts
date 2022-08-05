@@ -4,8 +4,33 @@ import useMostRecentPools from "../subgraphQuerys/useMostRecentPools";
 import { blueChips, lowVolume, weth, stables } from "./globals";
 import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeStableInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
 
+const query = `
+{
+  pools(first: 300 orderBy:createdAtTimestamp orderDirection:desc) {
+createdAtTimestamp
+      volumeUSD
+  
+       id
+      liquidity
+      feeTier
+
+        token0 {
+          id
+          name
+          symbol
+        }
+     token1{
+        id
+        name
+        symbol
+        
+      }
+
+}
+}`;
+
 export default async function useMostRecent() {
-  const result = await useMostRecentPools();
+  const result = await useMostRecentPools(query);
 
   let pools: any = result.data.pools;
 
