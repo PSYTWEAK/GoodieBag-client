@@ -25,6 +25,10 @@ export function removeNoneEthPools(pools: any): any {
   }
 }
 
+export function removeDuplicates(pools: any): any {
+  let _pools = pools.filter((value: any, index: number, self: any) => index === self.findIndex((t: any) => t.pool.token1.id === value.pool.token1.id));
+  return _pools;
+}
 export function removeStableInTokenName(pools: any): any {
   let _pools = pools;
   const index = _pools.findIndex(
@@ -37,7 +41,15 @@ export function removeStableInTokenName(pools: any): any {
       data.pool.token0.name.includes("USD") ||
       data.pool.token0.name.includes("EUR") ||
       data.pool.token1.name.includes("USD") ||
-      data.pool.token1.name.includes("EUR")
+      data.pool.token1.name.includes("EUR") ||
+      data.pool.token0.name.includes("AUD") ||
+      data.pool.token0.name.includes("AUD") ||
+      data.pool.token1.name.includes("AUD") ||
+      data.pool.token1.name.includes("AUD") ||
+      data.pool.token0.name.includes("BTC") ||
+      data.pool.token0.name.includes("BTC") ||
+      data.pool.token1.name.includes("BTC") ||
+      data.pool.token1.name.includes("BTC")
   );
   if (index > -1) {
     _pools.splice(index, 1);
