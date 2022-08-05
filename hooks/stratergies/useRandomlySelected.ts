@@ -3,12 +3,16 @@ import { useEffect, useState } from "react";
 import useUniswapSubgraph from "../subgraphQuerys/useUniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from "./globals";
 import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeStableInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
+
+var start: any = new Date();
+start.setUTCHours(0, 0, 0, 0);
+
 const query = `
-{
-  pools(first: 300 orderBy:createdAtTimestamp orderDirection:desc) {
-createdAtTimestamp
+query {
+  poolDayDatas(first: 1000 where: {date: ${start / 1000} } orderBy:volumeUSD orderDirection:desc) {
+      date
       volumeUSD
-  
+      pool {
        id
       liquidity
       feeTier
@@ -22,7 +26,7 @@ createdAtTimestamp
         id
         name
         symbol
-        
+        }
       }
 
 }

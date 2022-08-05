@@ -1,6 +1,6 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useMostRecentPools from "../subgraphQuerys/useMostRecentPools";
+import useUniswapSubgraph from "../subgraphQuerys/useUniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from "./globals";
 import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeStableInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
 
@@ -30,7 +30,7 @@ createdAtTimestamp
 }`;
 
 export default async function useMostRecent() {
-  const result = await useMostRecentPools(query);
+  const result = await useUniswapSubgraph(query);
 
   let pools: any = result.data.pools;
 

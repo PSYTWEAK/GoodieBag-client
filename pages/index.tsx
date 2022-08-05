@@ -6,7 +6,6 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import EtherAmount from "../components/EtherInput/EtherAmount";
-import useArbitrumSubgraph from "../hooks/subgraphQuerys/useArbitrumSubgraph";
 import useStratergy from "../hooks/useStratergy";
 import { EtherInput } from "../components/EtherInput/EtherInput";
 import TokensReadyToBuy from "../components/TokensReadyToBuy";
