@@ -16,6 +16,7 @@ export function BuyTokens({ pools, loading, amountETHIn }: { pools: any; loading
   });
 
   const [disabled, setDisabled] = useState(true);
+
   const handleClick = async (provider: any, pools: any, amountETHIn: number) => {
     if (pools) {
       let [value, tokenId, callData] = await useUniswapTrade(provider, pools, ethers.utils.parseEther(amountETHIn.toString()));
@@ -28,6 +29,7 @@ export function BuyTokens({ pools, loading, amountETHIn }: { pools: any; loading
       });
     }
   };
+
   useEffect(() => {
     if (amountETHIn > 0 && loading === "true" && pools) {
       setDisabled(false);

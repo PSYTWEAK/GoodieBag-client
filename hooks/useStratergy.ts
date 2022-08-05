@@ -7,14 +7,14 @@ async function _executeStratergy(stratergy: string) {
   switch (stratergy) {
     case "Randomly selected tokens with minimum $100 volume":
       return await useRandomlySelected();
-    case "Tokens added to Uniswap this week":
+    case "Tokens most recently added to Uniswap":
       return await useMostRecent();
     default:
   }
 }
 
 export default function useStratergy(stratergy: string) {
-  const [result, setResult] = useState([]);
+  const [tokens, setTokens] = useState([]);
   const [loading, setLoading] = useState("false");
 
   useEffect(() => {
@@ -23,12 +23,12 @@ export default function useStratergy(stratergy: string) {
       try {
         setLoading("true");
         const _result: any = await _executeStratergy(stratergy);
-        setResult(_result);
+        setTokens(_result);
       } catch (error) {
         setLoading("null");
       }
     }
   }, [stratergy]);
 
-  return [result, loading];
+  return [tokens, loading, setTokens];
 }

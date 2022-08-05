@@ -32,9 +32,7 @@ export function removeDuplicates(pools: any): any {
 
 export function removeSignOfDerivInTokenName(pools: any): any {
   let _pools = pools;
-  console.log("start");
   for (let i = 0; i < referencesToDerivative.length; i++) {
-    console.log(i);
     const index = _pools.findIndex(
       (data: any) =>
         data.pool.token0.symbol.includes(referencesToDerivative[i]) ||
@@ -51,7 +49,6 @@ export function removeSignOfDerivInTokenName(pools: any): any {
       i--;
     }
   }
-  console.log("end");
   return _pools;
 }
 

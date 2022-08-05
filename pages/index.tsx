@@ -14,8 +14,7 @@ import { BuyTokens } from "../components/BuyTokens";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
-  const [result, loading] = useStratergy(stratergy);
-  const [tokens, setTokens] = useState([]);
+  const [pools, loading, setPools] = useStratergy(stratergy);
   const [amountETHIn, setAmountETHIn] = useState(null);
 
   return (
@@ -36,7 +35,7 @@ const Home: NextPage = () => {
             <>
               <BackToSelectButton setStratergy={setStratergy} />
               <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
-              <BuyTokens pools={result} loading={loading} amountETHIn={amountETHIn} /> <TokensReadyToBuy tokens={result} loading={loading} />
+              <BuyTokens pools={pools} loading={loading} amountETHIn={amountETHIn} /> <TokensReadyToBuy pools={pools} loading={loading} setPools={setPools} />
             </>
           )}
           {!stratergy && (
