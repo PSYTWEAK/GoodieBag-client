@@ -1,4 +1,4 @@
-import { blueChips, lowVolume, weth, stables, referencesToCoinsWeDontWant } from "./globals";
+import { blueChips, lowVolume, weth, stables, referencesToDerivative } from "./globals";
 
 export function shuffleTokens(array: any) {
   let currentIndex = array.length,
@@ -33,18 +33,18 @@ export function removeDuplicates(pools: any): any {
 export function removeSignOfDerivInTokenName(pools: any): any {
   let _pools = pools;
   console.log("start");
-  for (let i = 0; i < referencesToCoinsWeDontWant.length; i++) {
+  for (let i = 0; i < referencesToDerivative.length; i++) {
     console.log(i);
     const index = _pools.findIndex(
       (data: any) =>
-        data.pool.token0.symbol.includes(referencesToCoinsWeDontWant[i]) ||
-        data.pool.token0.symbol.includes(referencesToCoinsWeDontWant[i]) ||
-        data.pool.token1.symbol.includes(referencesToCoinsWeDontWant[i]) ||
-        data.pool.token1.symbol.includes(referencesToCoinsWeDontWant[i]) ||
-        data.pool.token0.name.includes(referencesToCoinsWeDontWant[i]) ||
-        data.pool.token0.name.includes(referencesToCoinsWeDontWant[i]) ||
-        data.pool.token1.name.includes(referencesToCoinsWeDontWant[i]) ||
-        data.pool.token1.name.includes(referencesToCoinsWeDontWant[i])
+        data.pool.token0.symbol.includes(referencesToDerivative[i]) ||
+        data.pool.token0.symbol.includes(referencesToDerivative[i]) ||
+        data.pool.token1.symbol.includes(referencesToDerivative[i]) ||
+        data.pool.token1.symbol.includes(referencesToDerivative[i]) ||
+        data.pool.token0.name.includes(referencesToDerivative[i]) ||
+        data.pool.token0.name.includes(referencesToDerivative[i]) ||
+        data.pool.token1.name.includes(referencesToDerivative[i]) ||
+        data.pool.token1.name.includes(referencesToDerivative[i])
     );
     if (index > -1) {
       _pools.splice(index, 1);
