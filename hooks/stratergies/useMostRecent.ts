@@ -2,7 +2,7 @@ import { createClient } from "urql";
 import { useEffect, useState } from "react";
 import useUniswapSubgraph from "../subgraphQuerys/useUniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from "./globals";
-import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeStableInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
+import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
 
 const query = `
 {
@@ -37,7 +37,7 @@ export default async function useMostRecent() {
   pools = format(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
-  pools = removeStableInTokenName(pools);
+  pools = removeSignOfDerivInTokenName(pools);
   pools = removeNoneEthPools(pools);
   pools = removeDuplicates(pools);
   pools = pools.slice(0, 10);

@@ -1,4 +1,4 @@
-import { blueChips, lowVolume, weth, stables } from "./globals";
+import { blueChips, lowVolume, weth, stables, referencesToCoinsWeDontWant } from "./globals";
 
 export function shuffleTokens(array: any) {
   let currentIndex = array.length,
@@ -29,34 +29,30 @@ export function removeDuplicates(pools: any): any {
   let _pools = pools.filter((value: any, index: number, self: any) => index === self.findIndex((t: any) => t.pool.token1.id === value.pool.token1.id));
   return _pools;
 }
-export function removeStableInTokenName(pools: any): any {
+
+export function removeSignOfDerivInTokenName(pools: any): any {
   let _pools = pools;
-  const index = _pools.findIndex(
-    (data: any) =>
-      // do a loop instead
-      data.pool.token0.symbol.includes("USD") ||
-      data.pool.token0.symbol.includes("EUR") ||
-      data.pool.token1.symbol.includes("USD") ||
-      data.pool.token1.symbol.includes("EUR") ||
-      data.pool.token0.name.includes("USD") ||
-      data.pool.token0.name.includes("EUR") ||
-      data.pool.token1.name.includes("USD") ||
-      data.pool.token1.name.includes("EUR") ||
-      data.pool.token0.name.includes("AUD") ||
-      data.pool.token0.name.includes("AUD") ||
-      data.pool.token1.name.includes("AUD") ||
-      data.pool.token1.name.includes("AUD") ||
-      data.pool.token0.name.includes("BTC") ||
-      data.pool.token0.name.includes("BTC") ||
-      data.pool.token1.name.includes("BTC") ||
-      data.pool.token1.name.includes("BTC")
-  );
-  if (index > -1) {
-    _pools.splice(index, 1);
-    return removeStableInTokenName(_pools);
-  } else {
-    return _pools;
+  console.log("start");
+  for (let i = 0; i < referencesToCoinsWeDontWant.length; i++) {
+    console.log(i);
+    const index = _pools.findIndex(
+      (data: any) =>
+        data.pool.token0.symbol.includes(referencesToCoinsWeDontWant[i]) ||
+        data.pool.token0.symbol.includes(referencesToCoinsWeDontWant[i]) ||
+        data.pool.token1.symbol.includes(referencesToCoinsWeDontWant[i]) ||
+        data.pool.token1.symbol.includes(referencesToCoinsWeDontWant[i]) ||
+        data.pool.token0.name.includes(referencesToCoinsWeDontWant[i]) ||
+        data.pool.token0.name.includes(referencesToCoinsWeDontWant[i]) ||
+        data.pool.token1.name.includes(referencesToCoinsWeDontWant[i]) ||
+        data.pool.token1.name.includes(referencesToCoinsWeDontWant[i])
+    );
+    if (index > -1) {
+      _pools.splice(index, 1);
+      i--;
+    }
   }
+  console.log("end");
+  return _pools;
 }
 
 export function removeStables(pools: any): any {

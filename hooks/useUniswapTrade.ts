@@ -13,14 +13,19 @@ import { arbiUniswapQuoterAddress, arbiUniswapRouterAddress, arbiTokenEaterAddre
 export default async function useUniswapTrade(provider: any, pools: any, amountIn: BigNumber) {
   const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
   const percentSlippage = new Percent(100, 100);
+
+  const amountInBN = JSBI.BigInt(amountIn.toString());
+
+  const amountPerPool = JSBI.divide(amountInBN, JSBI.BigInt(pools.length));
+
+  const TokenA = new Token(provider._network.chainId, pools[0].pool.token0.id, 18, pools[0].pool.token0.symbol, pools[0].pool.token0.name);
+
+  const wethAmount = CurrencyAmount.fromRawAmount(TokenA, JSBI.BigInt(amountPerPool.toString()));
+
   let callData = [];
   let tokenId = [];
   let value = JSBI.BigInt(0);
 
-  const amountInBN = JSBI.BigInt(amountIn.toString());
-  const amountPerPool = JSBI.divide(amountInBN, JSBI.BigInt(pools.length));
-  const TokenA = new Token(provider._network.chainId, pools[0].pool.token0.id, 18, pools[0].pool.token0.symbol, pools[0].pool.token0.name);
-  const wethAmount = CurrencyAmount.fromRawAmount(TokenA, JSBI.BigInt(amountPerPool.toString()));
   for (let i = 0; i < pools.length; i++) {
     console.log("Pool " + i + " processing");
     try {
@@ -33,11 +38,12 @@ export default async function useUniswapTrade(provider: any, pools: any, amountI
         slippageTolerance: percentSlippage,
         deadline: Math.floor(Date.now() / 1000 + 10800),
       });
+
       callData.push(route.methodParameters.calldata);
       tokenId.push(pool.pool.token1.id);
       value = JSBI.add(amountPerPool, value);
     } catch (error) {
-      console.log("pool " + i + "failed");
+      console.log("pool " + i + " failed");
       console.log(pools[i]);
     }
   }
