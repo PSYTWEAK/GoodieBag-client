@@ -29,7 +29,7 @@ createdAtTimestamp
 }
 }`;
 
-export default async function useMostRecent() {
+export default async function useMostRecent(poolsLength: number) {
   const result = await useUniswapSubgraph(query);
 
   let pools: any = result.data.pools;
@@ -40,7 +40,7 @@ export default async function useMostRecent() {
   pools = removeSignOfDerivInTokenName(pools);
   pools = removeNoneEthPools(pools);
   pools = removeDuplicates(pools);
-  pools = pools.slice(0, 10);
+  pools = pools.slice(0, poolsLength);
 
   return pools;
 }

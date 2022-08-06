@@ -11,10 +11,12 @@ import { EtherInput } from "../components/EtherInput/EtherInput";
 import TokensReadyToBuy from "../components/TokensReadyToBuy";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { BuyTokens } from "../components/BuyTokens";
+import { SelectTokenListLength } from "../components/SelectTokenListLength";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
-  const [pools, loading, setPools] = useStratergy(stratergy);
+  const [poolsLength, setPoolsLength] = useState(10);
+  const [pools, loading, setPools] = useStratergy(stratergy, poolsLength);
   const [amountETHIn, setAmountETHIn] = useState(null);
 
   return (
