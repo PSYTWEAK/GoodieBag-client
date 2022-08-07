@@ -31,15 +31,16 @@ createdAtTimestamp
 
 export default async function useMostRecent(poolsLength: number) {
   const result = await useUniswapSubgraph(query);
+  console.log(result);
 
   let pools: any = result.data.pools;
 
   pools = format(pools);
-  pools = removeBlueChips(pools);
+  /*   pools = removeBlueChips(pools);
   pools = removeStables(pools);
   pools = removeSignOfDerivInTokenName(pools);
   pools = removeNoneEthPools(pools);
-  pools = removeDuplicates(pools);
+  pools = removeDuplicates(pools); */
   pools = pools.slice(0, poolsLength);
 
   return pools;
@@ -60,6 +61,7 @@ function format(pools: any): any {
           pools[i].token0.id != weth
             ? { id: pools[i].token0.id, name: pools[i].token0.name, symbol: pools[i].token0.symbol, __typename: "Token" }
             : { id: pools[i].token1.id, name: pools[i].token1.name, symbol: pools[i].token1.symbol, __typename: "Token" },
+        significantData: `Added to Uniswap at ${new Date(pools[i].createdAtTimestampp * 1000)}`,
       },
     };
     _pools.push(data);
