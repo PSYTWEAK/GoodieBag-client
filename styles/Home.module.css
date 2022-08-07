@@ -89,6 +89,7 @@
 .div {
   padding: 2px;
   color: inherit;
+  font-size: 1.1rem;
   text-decoration: none;
   border: 1px solid #eaeaea;
   border-radius: 10px;
@@ -100,6 +101,9 @@
 .remove {
   margin-left: auto;
   margin-right: 0;
+}
+.smolSignificantData {
+  font-size: 0.8rem !important;
 }
 
 /* .card:hover,
@@ -116,7 +120,6 @@
 
 .card p {
   margin: 0;
-  font-size: 1.2rem;
   line-height: 1.5;
 }
 

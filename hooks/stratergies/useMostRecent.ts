@@ -36,11 +36,11 @@ export default async function useMostRecent(poolsLength: number) {
   let pools: any = result.data.pools;
 
   pools = format(pools);
-  /*   pools = removeBlueChips(pools);
+  pools = removeBlueChips(pools);
   pools = removeStables(pools);
   pools = removeSignOfDerivInTokenName(pools);
   pools = removeNoneEthPools(pools);
-  pools = removeDuplicates(pools); */
+  pools = removeDuplicates(pools);
   pools = pools.slice(0, poolsLength);
 
   return pools;
@@ -61,11 +61,18 @@ function format(pools: any): any {
           pools[i].token0.id != weth
             ? { id: pools[i].token0.id, name: pools[i].token0.name, symbol: pools[i].token0.symbol, __typename: "Token" }
             : { id: pools[i].token1.id, name: pools[i].token1.name, symbol: pools[i].token1.symbol, __typename: "Token" },
-        significantData: `Added to Uniswap at ${new Date(pools[i].createdAtTimestampp * 1000)}`,
+        significantData: `Pool created at ${date(pools[i].createdAtTimestamp)}`,
       },
     };
     _pools.push(data);
   }
 
   return _pools;
+}
+
+function date(timestamp: number) {
+  var date = new Date(timestamp * 1000);
+  var formattedDate =
+    ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2);
+  return formattedDate;
 }

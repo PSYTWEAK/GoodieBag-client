@@ -36,6 +36,8 @@ export default async function useRandomlySelected(poolsLength: number) {
 
   let pools: any = result.data.poolDayDatas;
 
+  console.log(pools);
+
   pools = format(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
@@ -68,7 +70,7 @@ function format(pools: any): any {
       _pools[i].pool.token0.name = "";
       _pools[i].pool.token0.symbol = "";
     }
-    _pools[i].pool.significantData = `Daily Volume ${formatter.format(pools[i].pool.volumeUSD)}`;
+    _pools[i].pool.significantData = ``;
   }
   return _pools;
 }

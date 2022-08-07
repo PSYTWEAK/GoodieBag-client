@@ -26,7 +26,10 @@ const TokenList = (pools: any, handleRemoveToken: any) => {
             <p>{data.pool.token1.symbol}</p>
             <DeleteTokenButton removeToken={() => handleRemoveToken(data.pool.token1.id)} />
           </div>{" "}
-          <p>{data.pool.significantData}</p>
+          <div className={styles.smolSignificantData}>
+            {" "}
+            <p>{data.pool.significantData}</p>{" "}
+          </div>
         </Grid>
       );
     } catch (err) {
