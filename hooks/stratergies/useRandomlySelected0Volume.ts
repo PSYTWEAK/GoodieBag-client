@@ -31,7 +31,7 @@ query {
 
 }
 }`;
-export default async function useRandomlySelected(poolsLength: number) {
+export default async function useRandomlySelected0Volume(poolsLength: number) {
   const result = await useUniswapSubgraph(query);
 
   let pools: any = result.data.poolDayDatas;
@@ -41,6 +41,7 @@ export default async function useRandomlySelected(poolsLength: number) {
   pools = format(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
+  pools = removeVolume(pools);
   pools = removeNoneEthPools(pools);
   pools = removeSignOfDerivInTokenName(pools);
   pools = removeDuplicates(pools);

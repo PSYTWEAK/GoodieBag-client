@@ -61,7 +61,8 @@ function format(pools: any): any {
           pools[i].token0.id != weth
             ? { id: pools[i].token0.id, name: pools[i].token0.name, symbol: pools[i].token0.symbol, __typename: "Token" }
             : { id: pools[i].token1.id, name: pools[i].token1.name, symbol: pools[i].token1.symbol, __typename: "Token" },
-        significantData: `Pool created at ${date(pools[i].createdAtTimestamp)}`,
+        stratergySpecificDataDes: `Added to Uniswap at`,
+        stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
       },
     };
     _pools.push(data);

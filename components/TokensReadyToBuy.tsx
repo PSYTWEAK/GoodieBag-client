@@ -16,27 +16,29 @@ export default function TokensReadyToBuy({ pools, loading, setPools }: { pools: 
 }
 
 const TokenList = (pools: any, handleRemoveToken: any) => {
-  return pools.map((data: any, i: number) => {
-    try {
-      return (
-        <Grid item xs={8} width="max">
-          <div className={styles.div}>
-            <p>{data.pool.token1.name}</p>
-            <p>&nbsp;</p>
-            <p>{data.pool.token1.symbol}</p>
-            <DeleteTokenButton removeToken={() => handleRemoveToken(data.pool.token1.id)} />
-          </div>{" "}
-          <div className={styles.smolSignificantData}>
-            {" "}
-            <p>{data.pool.significantData}</p>{" "}
-          </div>
-        </Grid>
-      );
-    } catch (err) {
-      console.log("Couldn't show token " + i + err);
-      return <></>;
-    }
-  });
+  return (
+    <>
+      {stratergySpecificData(pools[0].pool.stratergySpecificDataDes)}
+      {pools.map((data: any, i: number) => {
+        try {
+          return (
+            <Grid item xs={8} width="max">
+              <div className={styles.div}>
+                <p>{data.pool.token1.name}</p>
+                <p>&nbsp;</p>
+                <p>{data.pool.token1.symbol}</p>
+                <DeleteTokenButton removeToken={() => handleRemoveToken(data.pool.token1.id)} />
+              </div>{" "}
+              {stratergySpecificData(data.pool.stratergySpecificData)}
+            </Grid>
+          );
+        } catch (err) {
+          console.log("Couldn't show token " + i + err);
+          return <></>;
+        }
+      })}
+    </>
+  );
 };
 
 function LoadingProcess({}) {
@@ -45,4 +47,16 @@ function LoadingProcess({}) {
       <CircularProgress />
     </div>
   );
+}
+
+function stratergySpecificData(data: string) {
+  if (data) {
+    return (
+      <div className={styles.smolstratergySpecificData}>
+        <p>{data}</p>
+      </div>
+    );
+  } else {
+    return <></>;
+  }
 }

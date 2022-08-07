@@ -102,8 +102,11 @@
   margin-left: auto;
   margin-right: 0;
 }
-.smolSignificantData {
+.smolstratergySpecificData {
   font-size: 0.8rem !important;
+  margin-left: auto;
+  margin-right: 0;
+  float: right;
 }
 
 /* .card:hover,

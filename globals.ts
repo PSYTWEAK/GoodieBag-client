@@ -1,6 +1,6 @@
 // globals
 
-export const statergys = ["Randomly selected tokens with minimum $100 volume", "Tokens most recently added to Uniswap", "Randomly selected tokens with 0 volume", "Randomly selected tokens all"];
+export const statergys = ["Randomly selected tokens with minimum $100 volume", "Randomly selected tokens with 0 volume", "Randomly selected tokens all", "Tokens most recently added to Uniswap"];
 export const GRAPHURL = "https://api.thegraph.com/subgraphs/name/benjaminlu/arbitrum-one-uniswap-v3";
 export const arbiTokenEaterAddress = "0xC874a4487c79Fb296ED916643Ba8f18B0F10C8Ee";
 export const arbiUniswapQuoterAddress = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
