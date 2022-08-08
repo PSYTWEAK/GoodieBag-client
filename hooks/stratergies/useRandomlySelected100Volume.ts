@@ -40,7 +40,6 @@ export default async function useRandomlySelected100Volume(poolsLength: number) 
   pools = format(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
-  //pools = removeNoneEthPools(pools);
   pools = removeLowVolume(pools);
   pools = removeSignOfDerivInTokenName(pools);
   pools = removeDuplicates(pools);

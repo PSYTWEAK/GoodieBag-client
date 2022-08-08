@@ -89,7 +89,7 @@ export function removeLowVolume(pools: any): any {
 
 export function removeVolume(pools: any): any {
   let _pools = pools;
-  const index = _pools.findIndex((data: any) => data.pool.volumeUSD > "0");
+  const index = _pools.findIndex((data: any) => data.pool.volumeUSD > "100");
   if (index > -1) {
     _pools.splice(index, 1);
     return removeLowVolume(_pools);

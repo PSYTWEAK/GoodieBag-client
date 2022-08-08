@@ -15,10 +15,11 @@ import { BuyTokens } from "../components/BuyTokens";
 import { SelectTokenListLength } from "../components/SelectTokenListLength";
 import { SettingsButton } from "../components/SettingsButton";
 import { BackToTokenList } from "../components/BackToTokenList";
+import Logo from "../components/Logo";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
-  const [poolsLength, setPoolsLength] = useState(10);
+  const [poolsLength, setPoolsLength] = useState(100);
   const [pools, loading, setPools] = useStratergy(stratergy, poolsLength);
   const [amountETHIn, setAmountETHIn] = useState(null);
   const [settingsActive, setSettingsActive] = useState(false);
@@ -35,7 +36,10 @@ const Home: NextPage = () => {
       </header>
       <main className={styles.main}>
         {" "}
-        <h1 className={styles.title}>Token Eater</h1>
+        <h1 className={styles.title}>
+          {" "}
+          <Logo />
+        </h1>
         <div className={styles.card}>
           {stratergy && (
             <>

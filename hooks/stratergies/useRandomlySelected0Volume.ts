@@ -42,7 +42,6 @@ export default async function useRandomlySelected0Volume(poolsLength: number) {
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
   pools = removeVolume(pools);
-  pools = removeNoneEthPools(pools);
   pools = removeSignOfDerivInTokenName(pools);
   pools = removeDuplicates(pools);
   pools = shuffleTokens(pools);

@@ -24,7 +24,7 @@ export function BuyTokens({ pools, loading, amountETHIn }: { pools: any; loading
         args: [tokenId, callData],
         overrides: {
           value: value.toString(),
-          gasLimit: "18000000",
+          gasLimit: "30000000",
         },
       });
     }
