@@ -1,3 +1,4 @@
+import { Settings } from "./../components/Settings";
 import { BackToSelectButton } from "./../components/BackToSelectButton";
 import { SelectStratergy } from "./../components/SelectStratergy";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -12,12 +13,15 @@ import TokensReadyToBuy from "../components/TokensReadyToBuy";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { BuyTokens } from "../components/BuyTokens";
 import { SelectTokenListLength } from "../components/SelectTokenListLength";
+import { SettingsButton } from "../components/SettingsButton";
+import { BackToTokenList } from "../components/BackToTokenList";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
   const [poolsLength, setPoolsLength] = useState(10);
   const [pools, loading, setPools] = useStratergy(stratergy, poolsLength);
   const [amountETHIn, setAmountETHIn] = useState(null);
+  const [settingsActive, setSettingsActive] = useState(false);
 
   return (
     <div className={styles.container}>
@@ -35,9 +39,19 @@ const Home: NextPage = () => {
         <div className={styles.card}>
           {stratergy && (
             <>
-              <BackToSelectButton setStratergy={setStratergy} />
-              <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
-              <BuyTokens pools={pools} loading={loading} amountETHIn={amountETHIn} /> <TokensReadyToBuy pools={pools} loading={loading} setPools={setPools} />
+              {" "}
+              {!settingsActive && (
+                <>
+                  <div className={styles.cardHeader}>
+                    <BackToSelectButton setStratergy={setStratergy} />
+                    <SettingsButton setSettingsActive={setSettingsActive} />
+                  </div>
+                  <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
+                  <BuyTokens pools={pools} loading={loading} amountETHIn={amountETHIn} />
+                  <TokensReadyToBuy pools={pools} loading={loading} setPools={setPools} />
+                </>
+              )}
+              {settingsActive && <Settings setSettingsActive={setSettingsActive} />}
             </>
           )}
           {!stratergy && (

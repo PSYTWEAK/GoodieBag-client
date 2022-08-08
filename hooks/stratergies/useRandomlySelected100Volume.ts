@@ -2,6 +2,7 @@ import { createClient } from "urql";
 import { useEffect, useState } from "react";
 import useUniswapSubgraph from "../subgraphQuerys/useUniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from "./globals";
+import bigDecimal from "js-big-decimal";
 import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
 
 var start: any = new Date();
@@ -35,11 +36,11 @@ export default async function useRandomlySelected100Volume(poolsLength: number) 
   const result = await useUniswapSubgraph(query);
 
   let pools: any = result.data.poolDayDatas;
-
+  console.log(pools);
   pools = format(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
-  pools = removeNoneEthPools(pools);
+  //pools = removeNoneEthPools(pools);
   pools = removeLowVolume(pools);
   pools = removeSignOfDerivInTokenName(pools);
   pools = removeDuplicates(pools);
