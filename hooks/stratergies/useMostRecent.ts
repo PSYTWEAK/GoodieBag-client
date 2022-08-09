@@ -47,28 +47,20 @@ export default async function useMostRecent(poolsLength: number) {
 }
 
 function format(pools: any): any {
-  let _pools = [];
-
+  let tokens = [];
   for (let i = 0; i < pools.length; i++) {
-    let data = {
-      pool: {
-        feeTier: pools[i].feeTier,
-        id: pools[i].id,
-        volumeUSD: pools[i].volumeUSD,
-        liquidity: pools[i].liquidity,
-        token0: { id: weth, name: "", symbol: "", __typename: "Token" },
-        token1:
-          pools[i].token0.id != weth
-            ? { id: pools[i].token0.id, name: pools[i].token0.name, symbol: pools[i].token0.symbol, __typename: "Token" }
-            : { id: pools[i].token1.id, name: pools[i].token1.name, symbol: pools[i].token1.symbol, __typename: "Token" },
-        stratergySpecificDataDes: `Added to Uniswap at`,
-        stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
-      },
+    let token = {
+      id: pools[i].token0.id != weth ? pools[i].token1.id : pools[i].token0.id,
+      name: pools[i].token0.id != weth ? pools[i].token1.name : pools[i].token0.name,
+      symbol: pools[i].token0.id != weth ? pools[i].token1.symbol : pools[i].token0.name,
+      volumeUSD: pools[i].volumeUSD,
+      stratergySpecificDataDes: `Added to Uniswap at`,
+      stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
     };
-    _pools.push(data);
+    tokens.push(token);
   }
 
-  return _pools;
+  return tokens;
 }
 
 function date(timestamp: number) {
