@@ -9,27 +9,19 @@ start.setUTCHours(0, 0, 0, 0);
 
 const query = `
 query {
-  poolDayDatas(first: 1000 where: {date: ${start / 1000} } orderBy:volumeUSD orderDirection:desc) {
+  
+  tokenDayDatas(first: 1000 where: {date: ${start / 1000} } orderBy:volumeUSD orderDirection:desc) {
       date
       volumeUSD
-      pool {
-       id
-      liquidity
-      feeTier
-
-        token0 {
-          id
+    priceUSD
+    token{id
           name
           symbol
-        }
-     token1{
-        id
-        name
-        symbol
-        }
-      }
+    decimals}
+      
+        
+  }
 
-}
 }`;
 export default async function useRandomlySelected0Volume(poolsLength: number) {
   const result = await useUniswapSubgraph(query);
@@ -59,23 +51,22 @@ var formatter = new Intl.NumberFormat("en-US", {
   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
 
-function format(pools: any): any {
-  let _pools = Object.assign([], pools);
-  for (let i = 0; i < pools.length; i++) {
-    if (pools[i].pool.token0.id != weth) {
-      _pools[i].pool.token1.id = pools[i].pool.token0.id;
-      _pools[i].pool.token1.name = pools[i].pool.token0.name;
-      _pools[i].pool.token1.symbol = pools[i].pool.token0.symbol;
-      _pools[i].pool.token0.id = weth;
-      _pools[i].pool.token0.name = "";
-      _pools[i].pool.token0.symbol = "";
-    }
-    _pools[i].pool.stratergySpecificDataDes = ``;
-    _pools[i].pool.stratergySpecificData = ``;
-
-    /* to get the volume of ETH from the broken subgraph its 
+function format(tokenDayDatas: any): any {
+  let tokens = [];
+  for (let i = 0; i < tokenDayDatas.length; i++) {
+    let token = {
+      id: tokenDayDatas.token.id,
+      name: tokenDayDatas.token.name,
+      symbol: tokenDayDatas.token.symbol,
+      volumeUSD: tokenDayDatas.volumeUSD,
+      /* to get the volume of ETH from the broken subgraph its 
     a = volume / tokenPrice
     b = a / 10^18 */
+      stratergySpecificDataDes: "",
+      stratergySpecificData: "",
+    };
+    tokens.push(token);
   }
-  return _pools;
+
+  return tokens;
 }

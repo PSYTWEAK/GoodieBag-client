@@ -27,7 +27,8 @@ query {
 export default async function useRandomlySelected100Volume(poolsLength: number) {
   const result = await useUniswapSubgraph(query);
 
-  let pools: any = result.data.poolDayDatas;
+  let pools: any = result.data;
+  console.log("pools");
   console.log(pools);
   pools = format(pools);
   pools = removeBlueChips(pools);
@@ -50,22 +51,22 @@ var formatter = new Intl.NumberFormat("en-US", {
   //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
 });
 
-function format(pools: any): any {
-  let _pools = Object.assign([], pools);
-  for (let i = 0; i < pools.length; i++) {
-    if (pools[i].pool.token0.id != weth) {
-      _pools[i].pool.token1.id = pools[i].pool.token0.id;
-      _pools[i].pool.token1.name = pools[i].pool.token0.name;
-      _pools[i].pool.token1.symbol = pools[i].pool.token0.symbol;
-      _pools[i].pool.token0.id = weth;
-      _pools[i].pool.token0.name = "";
-      _pools[i].pool.token0.symbol = "";
-    }
-    _pools[i].pool.stratergySpecificDataDes = ``;
-    _pools[i].pool.stratergySpecificData = ``;
-    /* to get the volume of ETH from the broken subgraph its 
+function format(tokenDayDatas: any): any {
+  let tokens = [];
+  for (let i = 0; i < tokenDayDatas.length; i++) {
+    let token = {
+      id: tokenDayDatas.token.id,
+      name: tokenDayDatas.token.name,
+      symbol: tokenDayDatas.token.symbol,
+      volumeUSD: tokenDayDatas.volumeUSD,
+      /* to get the volume of ETH from the broken subgraph its 
     a = volume / tokenPrice
     b = a / 10^18 */
+      stratergySpecificDataDes: "",
+      stratergySpecificData: "",
+    };
+    tokens.push(token);
   }
-  return _pools;
+
+  return tokens;
 }
