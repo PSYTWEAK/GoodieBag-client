@@ -72,6 +72,10 @@ function format(pools: any): any {
     }
     _pools[i].pool.stratergySpecificDataDes = ``;
     _pools[i].pool.stratergySpecificData = ``;
+
+    /* to get the volume of ETH from the broken subgraph its 
+    a = volume / tokenPrice
+    b = a / 10^18 */
   }
   return _pools;
 }

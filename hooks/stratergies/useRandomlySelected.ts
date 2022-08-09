@@ -9,27 +9,19 @@ start.setUTCHours(0, 0, 0, 0);
 
 const query = `
 query {
-  poolDayDatas(first: 1000 where: {date: ${start / 1000} } orderBy:volumeUSD orderDirection:desc) {
+  
+  tokenDayDatas(first: 1000 where: {date: ${start / 1000} } orderBy:volumeUSD orderDirection:desc) {
       date
       volumeUSD
-      pool {
-       id
-      liquidity
-      feeTier
-
-        token0 {
-          id
+    priceUSD
+    token{id
           name
           symbol
-        }
-     token1{
-        id
-        name
-        symbol
-        }
-      }
+    decimals}
+      
+        
+  }
 
-}
 }`;
 export default async function useRandomlySelected(poolsLength: number) {
   const result = await useUniswapSubgraph(query);
