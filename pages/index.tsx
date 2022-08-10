@@ -6,21 +6,17 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
-import EtherAmount from "../components/EtherInput/EtherAmount";
 import useStratergy from "../hooks/useStratergy";
 import { EtherInput } from "../components/EtherInput/EtherInput";
 import TokensReadyToBuy from "../components/TokensReadyToBuy";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { BuyTokens } from "../components/BuyTokens";
-import { SelectTokenListLength } from "../components/SelectTokenListLength";
 import { SettingsButton } from "../components/SettingsButton";
-import { BackToTokenList } from "../components/BackToTokenList";
 import Logo from "../components/Logo";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
-  const [poolsLength, setPoolsLength] = useState(100);
-  const [pools, loading, setPools] = useStratergy(stratergy, poolsLength);
+  const [tokensLength, setTokensLength] = useState(100);
+  const [tokens, loading, setTokens] = useStratergy(stratergy, tokensLength);
   const [amountETHIn, setAmountETHIn] = useState(null);
   const [settingsActive, setSettingsActive] = useState(false);
 
@@ -51,8 +47,8 @@ const Home: NextPage = () => {
                     <SettingsButton setSettingsActive={setSettingsActive} />
                   </div>
                   <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
-                  <BuyTokens pools={pools} loading={loading} amountETHIn={amountETHIn} />
-                  <TokensReadyToBuy pools={pools} loading={loading} setPools={setPools} />
+                  <BuyTokens tokens={tokens} loading={loading} amountETHIn={amountETHIn} />
+                  <TokensReadyToBuy tokens={tokens} loading={loading} setTokens={setTokens} />
                 </>
               )}
               {settingsActive && <Settings setSettingsActive={setSettingsActive} />}

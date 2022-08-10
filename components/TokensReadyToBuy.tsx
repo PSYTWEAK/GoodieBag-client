@@ -4,32 +4,32 @@ import styles from "../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { DeleteTokenButton } from "./DeleteTokenButton";
 
-export default function TokensReadyToBuy({ pools, loading, setPools }: { pools: any; loading: any; setPools: any }) {
+export default function TokensReadyToBuy({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
   const handleRemoveToken = (token: string) => {
-    setPools(pools.filter((item: any) => item.pool.token1.id !== token));
+    setTokens(tokens.filter((item: any) => item.id !== token));
   };
   return (
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} direction="column" marginTop={1.5}>
-      {loading === "false" ? <></> : loading === "null" ? <h1>No Tokens Found</h1> : loading === "true" && !pools ? <LoadingProcess /> : <>{TokenList(pools, handleRemoveToken)}</>}
+      {loading === "false" ? <></> : loading === "null" ? <h1>No Tokens Found</h1> : loading === "true" && !tokens ? <LoadingProcess /> : <>{TokenList(tokens, handleRemoveToken)}</>}
     </Grid>
   );
 }
 
-const TokenList = (pools: any, handleRemoveToken: any) => {
+const TokenList = (tokens: any, handleRemoveToken: any) => {
   return (
     <>
-      {stratergySpecificData(pools[0].pool.stratergySpecificDataDes)}
-      {pools.map((data: any, i: number) => {
+      {stratergySpecificData(tokens[0].stratergySpecificDataDes)}
+      {tokens.map((data: any, i: number) => {
         try {
           return (
             <Grid item xs={8} width="max">
               <div className={styles.div}>
-                <p>{data.pool.token1.name}</p>
+                <p>{data.name}</p>
                 <p>&nbsp;</p>
-                <p>{data.pool.token1.symbol}</p>
-                <DeleteTokenButton removeToken={() => handleRemoveToken(data.pool.token1.id)} />
+                <p>{data.symbol}</p>
+                <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} />
               </div>{" "}
-              {stratergySpecificData(data.pool.stratergySpecificData)}
+              {stratergySpecificData(data.stratergySpecificData)}
             </Grid>
           );
         } catch (err) {

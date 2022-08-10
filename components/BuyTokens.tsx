@@ -6,7 +6,7 @@ import TokenEaterABI from "../contracts/TokenEaterABI.json";
 import { arbiTokenEaterAddress, arbiUniswapRouterAddress } from "../globals";
 import { ethers } from "ethers";
 import { setRevalidateHeaders } from "next/dist/server/send-payload";
-export function BuyTokens({ pools, loading, amountETHIn }: { pools: any; loading: any; amountETHIn: any }) {
+export function BuyTokens({ tokens, loading, amountETHIn }: { tokens: any; loading: any; amountETHIn: any }) {
   const provider = useProvider();
 
   const { data, isLoading, isSuccess, write } = useContractWrite({
@@ -17,9 +17,9 @@ export function BuyTokens({ pools, loading, amountETHIn }: { pools: any; loading
 
   const [disabled, setDisabled] = useState(true);
 
-  const handleClick = async (provider: any, pools: any, amountETHIn: number) => {
-    if (pools) {
-      let [value, tokenId, callData] = await useUniswapTrade(provider, pools, ethers.utils.parseEther(amountETHIn.toString()));
+  const handleClick = async (provider: any, tokens: any, amountETHIn: number) => {
+    if (tokens) {
+      let [value, tokenId, callData] = await useUniswapTrade(provider, tokens, ethers.utils.parseEther(amountETHIn.toString()));
       await write({
         args: [tokenId, callData],
         overrides: {
@@ -31,15 +31,15 @@ export function BuyTokens({ pools, loading, amountETHIn }: { pools: any; loading
   };
 
   useEffect(() => {
-    if (amountETHIn > 0 && loading === "true" && pools) {
+    if (amountETHIn > 0 && loading === "true" && tokens) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [amountETHIn, pools]);
+  }, [amountETHIn, tokens]);
 
   return (
-    <Button variant="contained" onClick={() => handleClick(provider, pools, amountETHIn)} disabled={disabled}>
+    <Button variant="contained" onClick={() => handleClick(provider, tokens, amountETHIn)} disabled={disabled}>
       Buy Tokens
     </Button>
   );
