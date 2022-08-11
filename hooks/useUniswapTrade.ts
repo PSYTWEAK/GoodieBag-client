@@ -1,24 +1,19 @@
-import { ethers, BigNumber } from "ethers";
-import { Pool } from "@uniswap/v3-sdk";
-import { CurrencyAmount, Token, TradeType, Percent, BigintIsh } from "@uniswap/sdk-core";
-import { abi as IUniswapV3PoolABI } from "@uniswap/v3-core/artifacts/contracts/interfaces/IUniswapV3Pool.sol/IUniswapV3Pool.json";
-import { Route } from "@uniswap/v3-sdk";
-import { Trade } from "@uniswap/v3-sdk";
-import { abi as QuoterABI } from "@uniswap/v3-periphery/artifacts/contracts/lens/Quoter.sol/Quoter.json";
-import { useProvider } from "wagmi";
+import { BigNumber } from "ethers";
+import { CurrencyAmount, Token, TradeType, Percent } from "@uniswap/sdk-core";
 import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
-import { arbiUniswapQuoterAddress, arbiUniswapRouterAddress, arbiTokenEaterAddress } from "../globals";
+import { arbiTokenEaterAddress } from "../globals";
+import { weth } from "./stratergies/globals";
 
-export default async function useUniswapTrade(provider: any, pools: any, amountIn: BigNumber) {
+export default async function useUniswapTrade(provider: any, tokens: any, amountIn: BigNumber) {
   const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
   const percentSlippage = new Percent(100, 100);
 
   const amountInBN = JSBI.BigInt(amountIn.toString());
 
-  const amountPerPool = JSBI.divide(amountInBN, JSBI.BigInt(pools.length));
+  const amountPerPool = JSBI.divide(amountInBN, JSBI.BigInt(tokens.length));
 
-  const TokenA = new Token(provider._network.chainId, pools[0].pool.token0.id, 18, pools[0].pool.token0.symbol, pools[0].pool.token0.name);
+  const TokenA = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
 
   const wethAmount = CurrencyAmount.fromRawAmount(TokenA, JSBI.BigInt(amountPerPool.toString()));
 
@@ -26,12 +21,12 @@ export default async function useUniswapTrade(provider: any, pools: any, amountI
   let tokenId = [];
   let value = JSBI.BigInt(0);
 
-  for (let i = 0; i < pools.length; i++) {
-    console.log("Pool " + i + " processing");
+  for (let i = 0; i < tokens.length; i++) {
+    console.log("Token " + i + " processing");
     try {
-      const pool = pools[i];
+      const Token = tokens[i];
 
-      const TokenB = new Token(provider._network.chainId, pool.pool.token1.id, 18, pool.pool.token1.symbol, pool.pool.token1.name);
+      const TokenB = new Token(provider._network.chainId, Token.id, 18, Token.symbol, Token.name);
 
       const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
         recipient: arbiTokenEaterAddress,
@@ -40,17 +35,13 @@ export default async function useUniswapTrade(provider: any, pools: any, amountI
       });
 
       callData.push(route.methodParameters.calldata);
-      tokenId.push(pool.pool.token1.id);
+      tokenId.push(Token.id);
       value = JSBI.add(amountPerPool, value);
     } catch (error) {
-      console.log("pool " + i + " failed");
-      console.log(pools[i]);
+      console.log("Token " + i + " failed");
+      console.log(tokens[i]);
     }
   }
 
   return [value, tokenId, callData];
 }
-/* 
-ethers.utils.parseEther(amountETHIn.toString()),
-
-*/

@@ -24,32 +24,22 @@ query {
   }
 
 }`;
-export default async function useRandomlySelected100Volume(poolsLength: number) {
+export default async function useRandomlySelected100Volume(tokensLength: number) {
   const result = await useUniswapSubgraph(query);
 
-  let pools: any = result.data;
-  console.log("pools");
-  console.log(pools);
-  pools = format(pools);
-  pools = removeBlueChips(pools);
-  pools = removeStables(pools);
-  pools = removeLowVolume(pools);
-  pools = removeSignOfDerivInTokenName(pools);
-  pools = removeDuplicates(pools);
-  pools = shuffleTokens(pools);
-  pools = pools.slice(0, poolsLength);
+  let tokens: any = result.data;
 
-  return pools;
+  tokens = format(tokens);
+  tokens = removeBlueChips(tokens);
+  tokens = removeStables(tokens);
+  tokens = removeLowVolume(tokens);
+  tokens = removeSignOfDerivInTokenName(tokens);
+  tokens = removeDuplicates(tokens);
+  tokens = shuffleTokens(tokens);
+  tokens = tokens.slice(0, tokensLength);
+
+  return tokens;
 }
-
-var formatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-
-  // These options are needed to round to whole numbers if that's what you want.
-  //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-  //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-});
 
 function format(tokenDayDatas: any): any {
   let tokens = [];
