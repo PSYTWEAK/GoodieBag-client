@@ -41,22 +41,24 @@ export default async function useRandomlySelected100Volume(tokensLength: number)
   return tokens;
 }
 
-function format(tokenDayDatas: any): any {
+function format(data: any): any {
   let tokens = [];
-  for (let i = 0; i < tokenDayDatas.length; i++) {
+  for (let i = 0; i < data.tokenDayDatas.length; i++) {
     let token = {
-      id: tokenDayDatas.token.id,
-      name: tokenDayDatas.token.name,
-      symbol: tokenDayDatas.token.symbol,
-      volumeUSD: tokenDayDatas.volumeUSD,
+      id: data.tokenDayDatas[i].token.id,
+      name: data.tokenDayDatas[i].token.name,
+      symbol: data.tokenDayDatas[i].token.symbol,
+      volumeUSD: data.tokenDayDatas[i].volumeUSD,
       /* to get the volume of ETH from the broken subgraph its 
     a = volume / tokenPrice
     b = a / 10^18 */
       stratergySpecificDataDes: "",
       stratergySpecificData: "",
     };
-    tokens.push(token);
+    if (token.id != weth) {
+      tokens.push(token);
+    }
   }
-
+  console.log(tokens);
   return tokens;
 }
