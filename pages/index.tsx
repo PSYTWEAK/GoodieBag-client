@@ -51,7 +51,7 @@ const Home: NextPage = () => {
                   <TokensReadyToBuy tokens={tokens} loading={loading} setTokens={setTokens} />
                 </>
               )}
-              {settingsActive && <Settings setSettingsActive={setSettingsActive} />}
+              {settingsActive && <Settings setSettingsActive={setSettingsActive} setTokensLength={setTokensLength} />}
             </>
           )}
           {!stratergy && (
