@@ -5,9 +5,8 @@ export function Settings({ setSettingsActive, tokensLength, setTokensLength }: {
   return (
     <>
       <BackToTokenList setSettingsActive={setSettingsActive} />
-      <p>Slippage</p>
-      <SelectTokenListLength tokensLength={tokensLength} setTokensLength={setTokensLength} />
       <p>Number of tokens</p>
+      <SelectTokenListLength tokensLength={tokensLength} setTokensLength={setTokensLength} />
     </>
   );
 }
