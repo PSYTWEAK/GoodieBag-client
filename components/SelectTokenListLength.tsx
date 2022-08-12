@@ -2,9 +2,9 @@ import React from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { statergys } from "../globals";
 
-var tokensLength = Array.from(Array(50).keys());
+var selection = Array.from(Array(50).keys());
 
-export function SelectTokenListLength({ setTokensLength }: { setTokensLength: any }) {
+export function SelectTokenListLength({ tokensLength, setTokensLength }: { tokensLength: any; setTokensLength: any }) {
   return (
     <div>
       <FormControl
@@ -14,8 +14,8 @@ export function SelectTokenListLength({ setTokensLength }: { setTokensLength: an
         }}
       >
         <InputLabel id="demo-multiple-name-label">Select Stratergy</InputLabel>
-        <Select labelId="demo-simple-select-label" id="demo-simple-select" value={"Select"} label="Number of tokens" onChange={(e) => setTokensLength(e.target.value)}>
-          {tokensLength.map((num: number) => {
+        <Select labelId="demo-simple-select-label" id="demo-simple-select" label="Number of tokens" value={tokensLength} onChange={(e) => setTokensLength(e.target.value)}>
+          {selection.map((num: number) => {
             return <MenuItem value={num}>{num}</MenuItem>;
           })}
         </Select>

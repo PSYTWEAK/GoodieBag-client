@@ -15,7 +15,7 @@ import Logo from "../components/Logo";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
-  const [tokensLength, setTokensLength] = useState(100);
+  const [tokensLength, setTokensLength] = useState(10);
   const [tokens, loading, setTokens] = useStratergy(stratergy, tokensLength);
   const [amountETHIn, setAmountETHIn] = useState(null);
   const [settingsActive, setSettingsActive] = useState(false);
@@ -51,12 +51,12 @@ const Home: NextPage = () => {
                   <TokensReadyToBuy tokens={tokens} loading={loading} setTokens={setTokens} />
                 </>
               )}
-              {settingsActive && <Settings setSettingsActive={setSettingsActive} setTokensLength={setTokensLength} />}
+              {settingsActive && <Settings setSettingsActive={setSettingsActive} tokensLength={tokensLength} setTokensLength={setTokensLength} />}
             </>
           )}
           {!stratergy && (
             <>
-              <SelectStratergy setStratergy={setStratergy} />
+              <SelectStratergy stratergy={stratergy} setStratergy={setStratergy} />
             </>
           )}
         </div>

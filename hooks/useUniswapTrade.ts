@@ -4,6 +4,7 @@ import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
 import { arbiTokenEaterAddress } from "../globals";
 import { weth } from "./stratergies/globals";
+
 let callData: any = [];
 let tokenId: any = [];
 let value = JSBI.BigInt(0);

@@ -55,8 +55,8 @@ function format(data: any): any {
       /* to get the volume of ETH from the broken subgraph its 
     a = volume / tokenPrice
     b = a / 10^18 */
-      stratergySpecificDataDes: "Volume",
-      stratergySpecificData: data.tokenDayDatas[i].volumeUSD,
+      stratergySpecificDataDes: "",
+      stratergySpecificData: "",
     };
     if (token.id != weth) {
       tokens.push(token);
