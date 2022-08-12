@@ -39,7 +39,6 @@ export default async function useMostRecent(poolsLength: number) {
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
   pools = removeSignOfDerivInTokenName(pools);
-  pools = removeNoneEthPools(pools);
   pools = removeDuplicates(pools);
   pools = pools.slice(0, poolsLength);
 
@@ -57,7 +56,11 @@ function format(pools: any): any {
       stratergySpecificDataDes: `Added to Uniswap at`,
       stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
     };
-    tokens.push(token);
+
+    if (token.id && token.id != weth) {
+      console.log(token.id);
+      tokens.push(token);
+    }
   }
 
   return tokens;
