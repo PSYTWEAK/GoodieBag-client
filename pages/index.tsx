@@ -12,11 +12,13 @@ import TokensReadyToBuy from "../components/TokensReadyToBuy";
 import { BuyTokens } from "../components/BuyTokens";
 import { SettingsButton } from "../components/SettingsButton";
 import Logo from "../components/Logo";
+import useTokens from "../hooks/useTokens";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
   const [tokensLength, setTokensLength] = useState(10);
-  const [tokens, loading, setTokens] = useStratergy(stratergy, tokensLength);
+  const [stratResult, loading] = useStratergy(stratergy);
+  const [tokens, setTokens] = useTokens(stratResult, tokensLength);
   const [amountETHIn, setAmountETHIn] = useState(null);
   const [settingsActive, setSettingsActive] = useState(false);
 

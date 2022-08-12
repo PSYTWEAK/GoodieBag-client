@@ -24,7 +24,7 @@ query {
   }
 
 }`;
-export default async function useRandomlySelected100Volume(tokensLength: number) {
+export default async function useRandomlySelected100Volume() {
   const result = await useUniswapSubgraph(query);
 
   let tokens: any = result.data;
@@ -36,7 +36,6 @@ export default async function useRandomlySelected100Volume(tokensLength: number)
   tokens = removeSignOfDerivInTokenName(tokens);
   tokens = removeDuplicates(tokens);
   tokens = shuffleTokens(tokens);
-  tokens = tokens.slice(0, tokensLength);
 
   return tokens;
 }

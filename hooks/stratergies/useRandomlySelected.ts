@@ -23,23 +23,17 @@ query {
   }
 
 }`;
-export default async function useRandomlySelected(tokensLength: number) {
+export default async function useRandomlySelected() {
   const result = await useUniswapSubgraph(query);
 
   let tokens: any = result.data;
-  console.log("unformatted tokens");
-  console.log(tokens);
+
   tokens = format(tokens);
-  console.log("formatted tokens");
-  console.log(tokens);
   tokens = removeBlueChips(tokens);
   tokens = removeStables(tokens);
   tokens = removeSignOfDerivInTokenName(tokens);
   tokens = removeDuplicates(tokens);
   tokens = shuffleTokens(tokens);
-  console.log("filtered tokens");
-  console.log(tokens);
-  tokens = tokens.slice(0, tokensLength);
 
   return tokens;
 }

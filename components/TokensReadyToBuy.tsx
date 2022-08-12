@@ -8,14 +8,16 @@ export default function TokensReadyToBuy({ tokens, loading, setTokens }: { token
   const handleRemoveToken = (token: string) => {
     setTokens(tokens.filter((item: any) => item.id !== token));
   };
+  console.log(tokens);
   return (
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} direction="column" marginTop={1.5}>
-      {loading === "false" ? <></> : loading === "null" ? <h1>No Tokens Found</h1> : loading === "true" && !tokens ? <LoadingProcess /> : <>{TokenList(tokens, handleRemoveToken)}</>}
+      {loading === "false" ? <></> : loading === "null" ? <h1>No Tokens Found</h1> : loading === "true" && !tokens === true ? <LoadingProcess /> : <>{TokenList(tokens, handleRemoveToken)}</>}
     </Grid>
   );
 }
 
 const TokenList = (tokens: any, handleRemoveToken: any) => {
+  console.log(tokens);
   return (
     <>
       {stratergySpecificData(tokens[0].stratergySpecificDataDes)}
