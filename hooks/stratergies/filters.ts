@@ -78,10 +78,10 @@ export function removeLowVolume(tokens: any): any {
 
 export function removeVolume(tokens: any): any {
   let _tokens = tokens;
-  const index = _tokens.findIndex((data: any) => data.volumeUSD > "100");
+  const index = _tokens.findIndex((data: any) => data.volumeUSD > lowVolume);
   if (index > -1) {
     _tokens.splice(index, 1);
-    return removeLowVolume(_tokens);
+    return removeVolume(_tokens);
   } else {
     return _tokens;
   }

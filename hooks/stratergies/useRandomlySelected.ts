@@ -27,14 +27,18 @@ export default async function useRandomlySelected(tokensLength: number) {
   const result = await useUniswapSubgraph(query);
 
   let tokens: any = result.data;
-
+  console.log("unformatted tokens");
+  console.log(tokens);
   tokens = format(tokens);
+  console.log("formatted tokens");
+  console.log(tokens);
   tokens = removeBlueChips(tokens);
   tokens = removeStables(tokens);
-  tokens = removeNoneEthPools(tokens);
   tokens = removeSignOfDerivInTokenName(tokens);
   tokens = removeDuplicates(tokens);
   tokens = shuffleTokens(tokens);
+  console.log("filtered tokens");
+  console.log(tokens);
   tokens = tokens.slice(0, tokensLength);
 
   return tokens;
@@ -51,8 +55,8 @@ function format(data: any): any {
       /* to get the volume of ETH from the broken subgraph its 
     a = volume / tokenPrice
     b = a / 10^18 */
-      stratergySpecificDataDes: "",
-      stratergySpecificData: "",
+      stratergySpecificDataDes: "Volume",
+      stratergySpecificData: data.tokenDayDatas[i].volumeUSD,
     };
     if (token.id != weth) {
       tokens.push(token);

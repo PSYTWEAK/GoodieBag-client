@@ -4,6 +4,9 @@ import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
 import { arbiTokenEaterAddress } from "../globals";
 import { weth } from "./stratergies/globals";
+let callData: any = [];
+let tokenId: any = [];
+let value = JSBI.BigInt(0);
 
 export default async function useUniswapTrade(provider: any, tokens: any, amountIn: BigNumber) {
   const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
@@ -16,10 +19,6 @@ export default async function useUniswapTrade(provider: any, tokens: any, amount
   const TokenA = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
 
   const wethAmount = CurrencyAmount.fromRawAmount(TokenA, JSBI.BigInt(amountPerPool.toString()));
-
-  let callData = [];
-  let tokenId = [];
-  let value = JSBI.BigInt(0);
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
