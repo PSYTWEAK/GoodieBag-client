@@ -22,11 +22,10 @@ export default async function useUniswapTrade(provider: any, tokens: any, amount
   let value = JSBI.BigInt(0);
 
   for (let i = 0; i < tokens.length; i++) {
-    console.log("Token " + i + " processing");
+    const token = tokens[i];
     try {
-      const Token = tokens[i];
-
-      const TokenB = new Token(provider._network.chainId, Token.id, 18, Token.symbol, Token.name);
+      console.log("Token " + token.name + " processing");
+      const TokenB = new Token(provider._network.chainId, token.id, 18, token.symbol, token.name);
 
       const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
         recipient: arbiTokenEaterAddress,
@@ -35,11 +34,11 @@ export default async function useUniswapTrade(provider: any, tokens: any, amount
       });
 
       callData.push(route.methodParameters.calldata);
-      tokenId.push(Token.id);
+      tokenId.push(token.id);
       value = JSBI.add(amountPerPool, value);
     } catch (error) {
-      console.log("Token " + i + " failed");
-      console.log(tokens[i]);
+      console.log("Token " + token.name + " failed");
+      console.log(error);
     }
   }
 
