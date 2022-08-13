@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import EtherAmount from "./EtherAmount";
 import styles from "../../styles/Home.module.css";
 import { TextField } from "@mui/material";
 import ETHIcon from "../ETHIcon";
