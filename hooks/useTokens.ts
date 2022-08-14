@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function useTokens(stratResult: any, tokensLength: number) {
+export default function useTokens(stratergy: string, stratResult: any, tokensLength: number) {
   const [tokens, setTokens] = useState([]);
 
   useEffect(() => {
@@ -9,6 +9,10 @@ export default function useTokens(stratResult: any, tokensLength: number) {
       setTokens(stratResult.slice(0, tokensLength));
     }
   }, [stratResult, tokensLength]);
+
+  useEffect(() => {
+    setTokens([]);
+  }, [stratergy]);
 
   return [tokens, setTokens];
 }

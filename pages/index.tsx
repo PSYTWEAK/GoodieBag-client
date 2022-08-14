@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
   const [tokensLength, setTokensLength] = useState(10);
   const [stratResult, loading] = useStratergy(stratergy);
-  const [tokens, setTokens] = useTokens(stratResult, tokensLength);
+  const [tokens, setTokens] = useTokens(stratergy, stratResult, tokensLength);
   const [amountETHIn, setAmountETHIn] = useState(null);
   const [settingsActive, setSettingsActive] = useState(false);
 
