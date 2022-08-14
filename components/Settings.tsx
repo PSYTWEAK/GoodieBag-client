@@ -1,12 +1,25 @@
 import React from "react";
 import { BackToTokenList } from "./BackToTokenList";
 import { SelectTokenListLength } from "./SelectTokenListLength";
-export function Settings({ setSettingsActive, tokensLength, setTokensLength }: { setSettingsActive: any; tokensLength: any; setTokensLength: any }) {
+import { SlippageInput } from "./SlippageInput";
+export function Settings({
+  setSettingsActive,
+  tokensLength,
+  setTokensLength,
+  slippage,
+  setSlippage,
+}: {
+  setSettingsActive: any;
+  tokensLength: any;
+  setTokensLength: any;
+  slippage: number;
+  setSlippage: any;
+}) {
   return (
     <>
       <BackToTokenList setSettingsActive={setSettingsActive} />
-      <p>Number of tokens</p>
       <SelectTokenListLength tokensLength={tokensLength} setTokensLength={setTokensLength} />
+      <SlippageInput slippage={slippage} setSlippage={setSlippage} />
     </>
   );
 }

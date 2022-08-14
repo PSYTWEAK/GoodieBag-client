@@ -17,6 +17,7 @@ import useTokens from "../hooks/useTokens";
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
   const [tokensLength, setTokensLength] = useState(10);
+  const [slippage, setSlippage] = useState(10);
   const [stratResult, loading] = useStratergy(stratergy);
   const [tokens, setTokens] = useTokens(stratergy, stratResult, tokensLength);
   const [amountETHIn, setAmountETHIn] = useState(null);
@@ -53,7 +54,7 @@ const Home: NextPage = () => {
                   <TokensReadyToBuy tokens={tokens} loading={loading} setTokens={setTokens} />
                 </>
               )}
-              {settingsActive && <Settings setSettingsActive={setSettingsActive} tokensLength={tokensLength} setTokensLength={setTokensLength} />}
+              {settingsActive && <Settings setSettingsActive={setSettingsActive} tokensLength={tokensLength} setTokensLength={setTokensLength} slippage={slippage} setSlippage={setSlippage} />}
             </>
           )}
           {!stratergy && (
