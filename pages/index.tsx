@@ -50,7 +50,7 @@ const Home: NextPage = () => {
                     <SettingsButton setSettingsActive={setSettingsActive} />
                   </div>
                   <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
-                  <BuyTokens tokens={tokens} loading={loading} amountETHIn={amountETHIn} />
+                  <BuyTokens tokens={tokens} loading={loading} slippage={slippage} amountETHIn={amountETHIn} />
                   <TokensReadyToBuy tokens={tokens} loading={loading} setTokens={setTokens} />
                 </>
               )}

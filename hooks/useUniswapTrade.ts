@@ -9,9 +9,9 @@ let callData: any = [];
 let tokenId: any = [];
 let value = JSBI.BigInt(0);
 
-export default async function useUniswapTrade(provider: any, tokens: any, amountIn: BigNumber) {
+export default async function useUniswapTrade(provider: any, tokens: any, slippage: number, amountIn: BigNumber) {
   const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
-  const percentSlippage = new Percent(100, 100);
+  const percentSlippage = new Percent(slippage, 100);
 
   const amountInBN = JSBI.BigInt(amountIn.toString());
 
