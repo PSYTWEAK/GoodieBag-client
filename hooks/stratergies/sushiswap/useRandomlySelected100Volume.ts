@@ -45,6 +45,7 @@ function format(data: any): any {
       name: data.tokenDaySnapshots[i].token.name,
       symbol: data.tokenDaySnapshots[i].token.symbol,
       volumeUSD: data.tokenDaySnapshots[i].volumeUSD,
+      protocol: "Sushiswap",
       /* to get the volume of ETH from the broken subgraph its 
       a = volume / tokenPrice
       b = a / 10^18 */

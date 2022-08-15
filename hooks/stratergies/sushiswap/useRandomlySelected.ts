@@ -1,6 +1,6 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useUniswapSubgraph from "../subgraphs/useUniswapSubgraph";
+import useUniswapSubgraph from "../../subgraphs/useUniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from "./globals";
 import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from "./filters";
 
@@ -43,6 +43,7 @@ function format(data: any): any {
       name: data.tokenDaySnapshots[i].token.name,
       symbol: data.tokenDaySnapshots[i].token.symbol,
       volumeUSD: data.tokenDaySnapshots[i].volumeUSD,
+      protocol: "Sushiswap",
       /* to get the volume of ETH from the broken subgraph its 
       a = volume / tokenPrice
       b = a / 10^18 */

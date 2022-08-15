@@ -46,7 +46,8 @@ function format(pools: any): any {
       name: pools[i].token0.id != weth ? pools[i].token1.name : pools[i].token0.name,
       symbol: pools[i].token0.id != weth ? pools[i].token1.symbol : pools[i].token0.name,
       volumeUSD: pools[i].volumeUSD,
-      stratergySpecificDataDes: `Added to DEX at`,
+      protocol: "Sushiswap",
+      stratergySpecificDataDes: `Added to Sushiswap at`,
       stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
     };
 
