@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "../styles/Home.module.css";
-import { TextField } from "@mui/material";
+import { TextField, InputAdornment } from "@mui/material";
 
 export function SlippageInput({ slippage, setSlippage }: { slippage: any; setSlippage: any }) {
   return (
@@ -12,6 +12,7 @@ export function SlippageInput({ slippage, setSlippage }: { slippage: any; setSli
             max: 100,
             min: 10,
           },
+          endAdornment: <InputAdornment position="end">%</InputAdornment>,
         }}
         label="Slippage"
         placeholder="%"

@@ -8,7 +8,6 @@ export function EtherInput({ amountETHIn, setAmountETHIn }: { amountETHIn: any; 
       {" "}
       <div className={styles.grid}>
         <TextField
-          border-radius="8px"
           id="outlined-basic"
           variant="outlined"
           placeholder="0.00"
