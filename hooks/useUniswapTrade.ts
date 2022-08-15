@@ -9,22 +9,30 @@ let callData: any = [];
 let tokenId: any = [];
 let value = JSBI.BigInt(0);
 
-export default async function useUniswapTrade(provider: any, tokens: any, slippage: number, amountIn: BigNumber) {
-  const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
-  const percentSlippage = new Percent(slippage, 100);
+function wethInputdata(provider: any, amountIn: BigNumber, tokens: any) {
+  const WETH = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
 
   const amountInBN = JSBI.BigInt(amountIn.toString());
 
-  const amountPerPool = JSBI.divide(amountInBN, JSBI.BigInt(tokens.length));
+  const amountPerTrade = JSBI.divide(amountInBN, JSBI.BigInt(tokens.length));
 
-  const TokenA = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
+  const wethAmount = CurrencyAmount.fromRawAmount(WETH, JSBI.BigInt(amountPerTrade.toString()));
 
-  const wethAmount = CurrencyAmount.fromRawAmount(TokenA, JSBI.BigInt(amountPerPool.toString()));
+  return { wethAmount, amountPerTrade };
+}
+
+export default async function useUniswapTrade(provider: any, tokens: any, slippage: number, amountIn: BigNumber) {
+  const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
+
+  const { wethAmount, amountPerTrade } = wethInputdata(provider, amountIn, tokens);
+
+  const percentSlippage = new Percent(slippage, 100);
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
     try {
       console.log("Token " + token.name + " processing");
+
       const TokenB = new Token(provider._network.chainId, token.id, 18, token.symbol, token.name);
 
       const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
@@ -35,7 +43,7 @@ export default async function useUniswapTrade(provider: any, tokens: any, slippa
 
       callData.push(route.methodParameters.calldata);
       tokenId.push(token.id);
-      value = JSBI.add(amountPerPool, value);
+      value = JSBI.add(amountPerTrade, value);
     } catch (error) {
       console.log("Token " + token.name + " failed");
       console.log(error);

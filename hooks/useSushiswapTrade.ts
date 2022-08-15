@@ -30,21 +30,27 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
-    const swapParams = {
-      fromTokenAddress: weth,
-      toTokenAddress: token.id,
-      amount: "100000000000000000",
-      fromAddress: arbiTokenEaterAddress,
-      slippage: 1,
-      disableEstimate: false,
-      allowPartialFill: false,
-    };
+    try {
+      console.log("Token " + token.name + " processing");
+      const swapParams = {
+        fromTokenAddress: weth,
+        toTokenAddress: token.id,
+        amount: amountPerPool,
+        fromAddress: arbiTokenEaterAddress,
+        slippage: 1,
+        disableEstimate: false,
+        allowPartialFill: false,
+      };
 
-    const swapTransaction = await buildTxForSwap(swapParams);
+      const swapTransaction = await buildTxForSwap(swapParams);
 
-    callData.push(swapTransaction);
-    tokenId.push(token.id);
-    value = JSBI.add(amountPerPool, value);
+      callData.push(swapTransaction);
+      tokenId.push(token.id);
+      value = JSBI.add(amountPerPool, value);
+    } catch (error) {
+      console.log("Token " + token.name + " failed");
+      console.log(error);
+    }
   }
 
   return [value, tokenId, callData];
