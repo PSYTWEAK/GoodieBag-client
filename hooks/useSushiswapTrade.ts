@@ -7,14 +7,12 @@ let callData: any = [];
 let tokenId: any = [];
 let value = JSBI.BigInt(0);
 
-export default async function useSushiswapTrade(provider: any, tokens: any, slippage: number, amountIn: BigNumber) {
+export default async function useSushiswapTrade(provider: any, tokens: any, slippage: number, totalAmountIn: BigNumber) {
   const chainId = provider._network.chainId;
 
+  const amountPerTrade = amountInPerTrade(totalAmountIn, tokens);
+
   const apiBaseUrl = "https://api.1inch.io/v4.0/" + chainId;
-
-  const amountInBN = JSBI.BigInt(amountIn.toString());
-
-  const amountPerPool = JSBI.divide(amountInBN, JSBI.BigInt(tokens.length));
 
   function apiRequestUrl(methodName: any, queryParams: any) {
     return apiBaseUrl + methodName + "?" + new URLSearchParams(queryParams).toString();
@@ -35,7 +33,7 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
       const swapParams = {
         fromTokenAddress: weth,
         toTokenAddress: token.id,
-        amount: amountPerPool,
+        amount: amountPerTrade,
         fromAddress: arbiTokenEaterAddress,
         slippage: 1,
         disableEstimate: false,
@@ -46,7 +44,7 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
 
       callData.push(swapTransaction);
       tokenId.push(token.id);
-      value = JSBI.add(amountPerPool, value);
+      value = JSBI.add(amountPerTrade, value);
     } catch (error) {
       console.log("Token " + token.name + " failed");
       console.log(error);
@@ -54,4 +52,9 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
   }
 
   return [value, tokenId, callData];
+}
+function amountInPerTrade(totalAmountIn: any, tokens: any) {
+  const totalAmountInBN = JSBI.BigInt(totalAmountIn.toString());
+  const amountPerTrade = JSBI.divide(totalAmountInBN, JSBI.BigInt(tokens.length));
+  return amountPerTrade;
 }

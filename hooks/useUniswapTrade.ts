@@ -9,22 +9,22 @@ let callData: any = [];
 let tokenId: any = [];
 let value = JSBI.BigInt(0);
 
-function wethInputdata(provider: any, amountIn: BigNumber, tokens: any) {
+function wethInputdata(provider: any, totalAmountIn: BigNumber, tokens: any) {
   const WETH = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
 
-  const amountInBN = JSBI.BigInt(amountIn.toString());
+  const totalAmountInBN = JSBI.BigInt(totalAmountIn.toString());
 
-  const amountPerTrade = JSBI.divide(amountInBN, JSBI.BigInt(tokens.length));
+  const amountPerTrade = JSBI.divide(totalAmountInBN, JSBI.BigInt(tokens.length));
 
   const wethAmount = CurrencyAmount.fromRawAmount(WETH, JSBI.BigInt(amountPerTrade.toString()));
 
   return { wethAmount, amountPerTrade };
 }
 
-export default async function useUniswapTrade(provider: any, tokens: any, slippage: number, amountIn: BigNumber) {
+export default async function useUniswapTrade(provider: any, tokens: any, slippage: number, totalAmountIn: BigNumber) {
   const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
 
-  const { wethAmount, amountPerTrade } = wethInputdata(provider, amountIn, tokens);
+  const { wethAmount, amountPerTrade } = wethInputdata(provider, totalAmountIn, tokens);
 
   const percentSlippage = new Percent(slippage, 100);
 
