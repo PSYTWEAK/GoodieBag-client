@@ -1,19 +1,14 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useUniswapSubgraph from "../subgraphQuerys/useUniswapSubgraph";
+import useUniswapSubgraph from "../../subgraphs/useUniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from "./globals";
 import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
 
 const query = `
 {
-  pools(first: 300 orderBy:createdAtTimestamp orderDirection:desc) {
-createdAtTimestamp
+  pairs(first: 30 orderBy:createdAtTimestamp orderDirection:desc) {
       volumeUSD
-  
        id
-      liquidity
-      feeTier
-
         token0 {
           id
           name
@@ -25,9 +20,9 @@ createdAtTimestamp
         symbol
         
       }
-
+  }
 }
-}`;
+`;
 
 export default async function useMostRecent() {
   const result = await useUniswapSubgraph(query);
@@ -51,7 +46,7 @@ function format(pools: any): any {
       name: pools[i].token0.id != weth ? pools[i].token1.name : pools[i].token0.name,
       symbol: pools[i].token0.id != weth ? pools[i].token1.symbol : pools[i].token0.name,
       volumeUSD: pools[i].volumeUSD,
-      stratergySpecificDataDes: `Added to Uniswap at`,
+      stratergySpecificDataDes: `Added to DEX at`,
       stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
     };
 
