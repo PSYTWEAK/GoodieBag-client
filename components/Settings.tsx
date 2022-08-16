@@ -2,6 +2,7 @@ import React from "react";
 import { BackToTokenList } from "./BackToTokenList";
 import { SelectTokenListLength } from "./SelectTokenListLength";
 import { SlippageInput } from "./SlippageInput";
+import { DexCheckList } from "./DexChecklist";
 export function Settings({
   setSettingsActive,
   tokensLength,
@@ -17,9 +18,10 @@ export function Settings({
 }) {
   return (
     <>
+      {" "}
       <BackToTokenList setSettingsActive={setSettingsActive} />
-      <SelectTokenListLength tokensLength={tokensLength} setTokensLength={setTokensLength} />
-      <SlippageInput slippage={slippage} setSlippage={setSlippage} />
+      <DexCheckList />
+      <SelectTokenListLength tokensLength={tokensLength} setTokensLength={setTokensLength} /> <SlippageInput slippage={slippage} setSlippage={setSlippage} />
     </>
   );
 }

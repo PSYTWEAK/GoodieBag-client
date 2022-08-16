@@ -1,6 +1,7 @@
 // globals
 
 export const statergys = [
+  "Custom",
   "Uniswap - Tokens most recently added",
   "Uniswap - Randomly selected tokens with minimum $100 volume",
   "Uniswap - Randomly selected tokens with $0 volume",
