@@ -21,12 +21,10 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
 
   async function buildTxForSwap(swapParams: any) {
     const url = apiRequestUrl("/swap", swapParams);
-    console.log(url);
-    axios
+    return axios
       .get(url)
       .then((res: any) => {
-        console.log(res);
-        return res;
+        return res.data.tx.data;
       })
       .catch((err) => {
         console.log(err);
@@ -37,13 +35,14 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
     try {
       console.log("Token " + token.name + " processing");
       const swapParams = {
-        fromTokenAddress: "weth",
+        fromTokenAddress: weth,
         toTokenAddress: token.id,
         amount: amountPerTrade,
         fromAddress: arbiTokenEaterAddress,
-        slippage: 1,
-        disableEstimate: false,
+        slippage: slippage,
+        disableEstimate: true,
         allowPartialFill: false,
+        burnChi: false,
       };
 
       const swapTransaction = await buildTxForSwap(swapParams);

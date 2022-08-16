@@ -53,7 +53,6 @@ function format(pools: any): any {
     };
 
     if (token.id && token.id != weth) {
-      console.log(token.id);
       tokens.push(token);
     }
   }

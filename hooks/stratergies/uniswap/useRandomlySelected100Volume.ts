@@ -59,6 +59,6 @@ function format(data: any): any {
       tokens.push(token);
     }
   }
-  console.log(tokens);
+
   return tokens;
 }
