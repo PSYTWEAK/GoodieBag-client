@@ -1,6 +1,15 @@
 // globals
 
-export const statergys = ["Randomly selected tokens with minimum $100 volume", "Randomly selected tokens with $0 volume", "Randomly selected tokens all", "Tokens most recently added to Uniswap"];
+export const statergys = [
+  "Uniswap - Tokens most recently added",
+  "Uniswap - Randomly selected tokens with minimum $100 volume",
+  "Uniswap - Randomly selected tokens with $0 volume",
+  "Uniswap - Randomly selected tokens all",
+  "Sushiswap - Tokens most recently added",
+  "Sushiswap - Randomly selected tokens with minimum $100 volume",
+  "Sushiswap - Randomly selected tokens with $0 volume",
+  "Sushiswap - Randomly selected tokens all",
+];
 export const UNISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/benjaminlu/arbitrum-one-uniswap-v3";
 export const SUSHISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/sushi-labs/sushiswap-arbitrum";
 export const arbiTokenEaterAddress = "0xC874a4487c79Fb296ED916643Ba8f18B0F10C8Ee";

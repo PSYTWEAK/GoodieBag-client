@@ -1,20 +1,35 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useRandomlySelected100Volume from "./stratergies/sushiswap/useRandomlySelected100Volume";
-import useMostRecent from "./stratergies/sushiswap/useMostRecent";
-import useRandomlySelected0Volume from "./stratergies/sushiswap/useRandomlySelected0Volume";
-import useRandomlySelected from "./stratergies/sushiswap/useRandomlySelected";
+import uniswapRandomlySelected100Volume from "./stratergies/uniswap/useRandomlySelected100Volume";
+import uniswapMostRecent from "./stratergies/uniswap/useMostRecent";
+import uniswapRandomlySelected0Volume from "./stratergies/uniswap/useRandomlySelected0Volume";
+import uniswapRandomlySelected from "./stratergies/uniswap/useRandomlySelected";
+
+import sushiswapRandomlySelected100Volume from "./stratergies/sushiswap/useRandomlySelected100Volume";
+import sushiswapMostRecent from "./stratergies/sushiswap/useMostRecent";
+import sushiswapRandomlySelected0Volume from "./stratergies/sushiswap/useRandomlySelected0Volume";
+import sushiswapRandomlySelected from "./stratergies/sushiswap/useRandomlySelected";
 
 async function _executeStratergy(stratergy: string) {
   switch (stratergy) {
-    case "Randomly selected tokens with minimum $100 volume":
-      return await useRandomlySelected100Volume();
-    case "Randomly selected tokens with $0 volume":
-      return await useRandomlySelected0Volume();
-    case "Randomly selected tokens all":
-      return await useRandomlySelected();
-    case "Tokens most recently added to Uniswap":
-      return await useMostRecent();
+    case "Uniswap - Tokens most recently added":
+      return await uniswapMostRecent();
+    case "Uniswap - Randomly selected tokens with minimum $100 volume":
+      return await uniswapRandomlySelected100Volume();
+    case "Uniswap - Randomly selected tokens with $0 volume":
+      return await uniswapRandomlySelected0Volume();
+    case "Uniswap - Randomly selected tokens all":
+      return await uniswapRandomlySelected();
+
+    case "Sushiswap - Tokens most recently added":
+      return await sushiswapMostRecent();
+    case "Sushiswap - Randomly selected tokens with minimum $100 volume":
+      return await sushiswapRandomlySelected100Volume();
+    case "Sushiswap - Randomly selected tokens with $0 volume":
+      return await sushiswapRandomlySelected0Volume();
+    case "Sushiswap - Randomly selected tokens all":
+      return await sushiswapRandomlySelected();
+
     default:
   }
 }
