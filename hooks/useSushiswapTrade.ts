@@ -1,7 +1,8 @@
-import fetch from "node-fetch";
+import axios from "axios";
 import JSBI from "jsbi";
 import { weth } from "./stratergies/globals";
 import { arbiTokenEaterAddress } from "../globals";
+import { BigNumber } from "ethers";
 
 let callData: any = [];
 let tokenId: any = [];
@@ -20,18 +21,23 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
 
   async function buildTxForSwap(swapParams: any) {
     const url = apiRequestUrl("/swap", swapParams);
-
-    return fetch(url)
-      .then((res: any) => res.json())
-      .then((res: any) => res.tx);
+    console.log(url);
+    axios
+      .get(url)
+      .then((res: any) => {
+        console.log(res);
+        return res;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
     try {
       console.log("Token " + token.name + " processing");
       const swapParams = {
-        fromTokenAddress: weth,
+        fromTokenAddress: "weth",
         toTokenAddress: token.id,
         amount: amountPerTrade,
         fromAddress: arbiTokenEaterAddress,
@@ -53,6 +59,7 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
 
   return [value, tokenId, callData];
 }
+
 function amountInPerTrade(totalAmountIn: any, tokens: any) {
   const totalAmountInBN = JSBI.BigInt(totalAmountIn.toString());
   const amountPerTrade = JSBI.divide(totalAmountInBN, JSBI.BigInt(tokens.length));

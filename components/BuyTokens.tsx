@@ -6,6 +6,7 @@ import TokenEaterABI from "../contracts/TokenEaterABI.json";
 import { arbiTokenEaterAddress, arbiUniswapRouterAddress } from "../globals";
 import { ethers } from "ethers";
 import { setRevalidateHeaders } from "next/dist/server/send-payload";
+import useSushiswapTrade from "../hooks/useSushiswapTrade";
 export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: any; loading: any; slippage: number; amountETHIn: any }) {
   const provider = useProvider();
 
@@ -19,7 +20,7 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
 
   const handleClick = async (provider: any, tokens: any, amountETHIn: number) => {
     if (tokens) {
-      let [value, tokenId, callData] = await useUniswapTrade(provider, tokens, slippage, ethers.utils.parseEther(amountETHIn.toString()));
+      let [value, tokenId, callData] = await useSushiswapTrade(provider, tokens, slippage, ethers.utils.parseEther(amountETHIn.toString()));
       await write({
         args: [tokenId, callData],
         overrides: {
