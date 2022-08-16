@@ -2,7 +2,7 @@ import { createClient } from "urql";
 
 import { SUSHISWAP_SUBGRAPH } from "../../globals";
 
-export default async function useUniswapSubgraph(query: string) {
+export default async function useSushiswapSubgraph(query: string) {
   try {
     const client = createClient({
       url: SUSHISWAP_SUBGRAPH,

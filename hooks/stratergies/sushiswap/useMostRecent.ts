@@ -1,12 +1,13 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
 import useUniswapSubgraph from "../../subgraphs/useUniswapSubgraph";
-import { blueChips, lowVolume, weth, stables } from "./globals";
-import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
+import { blueChips, lowVolume, weth, stables } from ".././globals";
+import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens } from ".././filters";
+import useSushiswapSubgraph from "../../subgraphs/useSushiswapSubgraph";
 
 const query = `
 {
-  pairs(first: 30 orderBy:createdAtTimestamp orderDirection:desc) {
+  pairs(first: 50 orderBy:createdAtTimestamp orderDirection:desc) {
       volumeUSD
        id
         token0 {
@@ -25,9 +26,9 @@ const query = `
 `;
 
 export default async function useMostRecent() {
-  const result = await useUniswapSubgraph(query);
+  const result = await useSushiswapSubgraph(query);
 
-  let pools: any = result.data.pools;
+  let pools: any = result.data.pairs;
 
   pools = format(pools);
   pools = removeBlueChips(pools);

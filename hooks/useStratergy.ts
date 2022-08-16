@@ -1,9 +1,9 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useRandomlySelected100Volume from "./stratergies/useRandomlySelected100Volume";
-import useMostRecent from "./stratergies/useMostRecent";
-import useRandomlySelected0Volume from "./stratergies/useRandomlySelected0Volume";
-import useRandomlySelected from "./stratergies/useRandomlySelected";
+import useRandomlySelected100Volume from "./stratergies/sushiswap/useRandomlySelected100Volume";
+import useMostRecent from "./stratergies/sushiswap/useMostRecent";
+import useRandomlySelected0Volume from "./stratergies/sushiswap/useRandomlySelected0Volume";
+import useRandomlySelected from "./stratergies/sushiswap/useRandomlySelected";
 
 async function _executeStratergy(stratergy: string) {
   switch (stratergy) {

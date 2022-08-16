@@ -1,12 +1,12 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
 import useUniswapSubgraph from "../../subgraphs/useUniswapSubgraph";
-import { blueChips, lowVolume, weth, stables } from "./globals";
-import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens } from "./filters";
+import { blueChips, lowVolume, weth, stables } from ".././globals";
+import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens } from ".././filters";
 
 const query = `
 {
-  pools(first: 300 orderBy:createdAtTimestamp orderDirection:desc) {
+  pools(first: 100 orderBy:createdAtTimestamp orderDirection:desc) {
 createdAtTimestamp
       volumeUSD
   

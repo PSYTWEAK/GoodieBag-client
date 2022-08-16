@@ -1,8 +1,9 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
 import useUniswapSubgraph from "../../subgraphs/useUniswapSubgraph";
-import { blueChips, lowVolume, weth, stables } from "./globals";
-import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from "./filters";
+import { blueChips, lowVolume, weth, stables } from ".././globals";
+import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from ".././filters";
+import useSushiswapSubgraph from "../../subgraphs/useSushiswapSubgraph";
 
 var start: any = new Date();
 start.setUTCHours(0, 0, 0, 0);
@@ -20,8 +21,8 @@ const query = `
     }
   }
   `;
-export default async function useRandomlySelected() {
-  const result = await useUniswapSubgraph(query);
+export default async function useRandomlySelected0Volume() {
+  const result = await useSushiswapSubgraph(query);
 
   let tokens: any = result.data;
 

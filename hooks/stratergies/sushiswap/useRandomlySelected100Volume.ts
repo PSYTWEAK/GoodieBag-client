@@ -1,8 +1,8 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useUniswapSubgraph from "../../subgraphs/useUniswapSubgraph";
-import { blueChips, lowVolume, weth, stables } from "./globals";
-import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from "./filters";
+import useSushiswapSubgraph from "../../subgraphs/useSushiswapSubgraph";
+import { blueChips, lowVolume, weth, stables } from ".././globals";
+import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from ".././filters";
 import { removeLowVolume } from "../filters";
 
 var start: any = new Date();
@@ -11,7 +11,7 @@ start.setUTCHours(0, 0, 0, 0);
 const query = `
   query 
   {
-    tokenDaySnapshots(first:1000 where: {date: ${start / 1000} } orderBy: volumeUSD orderDirection:desc) {
+    tokenDaySnapshots(first:100 where: {date: ${start / 1000} } orderBy: volumeUSD orderDirection:desc) {
       token{
         id
         name
@@ -21,8 +21,8 @@ const query = `
     }
   }
   `;
-export default async function useRandomlySelected() {
-  const result = await useUniswapSubgraph(query);
+export default async function useRandomlySelected100Volume() {
+  const result = await useSushiswapSubgraph(query);
 
   let tokens: any = result.data;
 

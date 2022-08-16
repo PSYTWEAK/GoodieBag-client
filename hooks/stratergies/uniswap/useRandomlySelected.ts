@@ -1,8 +1,8 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
 import useUniswapSubgraph from "../../subgraphs/useUniswapSubgraph";
-import { blueChips, lowVolume, weth, stables } from "./globals";
-import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from "./filters";
+import { blueChips, lowVolume, weth, stables } from ".././globals";
+import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from ".././filters";
 
 var start: any = new Date();
 start.setUTCHours(0, 0, 0, 0);
