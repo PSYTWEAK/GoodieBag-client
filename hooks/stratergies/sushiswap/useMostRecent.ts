@@ -43,7 +43,6 @@ export default async function useMostRecent() {
 function format(pools: any): any {
   let tokens = [];
   for (let i = 0; i < pools.length; i++) {
-    console.log(pools[i]);
     let token = {
       id: pools[i].token0.id != weth ? pools[i].token1.id : pools[i].token0.id,
       name: pools[i].token0.id != weth ? pools[i].token1.name : pools[i].token0.name,

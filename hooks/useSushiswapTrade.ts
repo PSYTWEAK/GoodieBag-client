@@ -4,11 +4,10 @@ import { weth } from "./stratergies/globals";
 import { arbiTokenEaterAddress } from "../globals";
 import { BigNumber } from "ethers";
 
-let callData: any = [];
-let tokenId: any = [];
-let value = JSBI.BigInt(0);
-
 export default async function useSushiswapTrade(provider: any, tokens: any, slippage: number, totalAmountIn: BigNumber) {
+  let callData: any = [];
+  let tokenId: any = [];
+  let value = JSBI.BigInt(0);
   const chainId = provider._network.chainId;
 
   const amountPerTrade = amountInPerTrade(totalAmountIn, tokens);
@@ -24,6 +23,7 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
     return axios
       .get(url)
       .then((res: any) => {
+        console.log(res);
         return res.data.tx.data;
       })
       .catch((err) => {

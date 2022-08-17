@@ -2,39 +2,24 @@
   {
     "inputs": [
       {
+        "internalType": "address",
+        "name": "router",
+        "type": "address"
+      },
+      {
         "internalType": "address[]",
-        "name": "token",
+        "name": "tokens",
         "type": "address[]"
       },
       {
         "internalType": "bytes[]",
-        "name": "swapCalldata",
+        "name": "swapCalldatas",
         "type": "bytes[]"
       }
     ],
-    "name": "eatTokensWithETH",
+    "name": "multiBuy",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "init",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "router",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
