@@ -2,8 +2,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-
 import Logo from "../components/Logo";
+import Crown from "../components/leaderboard/Crown";
 
 const LeaderBoard: NextPage = () => {
   return (
@@ -18,7 +18,7 @@ const LeaderBoard: NextPage = () => {
       </header>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          <Logo />
+          <Crown />
         </h1>
         <div className={styles.card}></div>
       </main>
