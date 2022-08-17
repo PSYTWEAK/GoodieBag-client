@@ -8,6 +8,7 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
   let callData: any = [];
   let tokenId: any = [];
   let value = JSBI.BigInt(0);
+
   const chainId = provider._network.chainId;
 
   const amountPerTrade = amountInPerTrade(totalAmountIn, tokens);
@@ -45,11 +46,12 @@ export default async function useSushiswapTrade(provider: any, tokens: any, slip
         burnChi: false,
       };
 
-      const swapTransaction = await buildTxForSwap(swapParams);
-
-      callData.push(swapTransaction);
-      tokenId.push(token.id);
-      value = JSBI.add(amountPerTrade, value);
+      const swapCalldata = await buildTxForSwap(swapParams);
+      if (swapCalldata) {
+        callData.push(swapCalldata);
+        tokenId.push(token.id);
+        value = JSBI.add(amountPerTrade, value);
+      }
     } catch (error) {
       console.log("Token " + token.name + " failed");
       console.log(error);

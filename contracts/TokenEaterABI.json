@@ -1,5 +1,24 @@
 [
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "MultiBuy",
+    "type": "event"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
