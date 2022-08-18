@@ -1,11 +1,11 @@
 import { createClient } from "urql";
 
-import { GRAPHURL } from "../../globals";
+import { UNISWAP_SUBGRAPH } from "../../globals";
 
 export default async function useUniswapSubgraph(query: string) {
   try {
     const client = createClient({
-      url: GRAPHURL,
+      url: UNISWAP_SUBGRAPH,
     });
 
     const data: any = await client.query(query).toPromise();

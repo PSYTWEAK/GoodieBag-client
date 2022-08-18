@@ -33,7 +33,6 @@ export default async function useMostRecent() {
   const result = await useUniswapSubgraph(query);
 
   let pools: any = result.data.pools;
-
   pools = format(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
