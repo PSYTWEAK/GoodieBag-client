@@ -1,6 +1,5 @@
 import { CardHeader } from "./../components/CardHeader";
 import { Settings } from "./../components/Settings";
-import { BackToSelectButton } from "./../components/BackToSelectButton";
 import { SelectStratergy } from "./../components/SelectStratergy";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
@@ -9,7 +8,7 @@ import styles from "../styles/Home.module.css";
 import { useState, useEffect } from "react";
 import useStratergy from "../hooks/useStratergy";
 import { EtherInput } from "../components/EtherInput/EtherInput";
-import TokensReadyToBuy from "../components/TokensReadyToBuy";
+import Tokens from "../components/Tokens";
 import { BuyTokens } from "../components/BuyTokens";
 import { SettingsButton } from "../components/SettingsButton";
 import Logo from "../components/Logo";
@@ -20,6 +19,7 @@ const Home: NextPage = () => {
   const [tokensLength, setTokensLength] = useState(10);
   const [slippage, setSlippage] = useState(10);
   const [stratResult, loading] = useStratergy(stratergy);
+  const [config, setConfig] = useState({ uniswap: true, sushiswap: true });
   const [tokens, setTokens] = useTokens(stratergy, stratResult, tokensLength);
   const [amountETHIn, setAmountETHIn] = useState(null);
   const [settingsActive, setSettingsActive] = useState(false);
@@ -50,7 +50,7 @@ const Home: NextPage = () => {
                 <>
                   <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
                   <BuyTokens tokens={tokens} loading={loading} slippage={slippage} amountETHIn={amountETHIn} />
-                  <TokensReadyToBuy tokens={tokens} loading={loading} setTokens={setTokens} />
+                  <Tokens tokens={tokens} loading={loading} setTokens={setTokens} />
                 </>
               )}
             </>
@@ -60,7 +60,17 @@ const Home: NextPage = () => {
               <SelectStratergy stratergy={stratergy} setStratergy={setStratergy} />
             </>
           )}
-          {settingsActive && <Settings setSettingsActive={setSettingsActive} tokensLength={tokensLength} setTokensLength={setTokensLength} slippage={slippage} setSlippage={setSlippage} />}
+          {settingsActive && (
+            <Settings
+              setSettingsActive={setSettingsActive}
+              tokensLength={tokensLength}
+              setTokensLength={setTokensLength}
+              slippage={slippage}
+              setSlippage={setSlippage}
+              config={config}
+              setConfig={setConfig}
+            />
+          )}
         </div>
       </main>
 
