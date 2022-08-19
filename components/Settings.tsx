@@ -18,8 +18,6 @@ export function Settings({
 }) {
   return (
     <>
-      {" "}
-      <BackToTokenList setSettingsActive={setSettingsActive} />
       <DexCheckList />
       <SelectTokenListLength tokensLength={tokensLength} setTokensLength={setTokensLength} /> <SlippageInput slippage={slippage} setSlippage={setSlippage} />
     </>

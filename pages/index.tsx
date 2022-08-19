@@ -1,3 +1,4 @@
+import { CardHeader } from "./../components/CardHeader";
 import { Settings } from "./../components/Settings";
 import { BackToSelectButton } from "./../components/BackToSelectButton";
 import { SelectStratergy } from "./../components/SelectStratergy";
@@ -16,16 +17,11 @@ import useTokens from "../hooks/useTokens";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
-
-  const [slippage, setSlippage] = useState(10);
-
-  const [stratResult, loading] = useStratergy(stratergy);
-
   const [tokensLength, setTokensLength] = useState(10);
+  const [slippage, setSlippage] = useState(10);
+  const [stratResult, loading] = useStratergy(stratergy);
   const [tokens, setTokens] = useTokens(stratergy, stratResult, tokensLength);
-
   const [amountETHIn, setAmountETHIn] = useState(null);
-
   const [settingsActive, setSettingsActive] = useState(false);
 
   return (
@@ -45,28 +41,26 @@ const Home: NextPage = () => {
           <Logo />
         </h1>
         <div className={styles.card}>
+          <CardHeader stratergy={stratergy} setStratergy={setStratergy} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
+
           {stratergy && (
             <>
               {" "}
-              {!settingsActive && (
+              {!settingsActive && !settingsActive && (
                 <>
-                  <div className={styles.cardHeader}>
-                    <BackToSelectButton setStratergy={setStratergy} />
-                    <SettingsButton setSettingsActive={setSettingsActive} />
-                  </div>
                   <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
                   <BuyTokens tokens={tokens} loading={loading} slippage={slippage} amountETHIn={amountETHIn} />
                   <TokensReadyToBuy tokens={tokens} loading={loading} setTokens={setTokens} />
                 </>
               )}
-              {settingsActive && <Settings setSettingsActive={setSettingsActive} tokensLength={tokensLength} setTokensLength={setTokensLength} slippage={slippage} setSlippage={setSlippage} />}
             </>
           )}
-          {!stratergy && (
+          {!stratergy && !settingsActive && (
             <>
               <SelectStratergy stratergy={stratergy} setStratergy={setStratergy} />
             </>
           )}
+          {settingsActive && <Settings setSettingsActive={setSettingsActive} tokensLength={tokensLength} setTokensLength={setTokensLength} slippage={slippage} setSlippage={setSlippage} />}
         </div>
       </main>
 
