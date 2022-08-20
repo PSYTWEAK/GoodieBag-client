@@ -10,39 +10,40 @@ import sushiswapMostRecent from "./stratergies/sushiswap/useMostRecent";
 import sushiswapRandomlySelected0Volume from "./stratergies/sushiswap/useRandomlySelected0Volume";
 import sushiswapRandomlySelected from "./stratergies/sushiswap/useRandomlySelected";
 
-async function _executeStratergy(stratergy: string) {
+async function findStratergy(stratergy: string, config: any) {
   switch (stratergy) {
-    case "Uniswap - Tokens most recently added":
-      return await uniswapMostRecent();
-    case "Uniswap - Randomly selected tokens with minimum $100 volume":
-      return await uniswapRandomlySelected100Volume();
-    case "Uniswap - Randomly selected tokens with $0 volume":
-      return await uniswapRandomlySelected0Volume();
-    case "Uniswap - Randomly selected tokens all":
-      return await uniswapRandomlySelected();
-
-    case "Sushiswap - Tokens most recently added":
-      return await sushiswapMostRecent();
-    case "Sushiswap - Randomly selected tokens with minimum $100 volume":
-      return await sushiswapRandomlySelected100Volume();
-    case "Sushiswap - Randomly selected tokens with $0 volume":
-      return await sushiswapRandomlySelected0Volume();
-    case "Sushiswap - Randomly selected tokens all":
-      return await sushiswapRandomlySelected();
-
+    case "Tokens most recently added":
+      return await executeStratery(config, uniswapMostRecent, sushiswapMostRecent);
+    case "Randomly selected tokens with minimum $100 volume":
+      return await executeStratery(config, uniswapRandomlySelected100Volume, sushiswapRandomlySelected100Volume);
+    case "Randomly selected tokens with $0 volume":
+      return await executeStratery(config, uniswapRandomlySelected0Volume, sushiswapRandomlySelected0Volume);
+    case "Randomly selected tokens all":
+      return await executeStratery(config, uniswapRandomlySelected, sushiswapRandomlySelected);
     default:
   }
 }
-export default function useStratergy(stratergy: string) {
+async function executeStratery(config: any, uniswapFunction: Function, sushiswapFunction: Function) {
+  let tokens: any;
+  if (config.uniswap) {
+    tokens.push(await uniswapFunction());
+  }
+  if (config.sushiswap) {
+    tokens.push(await sushiswapFunction());
+  }
+  return tokens;
+}
+
+export default function useStratergy(stratergy: string, config: any) {
   const [stratResult, setStratResult] = useState([]);
   const [loading, setLoading] = useState("false");
 
   useEffect(() => {
-    executeStratergy();
-    async function executeStratergy() {
+    _stratergy();
+    async function _stratergy() {
       try {
         setLoading("true");
-        const _result: any = await _executeStratergy(stratergy);
+        const _result: any = await findStratergy(stratergy, config);
         setStratResult(_result);
       } catch (error) {
         setLoading("null");
