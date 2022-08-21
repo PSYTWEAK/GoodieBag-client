@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import useUniswapSubgraph from "../../subgraphs/useUniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from ".././globals";
 import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens } from ".././filters";
+import useSushiswapSubgraph from "../../subgraphs/useSushiswapSubgraph";
 
-const query = `
+const uniQuery = `
 {
   pools(first: 100 orderBy:createdAtTimestamp orderDirection:desc) {
 createdAtTimestamp
@@ -29,17 +30,52 @@ createdAtTimestamp
 }
 }`;
 
-export default async function useMostRecent() {
-  const result = await useUniswapSubgraph(query);
+const sushiQuery = `
+{
+  pairs(first: 50 orderBy:createdAtTimestamp orderDirection:desc) {
+      volumeUSD
+       id
+       createdAtTimestamp
+        token0 {
+          id
+          name
+          symbol
+        }
+     token1{
+        id
+        name
+        symbol
+        
+      }
+  }
+}
+`;
+
+export default async function useMostRecent(config: any) {
+  const result = await querySubgraphs(config);
 
   let pools: any = result.data.pools;
-  pools = format(pools);
+  pools = removeDuplicates(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
   pools = removeSignOfDerivInTokenName(pools);
-  pools = removeDuplicates(pools);
 
   return pools;
+}
+
+async function querySubgraphs(config: any) {
+  let tokens: any;
+  if (config.uniswap) {
+    let result = await useUniswapSubgraph(uniQuery);
+    result = format(result.data.pools);
+    tokens.push(result);
+  }
+  if (config.sushiswap) {
+    let result = await useSushiswapSubgraph(sushiQuery);
+    result = format(result.data.pairs);
+    tokens.push(result);
+  }
+  return tokens;
 }
 
 function format(pools: any): any {
