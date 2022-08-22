@@ -10,6 +10,7 @@ async function findStratergy(stratergy: string, config: any) {
     case "Tokens most recently added":
       return await MostRecent(config);
     case "Randomly selected tokens with minimum $100 volume":
+      console.log("Randomly selected tokens with minimum $100 volume");
       return await RandomlySelected100Volume(config);
     case "Randomly selected tokens with $0 volume":
       return await RandomlySelected0Volume(config);

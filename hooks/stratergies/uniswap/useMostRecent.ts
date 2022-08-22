@@ -64,16 +64,29 @@ export default async function useMostRecent(config: any) {
 }
 
 async function querySubgraphs(config: any) {
-  let tokens: any;
+  let tokens: any = [];
+
   if (config.uniswap) {
-    let result = await useUniswapSubgraph(uniQuery);
-    result = format(result.data.pools);
-    tokens.push(result);
+    try {
+      let result = await useUniswapSubgraph(uniQuery);
+
+      result = format(result.data);
+
+      result ? tokens.push(result) : null;
+    } catch (err) {
+      console.log(err);
+    }
   }
   if (config.sushiswap) {
-    let result = await useSushiswapSubgraph(sushiQuery);
-    result = format(result.data.pairs);
-    tokens.push(result);
+    try {
+      let result = await useSushiswapSubgraph(sushiQuery);
+
+      result = format(result.data);
+
+      result ? tokens.push(result) : null;
+    } catch (err) {
+      console.log(err);
+    }
   }
   return tokens;
 }

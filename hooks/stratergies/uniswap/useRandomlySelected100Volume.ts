@@ -39,32 +39,55 @@ const sushiQuery = `
   }
   `;
 export default async function useRandomlySelected(config: any) {
+  console.log("here");
   const result = await querySubgraphs(config);
-
+  console.log(result);
+  console.log("here");
   let tokens: any = result.data;
-
+  console.log(tokens);
   tokens = removeBlueChips(tokens);
+  console.log(tokens);
   tokens = removeStables(tokens);
+  console.log(tokens);
   tokens = removeSignOfDerivInTokenName(tokens);
+  console.log(tokens);
   tokens = removeDuplicates(tokens);
+  console.log(tokens);
   tokens = removeLowVolume(tokens);
+  console.log(tokens);
   tokens = shuffleTokens(tokens);
+  console.log(tokens);
 
   return tokens;
 }
 
 async function querySubgraphs(config: any) {
-  let tokens: any;
+  let tokens: any = [];
+
   if (config.uniswap) {
-    let result = await useUniswapSubgraph(uniQuery);
-    result = formatUni(result.data);
-    tokens.push(result);
+    try {
+      let result = await useUniswapSubgraph(uniQuery);
+
+      result = formatUni(result.data);
+
+      result ? tokens.push(result) : null;
+    } catch (err) {
+      console.log(err);
+    }
   }
   if (config.sushiswap) {
-    let result = await useSushiswapSubgraph(sushiQuery);
-    result = formatSushi(result.data);
-    tokens.push(result);
+    try {
+      let result = await useSushiswapSubgraph(sushiQuery);
+
+      result = formatSushi(result.data);
+
+      result ? tokens.push(result) : null;
+    } catch (err) {
+      console.log(err);
+    }
   }
+  console.log("tokens");
+  console.log(tokens);
   return tokens;
 }
 
