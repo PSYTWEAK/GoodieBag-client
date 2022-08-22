@@ -18,7 +18,6 @@ const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
   const [tokensLength, setTokensLength] = useState(10);
   const [slippage, setSlippage] = useState(10);
-
   const [config, setConfig] = useState({ uniswap: true, sushiswap: true });
   const [stratResult, loading] = useStratergy(stratergy, config);
   const [tokens, setTokens] = useTokens(stratergy, stratResult, tokensLength);

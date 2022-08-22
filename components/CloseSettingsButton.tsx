@@ -2,7 +2,7 @@ import React from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 import { IconButton } from "@mui/material";
-export function CloseSettings({ setSettingsActive }: { setSettingsActive: any }) {
+export function CloseSettingsButton({ setSettingsActive }: { setSettingsActive: any }) {
   return (
     <IconButton aria-label="back" onClick={() => setSettingsActive(false)}>
       <ArrowBackIosIcon />
