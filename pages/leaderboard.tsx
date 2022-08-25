@@ -4,8 +4,10 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Logo from "../components/Logo";
 import Crown from "../components/leaderboard/Crown";
+import Users from "../components/leaderboard/Users";
 
 const LeaderBoard: NextPage = () => {
+  const [result, loading] = useLeaderboard(stratergy, config);
   return (
     <div className={styles.container}>
       <Head>
@@ -20,7 +22,9 @@ const LeaderBoard: NextPage = () => {
         <h1 className={styles.title}>
           <Crown />
         </h1>
-        <div className={styles.card}></div>
+        <div className={styles.card}>
+          <Users />
+        </div>
       </main>
 
       <footer className={styles.footer}></footer>
