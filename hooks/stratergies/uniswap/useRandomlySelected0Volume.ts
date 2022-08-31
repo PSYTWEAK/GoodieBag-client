@@ -40,7 +40,7 @@ const sushiQuery = `
 export default async function useRandomlySelected(config: any) {
   const result = await querySubgraphs(config);
 
-  let tokens: any = result.data;
+  let tokens: any = result;
 
   tokens = removeDuplicates(tokens);
   tokens = removeBlueChips(tokens);

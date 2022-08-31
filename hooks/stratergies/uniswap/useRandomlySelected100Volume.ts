@@ -39,25 +39,14 @@ const sushiQuery = `
   }
   `;
 export default async function useRandomlySelected(config: any) {
-  console.log("here");
   const result = await querySubgraphs(config);
-  console.log(result);
-  console.log("here");
-  let tokens: any = result.data;
-  console.log(tokens);
+  let tokens: any = result;
   tokens = removeBlueChips(tokens);
-  console.log(tokens);
   tokens = removeStables(tokens);
-  console.log(tokens);
   tokens = removeSignOfDerivInTokenName(tokens);
-  console.log(tokens);
   tokens = removeDuplicates(tokens);
-  console.log(tokens);
   tokens = removeLowVolume(tokens);
-  console.log(tokens);
   tokens = shuffleTokens(tokens);
-  console.log(tokens);
-
   return tokens;
 }
 
@@ -86,8 +75,6 @@ async function querySubgraphs(config: any) {
       console.log(err);
     }
   }
-  console.log("tokens");
-  console.log(tokens);
   return tokens;
 }
 

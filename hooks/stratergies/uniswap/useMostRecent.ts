@@ -54,7 +54,7 @@ const sushiQuery = `
 export default async function useMostRecent(config: any) {
   const result = await querySubgraphs(config);
 
-  let pools: any = result.data.pools;
+  let pools: any = result;
   pools = removeDuplicates(pools);
   pools = removeBlueChips(pools);
   pools = removeStables(pools);
@@ -114,6 +114,7 @@ function format(pools: any): any {
 
 function date(timestamp: number) {
   var date = new Date(timestamp * 1000);
+
   var formattedDate =
     ("0" + date.getDate()).slice(-2) + "/" + ("0" + (date.getMonth() + 1)).slice(-2) + "/" + date.getFullYear() + " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2);
   return formattedDate;
