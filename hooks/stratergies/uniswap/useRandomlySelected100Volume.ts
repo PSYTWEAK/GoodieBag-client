@@ -46,7 +46,6 @@ export default async function useRandomlySelected(config: any) {
   tokens = removeSignOfDerivInTokenName(tokens);
   tokens = removeDuplicates(tokens);
   tokens = removeLowVolume(tokens);
-  tokens = shuffleTokens(tokens);
   return tokens;
 }
 
@@ -56,10 +55,11 @@ async function querySubgraphs(config: any) {
   if (config.uniswap) {
     try {
       let result = await useUniswapSubgraph(uniQuery);
+      console.log(result);
 
       result = formatUni(result.data);
 
-      result ? tokens.push(result) : null;
+      result ? tokens.push(...result) : null;
     } catch (err) {
       console.log(err);
     }
@@ -67,14 +67,15 @@ async function querySubgraphs(config: any) {
   if (config.sushiswap) {
     try {
       let result = await useSushiswapSubgraph(sushiQuery);
-
+      console.log(result);
       result = formatSushi(result.data);
 
-      result ? tokens.push(result) : null;
+      result ? tokens.push(...result) : null;
     } catch (err) {
       console.log(err);
     }
   }
+  console.log(tokens);
   return tokens;
 }
 

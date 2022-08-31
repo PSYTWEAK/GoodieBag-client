@@ -61,7 +61,7 @@ async function querySubgraphs(config: any) {
 
       result = formatUni(result.data);
 
-      result ? tokens.push(result) : null;
+      result ? tokens.push(...result) : null;
     } catch (err) {
       console.log(err);
     }
@@ -72,7 +72,7 @@ async function querySubgraphs(config: any) {
 
       result = formatSushi(result.data);
 
-      result ? tokens.push(result) : null;
+      result ? tokens.push(...result) : null;
     } catch (err) {
       console.log(err);
     }

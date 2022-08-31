@@ -4,7 +4,7 @@ import styles from "../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { DeleteTokenButton } from "./DeleteTokenButton";
 
-export default function TokensReadyToBuy({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
+export default function Tokens({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
   const handleRemoveToken = (token: string) => {
     setTokens(tokens.filter((item: any) => item.id !== token));
   };
@@ -21,6 +21,7 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
     <>
       {stratergySpecificData(tokens[0].stratergySpecificDataDes)}
       {tokens.map((data: any, i: number) => {
+        console.log(data);
         try {
           return (
             <Grid item xs={8} width="max">
@@ -34,13 +35,17 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
             </Grid>
           );
         } catch (err) {
-          console.log("Couldn't show token " + i + err);
-          return <></>;
+          return error(i, err);
         }
       })}
     </>
   );
 };
+
+function error(i: number, err: any) {
+  console.log("Couldn't show token " + i + err);
+  return <></>;
+}
 
 function LoadingProcess({}) {
   return (
