@@ -21,7 +21,6 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
     <>
       {stratergySpecificData(tokens[0].stratergySpecificDataDes)}
       {tokens.map((data: any, i: number) => {
-        console.log(data);
         try {
           return (
             <Grid item xs={8} width="max">

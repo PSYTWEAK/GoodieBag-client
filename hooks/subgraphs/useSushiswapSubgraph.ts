@@ -9,6 +9,8 @@ export default async function useSushiswapSubgraph(query: string) {
     });
 
     const data: any = await client.query(query).toPromise();
+    console.log("subgraph");
+    console.log(data);
     return data;
   } catch (error) {
     console.log(error);

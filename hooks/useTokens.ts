@@ -5,7 +5,6 @@ export default function useTokens(stratergy: string, stratResult: any, tokensLen
 
   useEffect(() => {
     if (!!stratResult === true) {
-      console.log();
       setTokens(stratResult.slice(0, tokensLength));
     }
   }, [stratResult, tokensLength]);

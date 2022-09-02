@@ -57,16 +57,23 @@ async function querySubgraphs(config: any) {
       let result = await useUniswapSubgraph(uniQuery);
 
       result ? tokens.push(...formatUni(result.data)) : null;
+      console.log("UNI");
+      console.log(result);
     } catch (err) {
+      console.log("UNI");
       console.log(err);
     }
   }
   if (config.sushiswap) {
     try {
       let result = await useSushiswapSubgraph(sushiQuery);
-
+      console.log("Sushi");
+      console.log(result);
       result ? tokens.push(...formatSushi(result.data)) : null;
+      console.log("Sushi");
+      console.log(result);
     } catch (err) {
+      console.log("Sushi");
       console.log(err);
     }
   }

@@ -6,7 +6,7 @@ import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, remo
 import useSushiswapSubgraph from "../../subgraphs/useSushiswapSubgraph";
 
 const uniQuery = `
-{
+query {
   pools(first: 100 orderBy:createdAtTimestamp orderDirection:desc) {
 createdAtTimestamp
       volumeUSD
@@ -31,7 +31,7 @@ createdAtTimestamp
 }`;
 
 const sushiQuery = `
-{
+query {
   pairs(first: 50 orderBy:createdAtTimestamp orderDirection:desc) {
       volumeUSD
        id
@@ -80,7 +80,10 @@ async function querySubgraphs(config: any) {
       let result = await useSushiswapSubgraph(sushiQuery);
 
       result ? tokens.push(...format(result.data)) : null;
+      console.log("Sushi");
+      console.log(result);
     } catch (err) {
+      console.log("Sushi");
       console.log(err);
     }
   }

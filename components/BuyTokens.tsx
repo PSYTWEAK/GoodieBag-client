@@ -21,7 +21,6 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
   const handleClick = async (provider: any, tokens: any, amountETHIn: number) => {
     if (tokens) {
       let [value, tokenId, callData] = await useSushiswapTrade(provider, tokens, slippage, ethers.utils.parseEther(amountETHIn.toString()));
-      console.log(callData);
       await write({
         args: [oneInch, tokenId, callData],
         overrides: {
