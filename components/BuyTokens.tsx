@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
-import useUniswapTrade from "../hooks/useUniswapTrade";
 import { useProvider, useContract, useContractWrite, useSendTransaction } from "wagmi";
 import TokenEaterABI from "../contracts/TokenEaterABI.json";
 import { arbiTokenEaterAddress, arbiUniswapRouterAddress, oneInch } from "../globals";
 import { ethers } from "ethers";
 import { setRevalidateHeaders } from "next/dist/server/send-payload";
-import useSushiswapTrade from "../hooks/useSushiswapTrade";
+import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: any; loading: any; slippage: number; amountETHIn: any }) {
   const provider = useProvider();
 
@@ -20,7 +19,7 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
 
   const handleClick = async (provider: any, tokens: any, amountETHIn: number) => {
     if (tokens) {
-      let [value, tokenId, callData] = await useSushiswapTrade(provider, tokens, slippage, ethers.utils.parseEther(amountETHIn.toString()));
+      let [value, tokenId, callData] = await useGenerateCalldata(provider, tokens, slippage, ethers.utils.parseEther(amountETHIn.toString()));
       await write({
         args: [oneInch, tokenId, callData],
         overrides: {

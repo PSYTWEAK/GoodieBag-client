@@ -4,10 +4,11 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Logo from "../components/Logo";
 import Crown from "../components/leaderboard/Crown";
-import Users from "../components/leaderboard/Users";
+import { Users } from "../components/leaderboard/Users";
+import useLeaderboard from "../hooks/leaderboard/useLeaderboard";
 
 const LeaderBoard: NextPage = () => {
-  const [result, loading] = useLeaderboard(stratergy, config);
+  const [result, loading] = useLeaderboard();
   return (
     <div className={styles.container}>
       <Head>

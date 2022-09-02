@@ -1,5 +1,5 @@
 // globals
-
+export const weth = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1";
 export const statergys = ["Custom", "Tokens most recently added", "Randomly selected tokens with minimum $100 volume", "Randomly selected tokens with $0 volume", "Randomly selected tokens all"];
 export const UNISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/benjaminlu/arbitrum-one-uniswap-v3";
 export const SUSHISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/sushiswap/sushiswap-arbitrum";

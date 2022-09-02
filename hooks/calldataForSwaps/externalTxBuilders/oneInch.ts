@@ -1,12 +1,13 @@
 import axios from "axios";
 import JSBI from "jsbi";
-import { weth } from "./stratergies/globals";
-import { arbiTokenEaterAddress } from "../globals";
+import { weth, arbiTokenEaterAddress } from "../../../globals";
 
 export let apiBaseUrl: string = "";
 
-export async function tryOneInch(chainId: any, token: any, amountPerTrade: JSBI, slippage: number, callData: any, tokenId: any, value: JSBI) {
+export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, slippage: number, callData: any, tokenId: any, value: JSBI) {
   console.log("Trying 1inch");
+
+  const chainId = provider._network.chainId;
 
   apiBaseUrl = "https://api.1inch.io/v4.0/" + chainId;
 
@@ -20,16 +21,16 @@ export async function tryOneInch(chainId: any, token: any, amountPerTrade: JSBI,
     allowPartialFill: false,
     burnChi: false,
   };
+
   const swapCalldata = await buildTxForSwap(swapParams);
+
   if (swapCalldata) {
     callData.push(swapCalldata);
     tokenId.push(token.id);
     value = JSBI.add(amountPerTrade, value);
   }
 }
-function apiRequestUrl(methodName: any, queryParams: any) {
-  return apiBaseUrl + methodName + "?" + new URLSearchParams(queryParams).toString();
-}
+
 async function buildTxForSwap(swapParams: any) {
   const url = apiRequestUrl("/swap", swapParams);
   return axios
@@ -41,4 +42,8 @@ async function buildTxForSwap(swapParams: any) {
     .catch((err) => {
       console.log(err);
     });
+}
+
+function apiRequestUrl(methodName: any, queryParams: any) {
+  return apiBaseUrl + methodName + "?" + new URLSearchParams(queryParams).toString();
 }
