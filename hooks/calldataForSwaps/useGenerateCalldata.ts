@@ -1,13 +1,12 @@
 import JSBI from "jsbi";
 import { BigNumber } from "ethers";
-import { oneInch } from "./txBuilders/oneInch";
+import { oneInch } from "./externalTxBuilders/oneInch";
+import { uniswap } from "./externalTxBuilders/uniswap";
 
-export default async function useCalldataForSwaps(provider: any, tokens: any, slippage: number, totalAmountIn: BigNumber) {
+export default async function useGenerateCalldata(provider: any, tokens: any, slippage: number, totalAmountIn: BigNumber) {
   let callData: any = [];
   let tokenId: any = [];
   let value = JSBI.BigInt(0);
-
-  const chainId = provider._network.chainId;
 
   const amountPerTrade = amountInPerTrade(totalAmountIn, tokens);
 
@@ -15,15 +14,19 @@ export default async function useCalldataForSwaps(provider: any, tokens: any, sl
     const token = tokens[i];
     try {
       console.log("Token " + token.name + " processing");
-      await oneInch(chainId, token, amountPerTrade, slippage, callData, tokenId, value);
-    } catch (error) {
-      console.log("failed");
-      try {
-        name = lead["Details"]["Name"]["First"] + " " + lead["Details"]["Name"]["Last"];
-      } catch (ex1) {
-        name = "No Name";
+
+      if (slippage > 50) {
+        throw "slippage too high";
       }
+
+      await oneInch(provider, token, amountPerTrade, slippage, callData, tokenId, value);
+    } catch (error) {
       console.log(error);
+
+      if (token.protocol === "Uniswap V3") {
+        await uniswap(provider, token, amountPerTrade, slippage, callData, tokenId, value);
+      } else if (token.protocol === "Sushi") {
+      }
     }
   }
 

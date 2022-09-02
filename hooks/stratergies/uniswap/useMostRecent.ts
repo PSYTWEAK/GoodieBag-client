@@ -70,7 +70,7 @@ async function querySubgraphs(config: any) {
     try {
       let result = await useUniswapSubgraph(uniQuery);
 
-      result ? tokens.push(...format(result.data)) : null;
+      result ? tokens.push(...formatUni(result.data)) : null;
     } catch (err) {
       console.log(err);
     }
@@ -79,18 +79,15 @@ async function querySubgraphs(config: any) {
     try {
       let result = await useSushiswapSubgraph(sushiQuery);
 
-      result ? tokens.push(...format(result.data)) : null;
-      console.log("Sushi");
-      console.log(result);
+      result ? tokens.push(...formatSushi(result.data)) : null;
     } catch (err) {
-      console.log("Sushi");
       console.log(err);
     }
   }
   return tokens;
 }
 
-function format(pools: any): any {
+function formatUni(pools: any): any {
   let tokens = [];
   for (let i = 0; i < pools.length; i++) {
     let token = {
@@ -100,6 +97,27 @@ function format(pools: any): any {
       volumeUSD: pools[i].volumeUSD,
       protocol: "Uniswap V3",
       stratergySpecificDataDes: `Added to Uniswap at`,
+      stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
+    };
+
+    if (token.id && token.id != weth) {
+      tokens.push(token);
+    }
+  }
+
+  return tokens;
+}
+
+function formatSushi(pools: any): any {
+  let tokens = [];
+  for (let i = 0; i < pools.length; i++) {
+    let token = {
+      id: pools[i].token0.id != weth ? pools[i].token1.id : pools[i].token0.id,
+      name: pools[i].token0.id != weth ? pools[i].token1.name : pools[i].token0.name,
+      symbol: pools[i].token0.id != weth ? pools[i].token1.symbol : pools[i].token0.name,
+      volumeUSD: pools[i].volumeUSD,
+      protocol: "Sushi",
+      stratergySpecificDataDes: `Added to DEX at`,
       stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
     };
 
