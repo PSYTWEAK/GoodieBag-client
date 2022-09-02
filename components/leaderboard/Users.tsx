@@ -4,19 +4,16 @@ import styles from "../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { ethers, BigNumber } from "ethers";
 
-export default function Users({ users, loading, setUsers }: { users: any; loading: any; setUsers: any }) {
-  const handleRemoveToken = (token: string) => {
-    setUsers(users.filter((item: any) => item.id !== token));
-  };
+export function Users({ users, loading }: { users: any; loading: any; }) {
 
   return (
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} direction="column" marginTop={1.5}>
-      {loading === "false" ? <></> : loading === "null" ? <h1>No Users Found</h1> : loading === "true" && users == false ? <LoadingProcess /> : <>{UserList(users, handleRemoveToken)}</>}
+      {loading === "false" ? <></> : loading === "null" ? <h1>No Users Found</h1> : loading === "true" && users == false ? <LoadingProcess /> : <>{UserList(users)}</>}
     </Grid>
   );
 }
 
-const UserList = (users: any, handleRemoveToken: any) => {
+const UserList = (users: any) => {
   return (
     <>
       {users.map((data: any, i: number) => {
@@ -52,7 +49,7 @@ function readableEthAmount(data: any) {
   return ETHAmount;
 }
 
-function LoadingProcess({}) {
+function LoadingProcess({ }) {
   return (
     <div className={styles.div}>
       <CircularProgress />

@@ -24,7 +24,7 @@ const LeaderBoard: NextPage = () => {
           <Crown />
         </h1>
         <div className={styles.card}>
-          <Users />
+          <Users users={undefined} loading={undefined} setUsers={undefined} />
         </div>
       </main>
 
