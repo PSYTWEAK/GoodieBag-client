@@ -5,6 +5,7 @@ import JSBI from "jsbi";
 import { weth, arbiTokenEaterAddress } from "../../../globals";
 
 export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, callData: any, tokenId: any, value: JSBI) {
+  console.log("Trying Sushi");
   const sushi;
 
   const path = [weth, token.id];
@@ -13,30 +14,18 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
 
   const minimumAmountOut = _minimumAmountOut(contractQuote, slippage);
 
-  try {
-    console.log("Trying Sushi");
+  // swap here
 
-    const TokenB = new Token(provider._network.chainId, token.id, 18, token.symbol, token.name);
-
-    const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
-      recipient: arbiTokenEaterAddress,
-      slippageTolerance: percentSlippage,
-      deadline: Math.floor(Date.now() / 1000 + 10800),
-    });
-
-    if (route) {
-      callData.push(route.methodParameters.calldata);
-      tokenId.push(token.id);
-      value = JSBI.add(amountPerTrade, value);
-    }
-  } catch (error) {
-    console.log("Token " + token.name + " failed");
-    console.log(error);
+  if (route) {
+    callData.push(route.methodParameters.calldata);
+    tokenId.push(token.id);
+    value = JSBI.add(amountPerTrade, value);
   }
 
   return [value, tokenId, callData];
 }
 
 function _minimumAmountOut(contractQuote: any, slippage: number) {
+  // contractQuote - (contractQuote / (slippage / 100))
   return JSBI.subtract(contractQuote, JSBI.divide(contractQuote, JSBI.divide(JSBI.BigInt(slippage), JSBI.BigInt(100))));
 }
