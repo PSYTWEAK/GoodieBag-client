@@ -8,7 +8,7 @@ async function queryLeaderboard() {
 }
 
 export default function useLeaderboard() {
-  const [result, setResult] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState("false");
 
   useEffect(() => {
@@ -17,12 +17,13 @@ export default function useLeaderboard() {
       try {
         setLoading("true");
         const _result: any = await queryLeaderboard();
-        setResult(_result);
+        _result.length ? setLoading("done") : setLoading("null");
+        setUsers(_result);
       } catch (error) {
         setLoading("null");
       }
     }
   }, []);
 
-  return [result, loading];
+  return [users, loading];
 }

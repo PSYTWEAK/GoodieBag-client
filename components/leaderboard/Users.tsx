@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { ethers, BigNumber } from "ethers";
 
@@ -8,12 +8,14 @@ export function Users({ users, loading }: { users: any; loading: any; }) {
 
   return (
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} direction="column" marginTop={1.5}>
-      {loading === "false" ? <></> : loading === "null" ? <h1>No Users Found</h1> : loading === "true" && users == false ? <LoadingProcess /> : <>{UserList(users)}</>}
+      {loading === "false" ? <></> : loading === "null" ? <h1>No Users Found</h1> : loading === "true" ? <LoadingProcess /> : <>{UserList(users)}</>}
     </Grid>
   );
 }
 
 const UserList = (users: any) => {
+  console.log("users", users);
+  console.log(users == false);
   return (
     <>
       {users.map((data: any, i: number) => {

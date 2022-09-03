@@ -8,7 +8,7 @@ import { Users } from "../components/leaderboard/Users";
 import useLeaderboard from "../hooks/leaderboard/useLeaderboard";
 
 const LeaderBoard: NextPage = () => {
-  const [result, loading] = useLeaderboard();
+  const [users, loading] = useLeaderboard();
   return (
     <div className={styles.container}>
       <Head>
@@ -24,7 +24,7 @@ const LeaderBoard: NextPage = () => {
           <Crown />
         </h1>
         <div className={styles.card}>
-          <Users users={undefined} loading={loading} />
+          <Users users={users} loading={loading} />
         </div>
       </main>
 
