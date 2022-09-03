@@ -17,8 +17,8 @@ export default function useLeaderboard() {
       try {
         setLoading("true");
         const _result: any = await queryLeaderboard();
-        _result.length ? setLoading("done") : setLoading("null");
-        setUsers(_result);
+        _result ? setLoading("done") : setLoading("null");
+        setUsers(_result.data.users);
       } catch (error) {
         setLoading("null");
       }

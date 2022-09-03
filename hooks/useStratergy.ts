@@ -30,7 +30,7 @@ export default function useStratergy(stratergy: string, config: any) {
         setLoading("true");
         const _result: any = await findStratergy(stratergy, config);
 
-        _result.length ? setLoading("done") : setLoading("null");
+        _result ? setLoading("done") : setLoading("null");
 
         setStratResult(_result);
       } catch (error) {

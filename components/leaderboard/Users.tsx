@@ -5,6 +5,7 @@ import { CircularProgress } from "@mui/material";
 import { ethers, BigNumber } from "ethers";
 
 export function Users({ users, loading }: { users: any; loading: any; }) {
+  console.log(users);
 
   return (
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} direction="column" marginTop={1.5}>
@@ -14,8 +15,6 @@ export function Users({ users, loading }: { users: any; loading: any; }) {
 }
 
 const UserList = (users: any) => {
-  console.log("users", users);
-  console.log(users == false);
   return (
     <>
       {users.map((data: any, i: number) => {
@@ -23,17 +22,19 @@ const UserList = (users: any) => {
           return (
             <Grid item xs={8} width="max">
               <div className={styles.div}>
-                <p>#{i}</p>
+                <p>#{i + 1}</p>
+                <p>&nbsp;</p>
                 <a href={`https://arbiscan.io/address/${data.id}`}>
                   <p>{readableAddress(data)}</p>
                 </a>
                 <p>&nbsp;</p>
                 <p>{readableEthAmount(data)}</p>
+                <p>&nbsp;</p>
+                <p> ETH</p>
               </div>{" "}
             </Grid>
           );
         } catch (err) {
-          console.log("Couldn't show token " + i + err);
           return <></>;
         }
       })}
@@ -42,13 +43,15 @@ const UserList = (users: any) => {
 };
 
 function readableAddress(data: any): React.ReactNode {
-  return `${data.id.slice(0, 6)}...${data.id.substr(data.id.length - 5)}`;
+  return `${data.id.slice(0, 5)}...${data.id.substr(data.id.length - 4)}`;
 }
 
 function readableEthAmount(data: any) {
   const value = BigNumber.from(data.value);
   const ETHAmount = ethers.utils.formatEther(value);
-  return ETHAmount;
+  const roundedEthAmount = ETHAmount.slice(0, 9);
+
+  return roundedEthAmount;
 }
 
 function LoadingProcess({ }) {

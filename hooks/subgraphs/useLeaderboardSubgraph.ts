@@ -6,7 +6,6 @@ const query = `
 query {
   users(first: 5 orderBy:value orderDirection: desc) {
     id
-    account
     value
   }
 }
