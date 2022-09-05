@@ -9,9 +9,10 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
   console.log("Trying Sushi");
   // sushiswap contract instance
   const sushiContract = new ethers.Contract(
-    "0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F",
+    "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
     [
       "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)",
+      "function getAmountsOut(uint amountIn, address[] memory path) public view returns (uint[] memory amounts)"
     ],
     provider
   );
@@ -23,18 +24,18 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
   const tokenEaterAddress = arbiTokenEaterAddress;
 
   // path for swap 
-  const path = [tokenAddress, weth, tokenEaterAddress];
+  const path = [tokenAddress, weth];
 
   // get the contract quote
-  const contractQuote = await sushiContract.getAmountsOut(amountPerTrade, path);
+  const contractQuote = await sushiContract.getAmountsOut(amountPerTrade.toString(), path);
 
   // get the minimum amount out
-  const minimumAmountOut = _minimumAmountOut(contractQuote[2], slippage);
+  const minimumAmountOut = _minimumAmountOut(contractQuote[1].toString(), slippage);
 
   // get the deadline
   const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
 
-  const calldata = sushiContract.encodeFunctionData("swapExactETHForTokens", [
+  const calldata = sushiContract.encodeFunctionData("swapExactTokensForTokens", [
     minimumAmountOut,
     path,
     arbiTokenEaterAddress,
@@ -50,8 +51,9 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
   return [value, tokenId, callData];
 }
 
-function _minimumAmountOut(contractQuote: any, slippage: number) {
-  // contractQuote - (contractQuote / (slippage / 100))
-  return JSBI.subtract(contractQuote, JSBI.divide(contractQuote, JSBI.divide(JSBI.BigInt(slippage), JSBI.BigInt(100))));
+function _minimumAmountOut(contractQuote: string, slippage: number) {
+  // contractQuote - (contractQuote * (slippage / 100))
+
+  return JSBI.subtract(JSBI.BigInt(contractQuote), JSBI.multiply(JSBI.BigInt(contractQuote), JSBI.divide(JSBI.BigInt(slippage), JSBI.BigInt(100))));
 }
 

@@ -26,6 +26,8 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
     callData.push(route.methodParameters.calldata);
     tokenId.push(token.id);
     value = JSBI.add(amountPerTrade, value);
+  } else {
+    console.log("Uniswap failed");
   }
 
   return [value, tokenId, callData];

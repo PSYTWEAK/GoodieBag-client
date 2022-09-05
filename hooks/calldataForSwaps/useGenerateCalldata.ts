@@ -16,17 +16,16 @@ export default async function useGenerateCalldata(provider: any, tokens: any, sl
     try {
       console.log("Token " + token.name + " processing");
 
-      if (slippage > 50) {
-        throw "slippage too high";
-      }
+      //   if (slippage > 50) {
+      throw "slippage too high";
+      //}
 
-      await oneInch(provider, token, amountPerTrade, slippage, callData, tokenId, value);
+      //  await oneInch(provider, token, amountPerTrade, slippage, callData, tokenId, value);
     } catch (error) {
-      console.log(error);
 
-      token.protocol === "Uniswap V3" ? await uniswap(provider, token, amountPerTrade, slippage, callData, tokenId, value) : null;
+      // token.protocol === "Uniswap V3" ? await uniswap(provider, token, amountPerTrade, slippage, callData, tokenId, value) : null;
 
-      token.protocol === "Sushi" ? await sushi(provider, token, amountPerTrade, slippage, callData, tokenId, value) : null;
+      token.protocol === "Sushiswap" ? await sushi(provider, token, amountPerTrade, slippage, callData, tokenId, value) : null;
     }
   }
 

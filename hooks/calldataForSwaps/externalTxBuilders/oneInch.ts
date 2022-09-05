@@ -28,6 +28,8 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
     callData.push(swapCalldata);
     tokenId.push(token.id);
     value = JSBI.add(amountPerTrade, value);
+  } else {
+    console.log("1inch failed");
   }
 }
 

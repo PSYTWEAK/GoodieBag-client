@@ -96,7 +96,7 @@ function formatUni(pools: any): any {
       symbol: pools[i].token0.id != weth ? pools[i].token1.symbol : pools[i].token0.name,
       volumeUSD: pools[i].volumeUSD,
       protocol: "Uniswap V3",
-      stratergySpecificDataDes: `Added to Uniswap at`,
+      stratergySpecificDataDes: `Added to DEX at`,
       stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
     };
 
@@ -116,7 +116,7 @@ function formatSushi(pools: any): any {
       name: pools[i].token0.id != weth ? pools[i].token1.name : pools[i].token0.name,
       symbol: pools[i].token0.id != weth ? pools[i].token1.symbol : pools[i].token0.name,
       volumeUSD: pools[i].volumeUSD,
-      protocol: "Sushi",
+      protocol: "Sushiswap",
       stratergySpecificDataDes: `Added to DEX at`,
       stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
     };

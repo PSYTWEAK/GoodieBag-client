@@ -69,7 +69,6 @@ async function querySubgraphs(config: any) {
       console.log(err);
     }
   }
-  console.log(tokens);
   return tokens;
 }
 
@@ -92,7 +91,6 @@ function formatUni(data: any): any {
       tokens.push(token);
     }
   }
-
   return tokens;
 }
 
@@ -115,4 +113,5 @@ function formatSushi(data: any): any {
       tokens.push(token);
     }
   }
+  return tokens
 }

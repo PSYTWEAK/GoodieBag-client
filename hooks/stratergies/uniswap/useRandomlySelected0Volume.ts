@@ -118,4 +118,5 @@ function formatSushi(data: any): any {
       tokens.push(token);
     }
   }
+  return tokens
 }

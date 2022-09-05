@@ -31,7 +31,7 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
   };
 
   useEffect(() => {
-    if (amountETHIn > 0 && loading === "true" && tokens) {
+    if (amountETHIn > 0 && loading === "done" && tokens.length > 0) {
       setDisabled(false);
     } else {
       setDisabled(true);

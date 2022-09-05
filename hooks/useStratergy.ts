@@ -31,6 +31,7 @@ export default function useStratergy(stratergy: string, config: any) {
         const _result: any = await findStratergy(stratergy, config);
 
         _result ? setLoading("done") : setLoading("null");
+        console.log(_result);
 
         setStratResult(_result);
       } catch (error) {
