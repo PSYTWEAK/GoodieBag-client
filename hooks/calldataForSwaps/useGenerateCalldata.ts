@@ -2,7 +2,7 @@ import JSBI from "jsbi";
 import { BigNumber } from "ethers";
 import { oneInch } from "./externalTxBuilders/oneInch";
 import { uniswap } from "./externalTxBuilders/uniswap";
-import { sushi } from "./localTxBuilders/Sushi";
+import { sushi } from "./localTxBuilders/sushiswap";
 
 export default async function useGenerateCalldata(provider: any, tokens: any, slippage: number, totalAmountIn: BigNumber) {
   let callData: any = [];
@@ -26,8 +26,10 @@ export default async function useGenerateCalldata(provider: any, tokens: any, sl
       // token.protocol === "Uniswap V3" ? await uniswap(provider, token, amountPerTrade, slippage, callData, tokenId, value) : null;
 
       token.protocol === "Sushiswap" ? await sushi(provider, token, amountPerTrade, slippage, callData, tokenId, value) : null;
+      console.log(value)
     }
   }
+  console.log(value)
 
   return [value, tokenId, callData];
 }

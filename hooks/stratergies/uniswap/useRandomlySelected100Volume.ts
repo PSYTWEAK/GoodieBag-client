@@ -52,15 +52,14 @@ export default async function useRandomlySelected(config: any) {
 async function querySubgraphs(config: any) {
   let tokens: any = [];
 
-  if (config.uniswap) {
-    try {
-      let result = await useUniswapSubgraph(uniQuery);
-
-      result ? tokens.push(...formatUni(result.data)) : null;
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  /*   if (config.uniswap) {
+      try {
+        let result = await useUniswapSubgraph(uniQuery);
+        result ? tokens.push(...formatUni(result.data)) : null;
+      } catch (err) {
+        console.log(err);
+      }
+    } */
   if (config.sushiswap) {
     try {
       let result = await useSushiswapSubgraph(sushiQuery);

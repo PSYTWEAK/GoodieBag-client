@@ -29,6 +29,4 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
   } else {
     console.log("Uniswap failed");
   }
-
-  return [value, tokenId, callData];
 }

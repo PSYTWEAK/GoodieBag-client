@@ -1,6 +1,4 @@
 import { BigNumber, ethers } from "ethers";
-import { CurrencyAmount, Token, TradeType, Percent } from "@uniswap/sdk-core";
-import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
 import { weth, arbiTokenEaterAddress } from "../../../globals";
 
@@ -17,14 +15,9 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
     provider
   );
 
-  // get the token address
-  const tokenAddress = token.id;
-
-  // get the token eater address
-  const tokenEaterAddress = arbiTokenEaterAddress;
 
   // path for swap 
-  const path = [tokenAddress, weth];
+  const path = [weth, token.id];
 
   // get the contract quote
   const contractQuote = await sushiContract.getAmountsOut(amountPerTrade.toString(), path);
@@ -35,8 +28,9 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
   // get the deadline
   const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
 
-  const calldata = sushiContract.encodeFunctionData("swapExactTokensForTokens", [
-    minimumAmountOut,
+  const calldata = sushiContract.interface.encodeFunctionData("swapExactTokensForTokens", [
+    amountPerTrade.toString(),
+    minimumAmountOut.toString(),
     path,
     arbiTokenEaterAddress,
     deadline,
@@ -46,9 +40,11 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
     callData.push(calldata);
     tokenId.push(token.id);
     value = JSBI.add(amountPerTrade, value);
+    console.log("Sushi success", value);
+  } else {
+    console.log("Sushi failed");
   }
 
-  return [value, tokenId, callData];
 }
 
 function _minimumAmountOut(contractQuote: string, slippage: number) {

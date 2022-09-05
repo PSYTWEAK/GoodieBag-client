@@ -20,6 +20,7 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
   const handleClick = async (provider: any, tokens: any, amountETHIn: number) => {
     if (tokens) {
       let [value, tokenId, callData] = await useGenerateCalldata(provider, tokens, slippage, ethers.utils.parseEther(amountETHIn.toString()));
+      console.log(value)
       await write({
         args: [oneInch, tokenId, callData],
         overrides: {
