@@ -4,7 +4,7 @@ import { weth, arbiTokenEaterAddress } from "../../../globals";
 
 export let apiBaseUrl: string = "";
 
-export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, slippage: number, callData: any, tokenId: any, value: JSBI) {
+export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setCallData: any, setTokenId: any, setValue: any) {
   console.log("Trying 1inch");
 
   const chainId = provider._network.chainId;
@@ -22,12 +22,12 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
     burnChi: false,
   };
 
-  const swapCalldata = await buildTxForSwap(swapParams);
+  const calldata = await buildTxForSwap(swapParams);
 
-  if (swapCalldata) {
-    callData.push(swapCalldata);
-    tokenId.push(token.id);
-    value = JSBI.add(amountPerTrade, value);
+  if (calldata) {
+    setCallData((callData: any) => [...callData, calldata]);
+    setTokenId((tokenId: any) => [...tokenId, token.id]);
+    setValue(JSBI.add(amountPerTrade, setValue));
   } else {
     console.log("1inch failed");
   }

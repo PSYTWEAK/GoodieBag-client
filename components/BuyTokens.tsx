@@ -6,6 +6,8 @@ import { arbiTokenEaterAddress, arbiUniswapRouterAddress, oneInch } from "../glo
 import { ethers } from "ethers";
 import { setRevalidateHeaders } from "next/dist/server/send-payload";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
+
+
 export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: any; loading: any; slippage: number; amountETHIn: any }) {
   const provider = useProvider();
 
@@ -17,31 +19,45 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
 
   const [disabled, setDisabled] = useState(true);
 
-  const handleClick = async (provider: any, tokens: any, amountETHIn: number) => {
+  const [generating, setGenerating] = useState("false");
+
+
+  const txObject = useGenerateCalldata(provider, tokens, slippage, ethers.utils.parseEther(amountETHIn.toString()), generating, setGenerating);
+
+
+  const handleClick = async () => {
     if (tokens) {
-      let [value, tokenId, callData] = await useGenerateCalldata(provider, tokens, slippage, ethers.utils.parseEther(amountETHIn.toString()));
-      console.log(value)
-      await write({
-        args: [oneInch, tokenId, callData],
-        overrides: {
-          value: value.toString(),
-          gasLimit: "30000000",
-        },
-      });
+      setGenerating("true");
     }
   };
 
   useEffect(() => {
-    if (amountETHIn > 0 && loading === "done" && tokens.length > 0) {
+    if (amountETHIn > 0 && loading === "done" && tokens.length > 0 && generating === "false") {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
   }, [amountETHIn, tokens]);
 
+  useEffect(() => {
+    if (generating === "done") {
+      write({
+        args: [oneInch, txObject.tokenId, txObject.callData],
+        overrides: {
+          value: txObject.value.toString(),
+          gasLimit: "30000000",
+        },
+      });
+    }
+    setGenerating("false");
+  }, [generating]);
+
   return (
-    <Button variant="contained" onClick={() => handleClick(provider, tokens, amountETHIn)} disabled={disabled}>
-      Buy Tokens
-    </Button>
+    <div>
+      <Button variant="contained" onClick={handleClick} disabled={disabled}>
+        Buy Tokens
+      </Button>
+    </div>
   );
+
 }

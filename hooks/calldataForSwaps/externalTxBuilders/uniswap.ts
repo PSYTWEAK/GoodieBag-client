@@ -4,7 +4,7 @@ import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
 import { weth, arbiTokenEaterAddress } from "../../../globals";
 
-export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, callData: any, tokenId: any, value: JSBI) {
+export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
   console.log("Trying Uniswap");
   const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
 
@@ -23,9 +23,11 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
   });
 
   if (route) {
-    callData.push(route.methodParameters.calldata);
-    tokenId.push(token.id);
-    value = JSBI.add(amountPerTrade, value);
+    setTxObject((prevState: any) => ({
+      callData: [...prevState.callData, route.methodParameters.calldata],
+      tokenId: [...prevState.tokenId, token.id],
+      value: JSBI.add(amountPerTrade, prevState.value),
+    }));
   } else {
     console.log("Uniswap failed");
   }

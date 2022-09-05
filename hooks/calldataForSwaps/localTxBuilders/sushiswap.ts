@@ -3,7 +3,7 @@ import JSBI from "jsbi";
 import { weth, arbiTokenEaterAddress } from "../../../globals";
 
 
-export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, callData: any, tokenId: any, value: JSBI) {
+export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
   console.log("Trying Sushi");
   // sushiswap contract instance
   const sushiContract = new ethers.Contract(
@@ -37,10 +37,11 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
   ]);
 
   if (calldata) {
-    callData.push(calldata);
-    tokenId.push(token.id);
-    value = JSBI.add(amountPerTrade, value);
-    console.log("Sushi success", value);
+    setTxObject((prevState: any) => ({
+      callData: [...prevState.callData, calldata],
+      tokenId: [...prevState.tokenId, token.id],
+      value: JSBI.add(amountPerTrade, prevState.value),
+    }));
   } else {
     console.log("Sushi failed");
   }
