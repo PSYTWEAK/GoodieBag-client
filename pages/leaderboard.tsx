@@ -36,7 +36,5 @@ const LeaderBoard: NextPage = () => {
 };
 
 export default LeaderBoard;
-function useRainbowSelector(arg0: (state: any) => any): { address: any; isConnected: any; } {
-  throw new Error("Function not implemented.");
-}
+
 

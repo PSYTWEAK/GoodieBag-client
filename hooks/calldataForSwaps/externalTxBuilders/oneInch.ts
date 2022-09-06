@@ -7,33 +7,37 @@ export let apiBaseUrl: string = "";
 export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
   console.log("Trying 1inch");
 
-  const chainId = provider._network.chainId;
 
-  apiBaseUrl = "https://api.1inch.io/v4.0/" + chainId;
+  try {
+    const chainId = provider._network.chainId;
 
-  const swapParams = {
-    fromTokenAddress: weth,
-    toTokenAddress: token.id,
-    amount: amountPerTrade,
-    fromAddress: arbiTokenEaterAddress,
-    slippage: slippage,
-    disableEstimate: true,
-    allowPartialFill: false,
-    burnChi: false,
-  };
+    apiBaseUrl = "https://api.1inch.io/v4.0/" + chainId;
 
-  const calldata = await buildTxForSwap(swapParams);
+    const swapParams = {
+      fromTokenAddress: weth,
+      toTokenAddress: token.id,
+      amount: amountPerTrade,
+      fromAddress: arbiTokenEaterAddress,
+      slippage: slippage,
+      disableEstimate: true,
+      allowPartialFill: false,
+      burnChi: false,
+    };
 
-  if (calldata) {
-    setTxObject((prevState: any) => ({
-      router: [...prevState.router, oneInchAddress],
-      callData: [...prevState.callData, calldata],
-      tokenId: [...prevState.tokenId, token.id],
-      value: JSBI.add(amountPerTrade, prevState.value),
-    }));
-  } else {
-    console.log("1inch failed");
-    throw "1inch failed";
+    const calldata = await buildTxForSwap(swapParams);
+
+    if (calldata) {
+      setTxObject((prevState: any) => ({
+        router: [...prevState.router, oneInchAddress],
+        callData: [...prevState.callData, calldata],
+        tokenId: [...prevState.tokenId, token.id],
+        value: JSBI.add(amountPerTrade, prevState.value),
+      }));
+    } else {
+      throw "1inch failed";
+    }
+  } catch (error) {
+    throw error;
   }
 }
 

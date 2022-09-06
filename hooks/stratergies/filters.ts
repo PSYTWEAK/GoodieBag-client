@@ -65,16 +65,10 @@ export function removeVolume(tokens: any): any {
   return _tokens;
 }
 
-export function removeNoneEthPools(pools: any): any {
-  let _pools = pools;
-  const index = _pools.findIndex((data: any) => data.pool.token0.id != weth && data.pool.token1.id != weth);
-  if (index > -1) {
-    _pools.splice(index, 1);
-    return removeNoneEthPools(_pools);
-  } else {
-    return _pools;
-  }
+export function removeNoneEthPools(pools: any) {
+  return pools.filter((pool: any) => pool.token0.id == weth || pool.token1.id == weth);
 }
+
 
 export function removeSignOfDerivInTokenName(tokens: any): any {
   let _tokens = tokens;
@@ -96,4 +90,10 @@ export function removeSignOfDerivInTokenName(tokens: any): any {
     }
   }
   return _tokens;
+}
+
+export function sortTokensByCreatedAt(array: any) {
+  return array.sort((a: any, b: any) => {
+    return b.createdAtTimestamp - a.createdAtTimestamp;
+  });
 }

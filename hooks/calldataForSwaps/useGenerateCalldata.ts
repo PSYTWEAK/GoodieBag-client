@@ -21,15 +21,13 @@ async function generateCallData(tokens: any, slippage: number, provider: any, am
 
       await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
     } catch (error) {
-      console.log("1inch failed, trying local");
-      console.log(token.protocol)
 
       try {
         token.protocol === "Uniswap V3" ? await uniswap(provider, token, amountPerTrade, slippage, setTxObject) : null;
 
         token.protocol === "Sushiswap" ? await sushi(provider, token, amountPerTrade, slippage, setTxObject) : null;
       } catch (error) {
-        console.log("local failed");
+        console.log(error)
       }
 
     }

@@ -4,7 +4,7 @@ import styles from "../../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { ethers, BigNumber } from "ethers";
 
-export function Users({ users, loading, address }: { users: any; loading: any; address: string }) {
+export function Users({ users, loading, address }: { users: any; loading: any; address: any }) {
 
   return (
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} direction="column" marginTop={1.5}>
@@ -13,7 +13,7 @@ export function Users({ users, loading, address }: { users: any; loading: any; a
   );
 }
 
-const UserList = (users: any, address: string) => {
+const UserList = (users: any, address: any) => {
   return (
     <>
       {users.map((data: any, i: number) => {

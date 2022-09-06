@@ -6,30 +6,37 @@ import { weth, arbiTokenEaterAddress, arbiUniswapRouterAddress } from "../../../
 
 export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
   console.log("Trying Uniswap");
-  const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
 
-  const WETH = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
+  try {
+    const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
 
-  const wethAmount = CurrencyAmount.fromRawAmount(WETH, JSBI.BigInt(amountPerTrade.toString()));
+    const WETH = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
 
-  const percentSlippage = new Percent(slippage, 100);
+    const wethAmount = CurrencyAmount.fromRawAmount(WETH, JSBI.BigInt(amountPerTrade.toString()));
 
-  const TokenB = new Token(provider._network.chainId, token.id, 18, token.symbol, token.name);
+    const percentSlippage = new Percent(slippage, 100);
 
-  const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
-    recipient: arbiTokenEaterAddress,
-    slippageTolerance: percentSlippage,
-    deadline: Math.floor(Date.now() / 1000 + 10800),
-  });
+    const TokenB = new Token(provider._network.chainId, token.id, 18, token.symbol, token.name);
 
-  if (route) {
-    setTxObject((prevState: any) => ({
-      router: [...prevState.router, arbiUniswapRouterAddress],
-      callData: [...prevState.callData, route.methodParameters.calldata],
-      tokenId: [...prevState.tokenId, token.id],
-      value: JSBI.add(amountPerTrade, prevState.value),
-    }));
-  } else {
-    console.log("Uniswap failed");
+    const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
+      recipient: arbiTokenEaterAddress,
+      slippageTolerance: percentSlippage,
+      deadline: Math.floor(Date.now() / 1000 + 10800),
+    });
+
+    if (route) {
+      setTxObject((prevState: any) => ({
+        router: [...prevState.router, arbiUniswapRouterAddress],
+        callData: [...prevState.callData, route.methodParameters.calldata],
+        tokenId: [...prevState.tokenId, token.id],
+        value: JSBI.add(amountPerTrade, prevState.value),
+      }));
+    } else {
+      throw "Uniswap failed";
+    }
+
+  } catch (error) {
+    throw error;
   }
+
 }

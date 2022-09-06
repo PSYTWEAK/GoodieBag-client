@@ -1,5 +1,4 @@
-import { createClient } from "urql";
-import { useEffect, useState } from "react";
+
 import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from ".././globals";
 import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume, removeLowVolume } from ".././filters";
@@ -52,14 +51,14 @@ export default async function useRandomlySelected(config: any) {
 async function querySubgraphs(config: any) {
   let tokens: any = [];
 
-  /*   if (config.uniswap) {
-      try {
-        let result = await uniswapSubgraph(uniQuery);
-        result ? tokens.push(...formatUni(result.data)) : null;
-      } catch (err) {
-        console.log(err);
-      }
-    } */
+  if (config.uniswap) {
+    try {
+      let result = await uniswapSubgraph(uniQuery);
+      result ? tokens.push(...formatUni(result.data)) : null;
+    } catch (err) {
+      console.log(err);
+    }
+  }
   if (config.sushiswap) {
     try {
       let result = await sushiswapSubgraph(sushiQuery);

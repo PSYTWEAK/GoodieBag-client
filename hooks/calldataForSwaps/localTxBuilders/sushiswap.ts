@@ -45,10 +45,10 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     } else {
-      console.log("Sushi failed");
+      throw "Sushi failed";
     }
   } catch (error) {
-    throw "Sushi failed";
+    throw error;
   }
 }
 

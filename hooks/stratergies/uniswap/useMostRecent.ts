@@ -1,7 +1,7 @@
 
 import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { weth } from ".././globals";
-import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens } from ".././filters";
+import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, sortTokensByCreatedAt } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
 
 const uniQuery = `
@@ -53,13 +53,14 @@ query {
 export default async function useMostRecent(config: any) {
   const result = await querySubgraphs(config);
 
-  let pools: any = result;
-  pools = removeDuplicates(pools);
-  pools = removeBlueChips(pools);
-  pools = removeStables(pools);
-  pools = removeSignOfDerivInTokenName(pools);
+  let tokens: any = result;
+  tokens = removeDuplicates(tokens);
+  tokens = removeBlueChips(tokens);
+  tokens = removeStables(tokens);
+  tokens = removeSignOfDerivInTokenName(tokens);
+  tokens = sortTokensByCreatedAt(tokens);
 
-  return pools;
+  return tokens;
 }
 
 async function querySubgraphs(config: any) {
@@ -69,37 +70,50 @@ async function querySubgraphs(config: any) {
     try {
       let result = await uniswapSubgraph(uniQuery);
 
-      result ? tokens.push(...formatUni(result.data)) : null;
+
+      result = removeNoneEthPools(result.data.pools);
+
+
+      result ? tokens.push(...formatUni(result)) : null;
     } catch (err) {
       console.log(err);
     }
   }
+
   if (config.sushiswap) {
     try {
       let result = await sushiswapSubgraph(sushiQuery);
 
-      result ? tokens.push(...formatSushi(result.data)) : null;
+
+      result = removeNoneEthPools(result.data.pairs);
+
+
+      result ? tokens.push(...formatSushi(result)) : null;
     } catch (err) {
       console.log(err);
     }
   }
+
   return tokens;
 }
+
+
 
 function formatUni(pools: any): any {
   let tokens = [];
   for (let i = 0; i < pools.length; i++) {
     let token = {
-      id: pools[i].token0.id != weth ? pools[i].token1.id : pools[i].token0.id,
-      name: pools[i].token0.id != weth ? pools[i].token1.name : pools[i].token0.name,
-      symbol: pools[i].token0.id != weth ? pools[i].token1.symbol : pools[i].token0.name,
+      id: pools[i].token0.id === weth ? pools[i].token1.id : pools[i].token0.id,
+      name: pools[i].token0.id === weth ? pools[i].token1.name : pools[i].token0.name,
+      symbol: pools[i].token0.id === weth ? pools[i].token1.symbol : pools[i].token0.name,
       volumeUSD: pools[i].volumeUSD,
       protocol: "Uniswap V3",
       stratergySpecificDataDes: `Added to DEX at`,
       stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
+      createdAtTimestamp: pools[i].createdAtTimestamp,
     };
 
-    if (token.id && token.id != weth) {
+    if (token.id) {
       tokens.push(token);
     }
   }
@@ -107,20 +121,21 @@ function formatUni(pools: any): any {
   return tokens;
 }
 
-function formatSushi(pools: any): any {
+function formatSushi(pairs: any): any {
   let tokens = [];
-  for (let i = 0; i < pools.length; i++) {
+  for (let i = 0; i < pairs.length; i++) {
     let token = {
-      id: pools[i].token0.id != weth ? pools[i].token1.id : pools[i].token0.id,
-      name: pools[i].token0.id != weth ? pools[i].token1.name : pools[i].token0.name,
-      symbol: pools[i].token0.id != weth ? pools[i].token1.symbol : pools[i].token0.name,
-      volumeUSD: pools[i].volumeUSD,
+      id: pairs[i].token0.id === weth ? pairs[i].token1.id : pairs[i].token0.id,
+      name: pairs[i].token0.id === weth ? pairs[i].token1.name : pairs[i].token0.name,
+      symbol: pairs[i].token0.id === weth ? pairs[i].token1.symbol : pairs[i].token0.name,
+      volumeUSD: pairs[i].volumeUSD,
       protocol: "Sushiswap",
       stratergySpecificDataDes: `Added to DEX at`,
-      stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
+      stratergySpecificData: `${date(pairs[i].createdAtTimestamp)}`,
+      createdAtTimestamp: pairs[i].createdAtTimestamp,
     };
 
-    if (token.id && token.id != weth) {
+    if (token.id) {
       tokens.push(token);
     }
   }
