@@ -6,9 +6,11 @@ import Logo from "../components/Logo";
 import Crown from "../components/leaderboard/Crown";
 import { Users } from "../components/leaderboard/Users";
 import useLeaderboard from "../hooks/leaderboard/useLeaderboard";
+import { useAccount } from "wagmi";
 
 const LeaderBoard: NextPage = () => {
   const [users, loading] = useLeaderboard();
+  const { address, isConnected } = useAccount()
   return (
     <div className={styles.container}>
       <Head>
@@ -24,7 +26,7 @@ const LeaderBoard: NextPage = () => {
           <Crown />
         </h1>
         <div className={styles.card}>
-          <Users users={users} loading={loading} />
+          <Users users={users} loading={loading} address={address} />
         </div>
       </main>
 
@@ -34,3 +36,7 @@ const LeaderBoard: NextPage = () => {
 };
 
 export default LeaderBoard;
+function useRainbowSelector(arg0: (state: any) => any): { address: any; isConnected: any; } {
+  throw new Error("Function not implemented.");
+}
+

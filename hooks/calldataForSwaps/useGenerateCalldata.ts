@@ -5,6 +5,10 @@ import { uniswap } from "./externalTxBuilders/uniswap";
 import { sushi } from "./localTxBuilders/sushiswap";
 import { useEffect, useState } from "react";
 
+// This hook is used to generate the calldata for the swaps for every token and split the total amount in between them
+// It also checks if the slippage is too high and if so, it will use the localTxBuilders
+// The localTxBuilders are used to generate the calldata for the swaps for tokens that are not supported by 1inch or have a slippage too high
+
 
 async function generateCallData(tokens: any, slippage: number, provider: any, amountPerTrade: JSBI, setTxObject: any) {
   for (let i = 0; i < tokens.length; i++) {
@@ -36,7 +40,7 @@ export default function useGenerateCalldata(provider: any, tokens: any, slippage
 
   useEffect(() => {
     if (generating === "true") {
-      const amountPerTrade = amountInPerTrade(totalAmountIn, tokens);
+      const amountPerTrade = amountInPerTrade(ethers.utils.parseEther(totalAmountIn.toString()), tokens);
       generateCallData(tokens, slippage, provider, amountPerTrade, setTxObject);
       setGenerating("false");
     }

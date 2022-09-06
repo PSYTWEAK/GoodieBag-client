@@ -22,7 +22,7 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
   const [generating, setGenerating] = useState("false");
 
 
-  const txObject = useGenerateCalldata(provider, tokens, slippage, ethers.utils.parseEther(amountETHIn.toString()), generating, setGenerating);
+  const txObject = useGenerateCalldata(provider, tokens, slippage, amountETHIn, generating, setGenerating);
 
 
   const handleClick = async () => {
