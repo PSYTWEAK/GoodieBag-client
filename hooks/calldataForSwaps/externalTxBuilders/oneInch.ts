@@ -1,6 +1,6 @@
 import axios from "axios";
 import JSBI from "jsbi";
-import { weth, arbiTokenEaterAddress } from "../../../globals";
+import { weth, arbiTokenEaterAddress, oneInchAddress } from "../../../globals";
 
 export let apiBaseUrl: string = "";
 
@@ -26,6 +26,7 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
 
   if (calldata) {
     setTxObject((prevState: any) => ({
+      router: [...prevState.router, oneInchAddress],
       callData: [...prevState.callData, calldata],
       tokenId: [...prevState.tokenId, token.id],
       value: JSBI.add(amountPerTrade, prevState.value),

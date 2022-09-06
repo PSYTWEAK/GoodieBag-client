@@ -24,9 +24,14 @@ async function generateCallData(tokens: any, slippage: number, provider: any, am
       console.log("1inch failed, trying local");
       console.log(token.protocol)
 
-      token.protocol === "Uniswap V3" ? await uniswap(provider, token, amountPerTrade, slippage, setTxObject) : null;
+      try {
+        token.protocol === "Uniswap V3" ? await uniswap(provider, token, amountPerTrade, slippage, setTxObject) : null;
 
-      token.protocol === "Sushiswap" ? await sushi(provider, token, amountPerTrade, slippage, setTxObject) : null;
+        token.protocol === "Sushiswap" ? await sushi(provider, token, amountPerTrade, slippage, setTxObject) : null;
+      } catch (error) {
+        console.log("local failed");
+      }
+
     }
   }
 }
@@ -40,10 +45,14 @@ export default function useGenerateCalldata(provider: any, tokens: any, slippage
     value: JSBI.BigInt(0),
   });
 
-  // clean up this code
-
   useEffect(() => {
     if (generating === "true") {
+      setTxObject({
+        router: [],
+        callData: [],
+        tokenId: [],
+        value: JSBI.BigInt(0),
+      });
       _gen()
     }
     async function _gen() {
@@ -52,6 +61,7 @@ export default function useGenerateCalldata(provider: any, tokens: any, slippage
       setGenerating("done");
     }
   }, [generating]);
+
 
   return txObject;
 }

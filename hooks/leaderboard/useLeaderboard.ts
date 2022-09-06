@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import useLeaderboardSubgraph from "../subgraphs/useLeaderboardSubgraph";
+import leaderboardSubgraph from "../subgraphs/leaderboardSubgraph";
 
 async function queryLeaderboard() {
-  let result = await useLeaderboardSubgraph();
+  let result = await leaderboardSubgraph();
 
   return result;
 }

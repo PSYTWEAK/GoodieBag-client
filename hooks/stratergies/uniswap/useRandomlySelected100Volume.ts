@@ -1,9 +1,9 @@
 import { createClient } from "urql";
 import { useEffect, useState } from "react";
-import useUniswapSubgraph from "../../subgraphs/useUniswapSubgraph";
+import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from ".././globals";
 import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume, removeLowVolume } from ".././filters";
-import useSushiswapSubgraph from "../../subgraphs/useSushiswapSubgraph";
+import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
 
 var start: any = new Date();
 start.setUTCHours(0, 0, 0, 0);
@@ -54,7 +54,7 @@ async function querySubgraphs(config: any) {
 
   /*   if (config.uniswap) {
       try {
-        let result = await useUniswapSubgraph(uniQuery);
+        let result = await uniswapSubgraph(uniQuery);
         result ? tokens.push(...formatUni(result.data)) : null;
       } catch (err) {
         console.log(err);
@@ -62,7 +62,7 @@ async function querySubgraphs(config: any) {
     } */
   if (config.sushiswap) {
     try {
-      let result = await useSushiswapSubgraph(sushiQuery);
+      let result = await sushiswapSubgraph(sushiQuery);
       result ? tokens.push(...formatSushi(result.data)) : null;
     } catch (err) {
       console.log(err);

@@ -1,16 +1,14 @@
 import { createClient } from "urql";
 
-import { SUSHISWAP_SUBGRAPH } from "../../globals";
+import { UNISWAP_SUBGRAPH } from "../../globals";
 
-export default async function useSushiswapSubgraph(query: string) {
+export default async function uniswapSubgraph(query: string) {
   try {
     const client = createClient({
-      url: SUSHISWAP_SUBGRAPH,
+      url: UNISWAP_SUBGRAPH,
     });
 
     const data: any = await client.query(query).toPromise();
-    console.log("subgraph");
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
