@@ -1,5 +1,5 @@
 import JSBI from "jsbi";
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { oneInch } from "./externalTxBuilders/oneInch";
 import { uniswap } from "./externalTxBuilders/uniswap";
 import { sushi } from "./localTxBuilders/sushiswap";
@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 // This hook is used to generate the calldata for the swaps for every token and split the total amount in between them
 // It also checks if the slippage is too high and if so, it will use the localTxBuilders
 // The localTxBuilders are used to generate the calldata for the swaps for tokens that are not supported by 1inch or have a slippage too high
-
 
 async function generateCallData(tokens: any, slippage: number, provider: any, amountPerTrade: JSBI, setTxObject: any) {
   for (let i = 0; i < tokens.length; i++) {
@@ -22,6 +21,8 @@ async function generateCallData(tokens: any, slippage: number, provider: any, am
 
       await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
     } catch (error) {
+      console.log("1inch failed, trying local");
+      console.log(token.protocol)
 
       token.protocol === "Uniswap V3" ? await uniswap(provider, token, amountPerTrade, slippage, setTxObject) : null;
 
@@ -33,16 +34,22 @@ async function generateCallData(tokens: any, slippage: number, provider: any, am
 export default function useGenerateCalldata(provider: any, tokens: any, slippage: number, totalAmountIn: BigNumber, generating: string, setGenerating: any) {
 
   const [txObject, setTxObject] = useState({
+    router: [],
     callData: [],
     tokenId: [],
     value: JSBI.BigInt(0),
   });
 
+  // clean up this code
+
   useEffect(() => {
     if (generating === "true") {
+      _gen()
+    }
+    async function _gen() {
       const amountPerTrade = amountInPerTrade(ethers.utils.parseEther(totalAmountIn.toString()), tokens);
-      generateCallData(tokens, slippage, provider, amountPerTrade, setTxObject);
-      setGenerating("false");
+      await generateCallData(tokens, slippage, provider, amountPerTrade, setTxObject);
+      setGenerating("done");
     }
   }, [generating]);
 

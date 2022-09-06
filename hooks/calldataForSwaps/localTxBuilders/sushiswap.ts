@@ -1,13 +1,13 @@
 import { BigNumber, ethers } from "ethers";
 import JSBI from "jsbi";
-import { weth, arbiTokenEaterAddress } from "../../../globals";
+import { weth, arbiTokenEaterAddress, arbiSushiswapRouterAddress } from "../../../globals";
 
 
 export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
   console.log("Trying Sushi");
   // sushiswap contract instance
   const sushiContract = new ethers.Contract(
-    "0x1b02dA8Cb0d097eB8D57A175b88c7D8b47997506",
+    arbiSushiswapRouterAddress,
     [
       "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) external returns (uint[] memory amounts)",
       "function getAmountsOut(uint amountIn, address[] memory path) public view returns (uint[] memory amounts)"
@@ -38,6 +38,7 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
 
   if (calldata) {
     setTxObject((prevState: any) => ({
+      router: [...prevState.router, arbiSushiswapRouterAddress],
       callData: [...prevState.callData, calldata],
       tokenId: [...prevState.tokenId, token.id],
       value: JSBI.add(amountPerTrade, prevState.value),
@@ -50,7 +51,6 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
 
 function _minimumAmountOut(contractQuote: string, slippage: number) {
   // contractQuote - (contractQuote * (slippage / 100))
-
   return JSBI.subtract(JSBI.BigInt(contractQuote), JSBI.multiply(JSBI.BigInt(contractQuote), JSBI.divide(JSBI.BigInt(slippage), JSBI.BigInt(100))));
 }
 

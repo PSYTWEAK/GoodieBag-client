@@ -2,7 +2,7 @@ import { BigNumber } from "ethers";
 import { CurrencyAmount, Token, TradeType, Percent } from "@uniswap/sdk-core";
 import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
-import { weth, arbiTokenEaterAddress } from "../../../globals";
+import { weth, arbiTokenEaterAddress, arbiUniswapRouterAddress } from "../../../globals";
 
 export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
   console.log("Trying Uniswap");
@@ -24,6 +24,7 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
 
   if (route) {
     setTxObject((prevState: any) => ({
+      router: [...prevState.router, arbiUniswapRouterAddress],
       callData: [...prevState.callData, route.methodParameters.calldata],
       tokenId: [...prevState.tokenId, token.id],
       value: JSBI.add(amountPerTrade, prevState.value),

@@ -21,9 +21,9 @@
   {
     "inputs": [
       {
-        "internalType": "address",
+        "internalType": "address[]",
         "name": "router",
-        "type": "address"
+        "type": "address[]"
       },
       {
         "internalType": "address[]",

@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { useProvider, useContract, useContractWrite, useSendTransaction } from "wagmi";
 import TokenEaterABI from "../contracts/TokenEaterABI.json";
-import { arbiTokenEaterAddress, arbiUniswapRouterAddress, oneInch } from "../globals";
-import { ethers } from "ethers";
-import { setRevalidateHeaders } from "next/dist/server/send-payload";
+import { arbiTokenEaterAddress } from "../globals";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 
 
@@ -42,7 +40,7 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
   useEffect(() => {
     if (generating === "done") {
       write({
-        args: [oneInch, txObject.tokenId, txObject.callData],
+        args: [txObject.router, txObject.tokenId, txObject.callData],
         overrides: {
           value: txObject.value.toString(),
           gasLimit: "30000000",
