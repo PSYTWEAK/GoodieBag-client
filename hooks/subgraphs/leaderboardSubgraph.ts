@@ -11,7 +11,7 @@ query {
 }
 `;
 
-export default async function useLeaderboardSubgraph() {
+export default async function leaderboardSubgraph() {
   try {
     const client = createClient({
       url: LEADERBOARD_SUBGRAPH,

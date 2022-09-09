@@ -3,8 +3,11 @@ import Grid from "@mui/material/Grid";
 import styles from "../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { DeleteTokenButton } from "./DeleteTokenButton";
+import useOneInchTokenList from "../hooks/useOneInchTokenList";
+import { TokenLogo } from "./tokenLogo";
 
 export default function Tokens({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
+
   const handleRemoveToken = (token: string) => {
     setTokens(tokens.filter((item: any) => item.id !== token));
   };
@@ -29,6 +32,7 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
           return (
             <Grid item xs={8} width="max">
               <div className={styles.div}>
+                <TokenLogo tokenAddress={data.id} />
                 <p>{data.name}</p>
                 <p>&nbsp;</p>
                 <p>{data.symbol}</p>

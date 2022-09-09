@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { useProvider, useContract, useContractWrite, useSendTransaction } from "wagmi";
-import TokenEaterABI from "../contracts/TokenEaterABI.json";
-import { arbiTokenEaterAddress } from "../globals";
+import GoodieBagABI from "../contracts/GoodieBagABI.json";
+import { arbiGoodieBagAddress } from "../globals";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 
 
@@ -10,8 +10,8 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
   const provider = useProvider();
 
   const { data, isLoading, isSuccess, write } = useContractWrite({
-    addressOrName: arbiTokenEaterAddress,
-    contractInterface: TokenEaterABI,
+    addressOrName: arbiGoodieBagAddress,
+    contractInterface: GoodieBagABI,
     functionName: "multiBuy",
   });
 

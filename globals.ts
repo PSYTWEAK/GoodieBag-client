@@ -8,7 +8,7 @@ export const UNISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/benjami
 export const SUSHISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/sushiswap/sushiswap-arbitrum";
 export const LEADERBOARD_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/psytweak/goodiebag-leaderboard";
 // goodiebag contract
-export const arbiTokenEaterAddress = "0x5C06aa163eD49eB27Ac5015A9b8cD07D3ba7dc42";
+export const arbiGoodieBagAddress = "0x5C06aa163eD49eB27Ac5015A9b8cD07D3ba7dc42";
 // uniswap contracts
 export const arbiUniswapQuoterAddress = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
 export const arbiUniswapRouterAddress = "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45";

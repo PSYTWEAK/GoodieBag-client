@@ -32,6 +32,7 @@ const UserList = (users: any, address: any) => {
 
                 <p> ETH</p>
               </div>{" "}
+
             </Grid>
           );
         } catch (err) {

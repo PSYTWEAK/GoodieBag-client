@@ -1,6 +1,6 @@
 import axios from "axios";
 import JSBI from "jsbi";
-import { weth, arbiTokenEaterAddress, oneInchAddress } from "../../../globals";
+import { weth, arbiGoodieBagAddress, oneInchAddress } from "../../../globals";
 
 export let apiBaseUrl: string = "";
 
@@ -17,7 +17,7 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
       fromTokenAddress: weth,
       toTokenAddress: token.id,
       amount: amountPerTrade,
-      fromAddress: arbiTokenEaterAddress,
+      fromAddress: arbiGoodieBagAddress,
       slippage: slippage,
       disableEstimate: true,
       allowPartialFill: false,
