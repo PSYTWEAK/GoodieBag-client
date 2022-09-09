@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from "ethers";
 import JSBI from "jsbi";
-import { weth, arbiTokenEaterAddress, arbiSushiswapRouterAddress } from "../../../globals";
+import { weth, arbiGoodieBagAddress, arbiSushiswapRouterAddress } from "../../../globals";
 
 
 export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
@@ -33,7 +33,7 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
       amountPerTrade.toString(),
       minimumAmountOut.toString(),
       path,
-      arbiTokenEaterAddress,
+      arbiGoodieBagAddress,
       deadline,
     ]);
 

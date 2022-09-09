@@ -5,8 +5,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+// set oneinch token list to return any type
+
+
 export default function useOneInchTokenList() {
-    const [tokenList, setTokenList] = useState([]);
+    const [tokenList, setTokenList] = useState<any>([]);
     const [loading, setLoading] = useState("false");
 
     useEffect(() => {
@@ -17,7 +20,7 @@ export default function useOneInchTokenList() {
             try {
                 setLoading("true");
                 const _result: any = await getTokenList();
-                setTokenList(_result);
+                setTokenList(_result.tokens);
                 _result ? setLoading("done") : setLoading("null");
             } catch (error) {
                 setLoading("null");

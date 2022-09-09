@@ -33,7 +33,9 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
             <Grid item xs={8} width="max">
               <div className={styles.div}>
                 <TokenLogo tokenAddress={data.id} />
-                <p>{data.name}</p>
+                <a target="_blank" href={`https://arbiscan.io/address/${data.id}`}>
+                  <p>{data.name}</p>
+                </a>
                 <p>&nbsp;</p>
                 <p>{data.symbol}</p>
                 <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} />
