@@ -19,36 +19,33 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
   // path for swap 
   const path = [weth, token.id];
 
-  try {
-    // get the contract quote
-    const contractQuote = await sushiContract.getAmountsOut(amountPerTrade.toString(), path);
+  // get the contract quote
+  const contractQuote = await sushiContract.getAmountsOut(amountPerTrade.toString(), path);
 
-    // get the minimum amount out
-    const minimumAmountOut = _minimumAmountOut(contractQuote[1].toString(), slippage);
+  // get the minimum amount out
+  const minimumAmountOut = _minimumAmountOut(contractQuote[1].toString(), slippage);
 
-    // get the deadline
-    const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
+  // get the deadline
+  const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
 
-    const calldata = sushiContract.interface.encodeFunctionData("swapExactTokensForTokens", [
-      amountPerTrade.toString(),
-      minimumAmountOut.toString(),
-      path,
-      arbiGoodieBagAddress,
-      deadline,
-    ]);
+  const calldata = await sushiContract.interface.encodeFunctionData("swapExactTokensForTokens", [
+    amountPerTrade.toString(),
+    minimumAmountOut.toString(),
+    path,
+    arbiGoodieBagAddress,
+    deadline,
+  ]);
 
-    if (calldata) {
-      setTxObject((prevState: any) => ({
-        router: [...prevState.router, arbiSushiswapRouterAddress],
-        callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, token.id],
-        value: JSBI.add(amountPerTrade, prevState.value),
-      }));
-    } else {
-      throw "Sushi failed";
-    }
-  } catch (error) {
-    throw error;
+  if (calldata) {
+    setTxObject((prevState: any) => ({
+      router: [...prevState.router, arbiSushiswapRouterAddress],
+      callData: [...prevState.callData, calldata],
+      tokenId: [...prevState.tokenId, token.id],
+      value: JSBI.add(amountPerTrade, prevState.value),
+    }));
+    return true;
+  } else {
+    return false;
   }
 }
 

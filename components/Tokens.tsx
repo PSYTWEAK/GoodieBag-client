@@ -6,6 +6,9 @@ import { DeleteTokenButton } from "./DeleteTokenButton";
 import useOneInchTokenList from "../hooks/useOneInchTokenList";
 import { TokenLogo } from "./TokenLogo";
 import { Token } from "graphql";
+import DoneIcon from '@mui/icons-material/Done';
+import { Done } from "@mui/icons-material";
+import ErrorIcon from '@mui/icons-material/Error';
 
 export default function Tokens({ tokens, loading, setTokens, generatingCalldata }: { tokens: any; loading: any; setTokens: any, generatingCalldata: string }) {
 
@@ -39,7 +42,8 @@ const TokenList = (tokens: any, handleRemoveToken: any, generatingCalldata: stri
                 </a>
                 <p>&nbsp;</p>
                 <p>{data.symbol}</p>
-                {generatingCalldata === "false" ? <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} /> : tokenSwapCalldataProgress(data)}
+                {data.hasCalldata === "null" ? <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} /> : <></>}
+                {tokenBuildFeedback(data)}
               </div>{" "}
               {stratergySpecificData(data.stratergySpecificData)}
             </Grid>
@@ -52,24 +56,24 @@ const TokenList = (tokens: any, handleRemoveToken: any, generatingCalldata: stri
   );
 };
 
-function tokenSwapCalldataProgress(token: any) {
+function tokenBuildFeedback(token: any) {
   if (token.hasCalldata === "loading") {
     return (
-      <div className={styles.div}>
+      <div className={styles.tokenBuildFeedback}>
         <CircularProgress />
       </div>
     );
   } else if (token.hasCalldata === "true") {
     return (
-      <div className={styles.div}>
-        <p>✅</p>
+      <div className={styles.tokenBuildFeedback}>
+        <DoneIcon />
       </div>
 
     );
   } else if (token.hasCalldata === "false") {
     return (
-      <div className={styles.div}>
-        <p>❌</p>
+      <div className={styles.tokenBuildFeedback}>
+        <ErrorIcon />
       </div>
     );
   } else {

@@ -127,6 +127,12 @@
   margin-right: 0;
 }
 
+.tokenBuildFeedback {
+  margin-left: auto;
+  margin-right: 0;
+  padding-right: 2px;
+}
+
 .smolstratergySpecificData {
   font-size: 0.8rem !important;
   margin-left: auto;

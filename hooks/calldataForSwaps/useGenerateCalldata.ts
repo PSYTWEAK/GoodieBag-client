@@ -11,37 +11,50 @@ import { useEffect, useState } from "react";
 
 async function generateCallData(tokens: any, setTokens: any, slippage: number, provider: any, amountPerTrade: JSBI, setTxObject: any) {
   for (let i = 0; i < tokens.length; i++) {
+
     const token = tokens[i];
-    setTokens((prevState: any) => {
+
+    console.log("Token " + token.name + " processing");
+
+    let success: boolean = false;
+
+    await setTokens((prevState: any) => {
       prevState[i].hasCalldata = "loading";
       return [...prevState];
     });
-    try {
-      console.log("Token " + token.name + " processing");
 
-      if (slippage > 50) {
-        throw "slippage too high";
+    try {
+
+      if (slippage < 50) {
+        success = await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
       }
 
-      await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
+      if (!success && token.protocol === "Uniswap V3") {
+
+        success = await uniswap(provider, token, amountPerTrade, slippage, setTxObject)
+      }
+      if (!success && token.protocol === "Sushiswap") {
+
+        success = await sushi(provider, token, amountPerTrade, slippage, setTxObject);
+      }
     } catch (error) {
-
-      try {
-        token.protocol === "Uniswap V3" ? await uniswap(provider, token, amountPerTrade, slippage, setTxObject) : null;
-
-        token.protocol === "Sushiswap" ? await sushi(provider, token, amountPerTrade, slippage, setTxObject) : null;
-        setTokens((prevState: any) => {
-          prevState[i].hasCalldata = "true";
-          return [...prevState];
-        });
-      } catch (error) {
-        console.log(error)
-        setTokens((prevState: any) => {
+      console.log(error)
+      await setTokens((prevState: any) => {
+        prevState[i].hasCalldata = "false";
+        return [...prevState];
+      });
+    } finally {
+      if (!success) {
+        await setTokens((prevState: any) => {
           prevState[i].hasCalldata = "false";
           return [...prevState];
         });
+      } else {
+        await setTokens((prevState: any) => {
+          prevState[i].hasCalldata = "true";
+          return [...prevState];
+        });
       }
-
     }
   }
 }
