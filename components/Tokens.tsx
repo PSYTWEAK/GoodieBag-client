@@ -5,8 +5,9 @@ import { CircularProgress } from "@mui/material";
 import { DeleteTokenButton } from "./DeleteTokenButton";
 import useOneInchTokenList from "../hooks/useOneInchTokenList";
 import { TokenLogo } from "./TokenLogo";
+import { Token } from "graphql";
 
-export default function Tokens({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
+export default function Tokens({ tokens, loading, setTokens, generatingCalldata }: { tokens: any; loading: any; setTokens: any, generatingCalldata: string }) {
 
   const handleRemoveToken = (token: string) => {
     setTokens(tokens.filter((item: any) => item.id !== token));
@@ -17,13 +18,13 @@ export default function Tokens({ tokens, loading, setTokens }: { tokens: any; lo
       {loading === "false" ? <></> :
         loading === "null" ? <h1>No Tokens Found</h1> :
           loading === "true" ? <LoadingProcess /> :
-            loading === "done" && tokens.length > 0 ? <>{TokenList(tokens, handleRemoveToken)}</> :
+            loading === "done" && tokens.length > 0 ? <>{TokenList(tokens, handleRemoveToken, generatingCalldata)}</> :
               <></>}
     </Grid>
   );
 }
 
-const TokenList = (tokens: any, handleRemoveToken: any) => {
+const TokenList = (tokens: any, handleRemoveToken: any, generatingCalldata: string) => {
   return (
     <>
       {stratergySpecificData(tokens[0].stratergySpecificDataDes)}
@@ -38,7 +39,7 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
                 </a>
                 <p>&nbsp;</p>
                 <p>{data.symbol}</p>
-                <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} />
+                {generatingCalldata === "false" ? <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} /> : swapBuildingProgress(data)}
               </div>{" "}
               {stratergySpecificData(data.stratergySpecificData)}
             </Grid>
@@ -51,12 +52,35 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
   );
 };
 
+function swapBuildingProgress(token: any) {
+  if (token.hasCalldata === "null") {
+    return (
+      <div className={styles.div}>
+        <CircularProgress />
+      </div>
+    );
+  } else if (token.hasCalldata === "true") {
+    return (
+      <div className={styles.div}>
+        <p>✅</p>
+      </div>
+
+    );
+  } else if (token.hasCalldata === "false") {
+    return (
+      <div className={styles.div}>
+        <p>❌</p>
+      </div>
+    );
+  }
+}
+
 function error(i: number, err: any) {
   console.log("Couldn't show token " + i + err);
   return <></>;
 }
 
-function LoadingProcess({ }) {
+function LoadingProcess() {
   return (
     <div className={styles.div}>
       <CircularProgress />

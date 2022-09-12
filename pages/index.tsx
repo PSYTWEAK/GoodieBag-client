@@ -24,6 +24,9 @@ const Home: NextPage = () => {
   const [amountETHIn, setAmountETHIn] = useState(null);
   const [settingsActive, setSettingsActive] = useState(false);
 
+  const [generatingCalldata, setGeneratingCalldata] = useState("false");
+
+
   return (
     <div className={styles.container}>
       <Head>
@@ -49,8 +52,8 @@ const Home: NextPage = () => {
               {!settingsActive && !settingsActive && (
                 <>
                   <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
-                  <BuyTokens tokens={tokens} loading={loading} slippage={slippage} amountETHIn={amountETHIn} />
-                  <Tokens tokens={tokens} loading={loading} setTokens={setTokens} />
+                  <BuyTokens tokens={tokens} loading={loading} slippage={slippage} amountETHIn={amountETHIn} generatingCalldata={generatingCalldata} setGeneratingCalldata={setGeneratingCalldata} />
+                  <Tokens tokens={tokens} loading={loading} setTokens={setTokens} generatingCalldata={generatingCalldata} />
                 </>
               )}
             </>

@@ -6,7 +6,7 @@ import { arbiGoodieBagAddress } from "../globals";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 
 
-export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: any; loading: any; slippage: number; amountETHIn: any }) {
+export function BuyTokens({ tokens, loading, slippage, amountETHIn, generatingCalldata, setGeneratingCalldata }: { tokens: any; loading: any; slippage: number; amountETHIn: any, generatingCalldata: string, setGeneratingCalldata: any }) {
   const provider = useProvider();
 
   const { data, isLoading, isSuccess, write } = useContractWrite({
@@ -17,7 +17,7 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
 
   const [disabled, setDisabled] = useState(true);
 
-  const [generating, setGenerating] = useState("false");
+
 
 
   const txObject = useGenerateCalldata(provider, tokens, slippage, amountETHIn, generating, setGenerating);
