@@ -4,7 +4,7 @@ import styles from "../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { DeleteTokenButton } from "./DeleteTokenButton";
 import useOneInchTokenList from "../hooks/useOneInchTokenList";
-import { TokenLogo } from "./tokenLogo";
+import { TokenLogo } from "./TokenLogo";
 
 export default function Tokens({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
 

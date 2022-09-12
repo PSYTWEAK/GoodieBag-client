@@ -45,6 +45,8 @@ export default async function useRandomlySelected(config: any) {
   tokens = removeSignOfDerivInTokenName(tokens);
   tokens = removeDuplicates(tokens);
   tokens = removeLowVolume(tokens);
+  tokens = shuffleTokens(tokens);
+
   return tokens;
 }
 

@@ -24,7 +24,7 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn }: { tokens: 
 
 
   const handleClick = async () => {
-    if (tokens) {
+    if (tokens && generating === "false") {
       setGenerating("true");
     }
   };
