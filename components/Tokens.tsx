@@ -10,7 +10,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import { Done } from "@mui/icons-material";
 import ErrorIcon from '@mui/icons-material/Error';
 
-export default function Tokens({ tokens, loading, setTokens, generatingCalldata }: { tokens: any; loading: any; setTokens: any, generatingCalldata: string }) {
+export default function Tokens({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
 
   const handleRemoveToken = (token: string) => {
     setTokens(tokens.filter((item: any) => item.id !== token));
@@ -20,14 +20,14 @@ export default function Tokens({ tokens, loading, setTokens, generatingCalldata 
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} direction="column" marginTop={1.5}>
       {loading === "false" ? <></> :
         loading === "null" ? <h1>No Tokens Found</h1> :
-          loading === "true" ? <LoadingProcess /> :
-            loading === "done" && tokens.length > 0 ? <>{TokenList(tokens, handleRemoveToken, generatingCalldata)}</> :
+          loading === "true" ? <loadingAllTokensProgress /> :
+            loading === "done" && tokens.length > 0 ? <>{TokenList(tokens, handleRemoveToken)}</> :
               <></>}
     </Grid>
   );
 }
 
-const TokenList = (tokens: any, handleRemoveToken: any, generatingCalldata: string) => {
+const TokenList = (tokens: any, handleRemoveToken: any) => {
   return (
     <>
       {stratergySpecificData(tokens[0].stratergySpecificDataDes)}
@@ -56,23 +56,23 @@ const TokenList = (tokens: any, handleRemoveToken: any, generatingCalldata: stri
   );
 };
 
-function tokenBuildFeedback(token: any) {
+function tokenCalldataBuildFeedback(token: any) {
   if (token.hasCalldata === "loading") {
     return (
-      <div className={styles.tokenBuildFeedback}>
+      <div className={styles.tokenCalldataBuildFeedback}>
         <CircularProgress />
       </div>
     );
   } else if (token.hasCalldata === "true") {
     return (
-      <div className={styles.tokenBuildFeedback}>
+      <div className={styles.tokenCalldataBuildFeedback}>
         <DoneIcon />
       </div>
 
     );
   } else if (token.hasCalldata === "false") {
     return (
-      <div className={styles.tokenBuildFeedback}>
+      <div className={styles.tokenCalldataBuildFeedback}>
         <ErrorIcon />
       </div>
     );
@@ -86,7 +86,7 @@ function error(i: number, err: any) {
   return <></>;
 }
 
-function LoadingProcess() {
+function loadingAllTokensProgress() {
   return (
     <div className={styles.div}>
       <CircularProgress />
