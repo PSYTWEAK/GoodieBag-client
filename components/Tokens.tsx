@@ -39,7 +39,7 @@ const TokenList = (tokens: any, handleRemoveToken: any, generatingCalldata: stri
                 </a>
                 <p>&nbsp;</p>
                 <p>{data.symbol}</p>
-                {generatingCalldata === "false" ? <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} /> : swapBuildingProgress(data)}
+                {generatingCalldata === "false" ? <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} /> : tokenSwapCalldataProgress(data)}
               </div>{" "}
               {stratergySpecificData(data.stratergySpecificData)}
             </Grid>
@@ -52,8 +52,8 @@ const TokenList = (tokens: any, handleRemoveToken: any, generatingCalldata: stri
   );
 };
 
-function swapBuildingProgress(token: any) {
-  if (token.hasCalldata === "null") {
+function tokenSwapCalldataProgress(token: any) {
+  if (token.hasCalldata === "loading") {
     return (
       <div className={styles.div}>
         <CircularProgress />
@@ -72,6 +72,8 @@ function swapBuildingProgress(token: any) {
         <p>❌</p>
       </div>
     );
+  } else {
+    return <></>;
   }
 }
 

@@ -111,6 +111,7 @@ function formatUni(pools: any): any {
       stratergySpecificDataDes: `Added to DEX at`,
       stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
       createdAtTimestamp: pools[i].createdAtTimestamp,
+      hasCalldata: "null"
     };
 
     if (token.id) {
@@ -133,6 +134,7 @@ function formatSushi(pairs: any): any {
       stratergySpecificDataDes: `Added to DEX at`,
       stratergySpecificData: `${date(pairs[i].createdAtTimestamp)}`,
       createdAtTimestamp: pairs[i].createdAtTimestamp,
+      hasCalldata: "null"
     };
 
     if (token.id) {

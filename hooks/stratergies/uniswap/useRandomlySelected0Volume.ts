@@ -90,6 +90,7 @@ function formatUni(data: any): any {
     b = a / 10^18 */
       stratergySpecificDataDes: "",
       stratergySpecificData: "",
+      hasCalldata: "null"
     };
     if (token.id != weth) {
       tokens.push(token);
@@ -113,6 +114,7 @@ function formatSushi(data: any): any {
       b = a / 10^18 */
       stratergySpecificDataDes: "",
       stratergySpecificData: "",
+      hasCalldata: "null"
     };
     if (token.id != weth) {
       tokens.push(token);

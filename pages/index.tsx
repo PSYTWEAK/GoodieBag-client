@@ -52,7 +52,7 @@ const Home: NextPage = () => {
               {!settingsActive && !settingsActive && (
                 <>
                   <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
-                  <BuyTokens tokens={tokens} loading={loading} slippage={slippage} amountETHIn={amountETHIn} generatingCalldata={generatingCalldata} setGeneratingCalldata={setGeneratingCalldata} />
+                  <BuyTokens tokens={tokens} setTokens={setTokens} loading={loading} slippage={slippage} amountETHIn={amountETHIn} generatingCalldata={generatingCalldata} setGeneratingCalldata={setGeneratingCalldata} />
                   <Tokens tokens={tokens} loading={loading} setTokens={setTokens} generatingCalldata={generatingCalldata} />
                 </>
               )}

@@ -40,6 +40,7 @@ const sushiQuery = `
 export default async function useRandomlySelected(config: any) {
   const result = await querySubgraphs(config);
   let tokens: any = result;
+
   tokens = removeBlueChips(tokens);
   tokens = removeStables(tokens);
   tokens = removeSignOfDerivInTokenName(tokens);
@@ -86,6 +87,7 @@ function formatUni(data: any): any {
     b = a / 10^18 */
       stratergySpecificDataDes: "",
       stratergySpecificData: "",
+      hasCalldata: "null"
     };
     if (token.id != weth) {
       tokens.push(token);
@@ -108,6 +110,7 @@ function formatSushi(data: any): any {
       b = a / 10^18 */
       stratergySpecificDataDes: "",
       stratergySpecificData: "",
+      hasCalldata: "null"
     };
     if (token.id != weth) {
       tokens.push(token);

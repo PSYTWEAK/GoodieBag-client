@@ -6,7 +6,7 @@ import { arbiGoodieBagAddress } from "../globals";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 
 
-export function BuyTokens({ tokens, loading, slippage, amountETHIn, generatingCalldata, setGeneratingCalldata }: { tokens: any; loading: any; slippage: number; amountETHIn: any, generatingCalldata: string, setGeneratingCalldata: any }) {
+export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, generatingCalldata, setGeneratingCalldata }: { tokens: any; setTokens: any; loading: any; slippage: number; amountETHIn: any, generatingCalldata: string, setGeneratingCalldata: any }) {
   const provider = useProvider();
 
   const { data, isLoading, isSuccess, write } = useContractWrite({
@@ -17,20 +17,17 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn, generatingCa
 
   const [disabled, setDisabled] = useState(true);
 
-
-
-
-  const txObject = useGenerateCalldata(provider, tokens, slippage, amountETHIn, generating, setGenerating);
+  const txObject = useGenerateCalldata(provider, tokens, setTokens, slippage, amountETHIn, generatingCalldata, setGeneratingCalldata);
 
 
   const handleClick = async () => {
-    if (tokens && generating === "false") {
-      setGenerating("true");
+    if (tokens && generatingCalldata === "false") {
+      setGeneratingCalldata("true");
     }
   };
 
   useEffect(() => {
-    if (amountETHIn > 0 && loading === "done" && tokens.length > 0 && generating === "false") {
+    if (amountETHIn > 0 && loading === "done" && tokens.length > 0 && generatingCalldata === "false") {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -38,7 +35,7 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn, generatingCa
   }, [amountETHIn, tokens]);
 
   useEffect(() => {
-    if (generating === "done") {
+    if (generatingCalldata === "done") {
       write({
         args: [txObject.router, txObject.tokenId, txObject.callData],
         overrides: {
@@ -47,8 +44,8 @@ export function BuyTokens({ tokens, loading, slippage, amountETHIn, generatingCa
         },
       });
     }
-    setGenerating("false");
-  }, [generating]);
+    setGeneratingCalldata("false");
+  }, [generatingCalldata]);
 
   return (
     <div>
