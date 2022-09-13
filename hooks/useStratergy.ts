@@ -26,15 +26,17 @@ export default function useStratergy(stratergy: string, config: any) {
   useEffect(() => {
     _stratergy();
     async function _stratergy() {
-      try {
-        setLoading("true");
-        const _result: any = await findStratergy(stratergy, config);
-        setStratResult(_result);
-        _result ? setLoading("done") : setLoading("null");
+      if (stratergy) {
+        try {
+          setLoading("true");
+          const _result: any = await findStratergy(stratergy, config);
+          setStratResult(_result);
+          _result ? setLoading("done") : setLoading("null");
 
 
-      } catch (error) {
-        setLoading("null");
+        } catch (error) {
+          setLoading("null");
+        }
       }
     }
   }, [stratergy]);
