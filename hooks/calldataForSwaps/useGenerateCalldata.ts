@@ -11,52 +11,43 @@ import { useEffect, useState } from "react";
 
 async function generateCallData(tokens: any, setTokens: any, slippage: number, provider: any, amountPerTrade: JSBI, setTxObject: any) {
   for (let i = 0; i < tokens.length; i++) {
-
-    const token = tokens[i];
-
-    console.log("Token " + token.name + " processing");
-
-    let success: boolean = false;
-
-    await setTokens((prevState: any) => {
-      prevState[i].hasCalldata = "loading";
-      return [...prevState];
-    });
-
-    try {
-
-      if (slippage < 50) {
-        success = await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
-      }
-
-      if (!success && token.protocol === "Uniswap V3") {
-
-        success = await uniswap(provider, token, amountPerTrade, slippage, setTxObject)
-      }
-      if (!success && token.protocol === "Sushiswap") {
-
-        success = await sushi(provider, token, amountPerTrade, slippage, setTxObject);
-      }
-    } catch (error) {
-      console.log(error)
-      await setTokens((prevState: any) => {
-        prevState[i].hasCalldata = "false";
-        return [...prevState];
-      });
-    } finally {
-      if (!success) {
-        await setTokens((prevState: any) => {
-          prevState[i].hasCalldata = "false";
-          return [...prevState];
-        });
-      } else {
-        await setTokens((prevState: any) => {
-          prevState[i].hasCalldata = "true";
-          return [...prevState];
-        });
-      }
-    }
+    await generateTokenSwapCalldata(tokens[i], i, setTokens, slippage, provider, amountPerTrade, setTxObject);
   }
+}
+
+
+async function generateTokenSwapCalldata(token: any, index: number, setTokens: any, slippage: number, provider: any, amountPerTrade: JSBI, setTxObject: any) {
+
+  let success: boolean = false;
+
+  setTokens((prevState: any) => {
+    prevState[index].hasCalldata = "loading";
+    return [...prevState];
+  });
+
+  try {
+
+    if (slippage < 50) {
+      success = await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
+    }
+
+    if (!success && token.protocol === "Uniswap V3") {
+
+      success = await uniswap(provider, token, amountPerTrade, slippage, setTxObject);
+    }
+    if (!success && token.protocol === "Sushiswap") {
+
+      success = await sushi(provider, token, amountPerTrade, slippage, setTxObject);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+
+  setTokens((prevState: any) => {
+    prevState[index].hasCalldata = success.toString();
+    return [...prevState];
+  });
+
 }
 
 export default function useGenerateCalldata(provider: any, tokens: any, setTokens: any, slippage: number, totalAmountIn: BigNumber, generating: string, setGenerating: any) {

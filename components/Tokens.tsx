@@ -20,7 +20,7 @@ export default function Tokens({ tokens, loading, setTokens }: { tokens: any; lo
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} direction="column" marginTop={1.5}>
       {loading === "false" ? <></> :
         loading === "null" ? <h1>No Tokens Found</h1> :
-          loading === "true" ? <loadingAllTokensProgress /> :
+          loading === "true" ? loadingAllTokensProgress() :
             loading === "done" && tokens.length > 0 ? <>{TokenList(tokens, handleRemoveToken)}</> :
               <></>}
     </Grid>
@@ -43,7 +43,7 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
                 <p>&nbsp;</p>
                 <p>{data.symbol}</p>
                 {data.hasCalldata === "null" ? <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} /> : <></>}
-                {tokenBuildFeedback(data)}
+                {tokenCalldataBuildFeedback(data)}
               </div>{" "}
               {stratergySpecificData(data.stratergySpecificData)}
             </Grid>

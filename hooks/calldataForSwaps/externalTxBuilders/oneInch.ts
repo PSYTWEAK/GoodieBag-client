@@ -5,7 +5,6 @@ import { weth, arbiGoodieBagAddress, oneInchAddress } from "../../../globals";
 export let apiBaseUrl: string = "";
 
 export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
-  console.log("Trying 1inch");
 
   const chainId = provider._network.chainId;
 
@@ -42,7 +41,6 @@ async function buildTxForSwap(swapParams: any) {
   return axios
     .get(url)
     .then((res: any) => {
-      console.log(res);
       return res.data.tx.data;
     })
     .catch((err) => {

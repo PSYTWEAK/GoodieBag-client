@@ -4,7 +4,6 @@ import { weth, arbiGoodieBagAddress, arbiSushiswapRouterAddress } from "../../..
 
 
 export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
-  console.log("Trying Sushi");
   // sushiswap contract instance
   const sushiContract = new ethers.Contract(
     arbiSushiswapRouterAddress,

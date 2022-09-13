@@ -5,7 +5,6 @@ import JSBI from "jsbi";
 import { weth, arbiGoodieBagAddress, arbiUniswapRouterAddress } from "../../../globals";
 
 export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
-  console.log("Trying Uniswap");
 
   const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
 
