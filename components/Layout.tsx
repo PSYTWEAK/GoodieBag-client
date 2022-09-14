@@ -14,8 +14,6 @@ const Layout = ({ children }: Props) => (
         <Head>
             <title>GoodieBag</title>
             <meta name="description" content="The ERC20 mass buying tool" />
-            {// use logo.ico in public folder as favicon
-            }
             <link rel="icon" href="/logo.ico" />
         </Head>
         <NavBar />
