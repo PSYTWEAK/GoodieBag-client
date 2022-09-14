@@ -26,7 +26,7 @@ export default function useStratergy(stratergy: string, config: any) {
   useEffect(() => {
     _stratergy();
     async function _stratergy() {
-      if (stratergy) {
+      if (stratergy !== "") {
         try {
           setLoading("true");
           const _result: any = await findStratergy(stratergy, config);

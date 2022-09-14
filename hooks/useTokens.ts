@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-export default function useTokens(stratergy: string, stratResult: any, tokensLength: number) {
+export default function useTokens(stratergy: string, stratResult: any, tokensLength: number, loading: any) {
   const [tokens, setTokens] = useState([]);
 
   useEffect(() => {
-    if (!!stratResult === true) {
+    if (loading === "done") {
       setTokens(stratResult.slice(0, tokensLength));
     }
-  }, [stratResult, tokensLength]);
+  }, [stratResult, tokensLength, loading]);
 
   useEffect(() => {
     setTokens([]);

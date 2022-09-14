@@ -60,6 +60,7 @@ async function querySubgraphs(config: any) {
       let result = await uniswapSubgraph(uniQuery);
 
       result ? tokens.push(...formatUni(result.data)) : null;
+      console.log(result)
     } catch (err) {
       console.log(err);
     }
