@@ -23,7 +23,7 @@ const UserList = (users: any, address: any) => {
               <div className={styles.leaderboardUser}>
                 <p>#{i + 1}</p>
                 <p>&nbsp;</p>
-                <a target="_blank" href={`https://arbiscan.io/address/${data.id}`}>
+                <a target="_blank" rel="noreferrer" href={`https://arbiscan.io/address/${data.id}`}>
                   <p className={data.id.toLowerCase() === address.toLowerCase() ? styles.rainbow : ""}>{readableAddress(data)}</p>
                 </a>
                 <p>&nbsp;</p>

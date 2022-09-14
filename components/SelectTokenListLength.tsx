@@ -15,8 +15,8 @@ export function SelectTokenListLength({ tokensLength, setTokensLength }: { token
       >
         <InputLabel id="demo-multiple-name-label">Number of Tokens</InputLabel>
         <Select labelId="demo-simple-select-label" id="demo-simple-select" label="Number of tokens" value={tokensLength} onChange={(e) => setTokensLength(e.target.value)}>
-          {selection.map((num: number) => {
-            return <MenuItem value={num}>{num}</MenuItem>;
+          {selection.map((num: number, i: number) => {
+            return <MenuItem key={i} value={num}>{num}</MenuItem>;
           })}
         </Select>
       </FormControl>

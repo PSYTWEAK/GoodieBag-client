@@ -37,13 +37,13 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
             <Grid item xs={8} width="max">
               <div className={styles.div}>
                 <TokenLogo tokenAddress={data.id} />
-                <a target="_blank" href={`https://arbiscan.io/address/${data.id}`}>
+                <a target="_blank" rel="noreferrer" href={`https://arbiscan.io/address/${data.id}`}>
                   <p>{data.name}</p>
                 </a>
                 <p>&nbsp;</p>
                 <p>{data.symbol}</p>
                 {data.hasCalldata === "null" ? <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} /> : <></>}
-                {tokenCalldataBuildFeedback(data)}
+                {calldataBuildFeedback(data)}
               </div>{" "}
               {stratergySpecificData(data.stratergySpecificData)}
             </Grid>
@@ -56,7 +56,7 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
   );
 };
 
-function tokenCalldataBuildFeedback(token: any) {
+function calldataBuildFeedback(token: any) {
   if (token.hasCalldata === "loading") {
     return (
       <div className={styles.tokenCalldataBuildFeedback}>
