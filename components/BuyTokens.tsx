@@ -44,7 +44,7 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClick} disabled={disabled}>
+      <Button variant="contained" disabled={disabled}>
         Buy Tokens
       </Button>
     </div>
