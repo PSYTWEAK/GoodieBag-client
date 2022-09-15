@@ -23,6 +23,10 @@ async function generateTokenSwapCalldata(token: any, index: number, setTokens: a
 
   try {
 
+    if (slippage < 50) {
+      success = await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
+    }
+
 
   } catch (error) {
     console.log(error);
