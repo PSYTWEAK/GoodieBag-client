@@ -17,22 +17,18 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
 
   const [disabled, setDisabled] = useState(true);
 
-  const { txObject, generateCallData } = useGenerateCalldata();
-
-  const handleClick = async () => {
-    if (tokens) {
-      generateCallData({
-        provider,
-        tokens,
-        setTokens,
-        slippage,
-        amountETHIn,
-      })
-    }
-  };
+  const [txObject, setTxObject] = useState({
+    router: [],
+    callData: [],
+    tokenId: [],
+    value: JSBI.BigInt(0),
+    completed: false,
+  });
 
   useEffect(() => {
-    if (amountETHIn > 0 && loading === "done" && tokens.length > 0) {
+    if (amountETHIn > 0
+      && loading === "done"
+      && tokens.length > 0) {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -53,7 +49,7 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClick} disabled={disabled}>
+      <Button variant="contained" disabled={disabled}>
         Buy Tokens
       </Button>
     </div>
