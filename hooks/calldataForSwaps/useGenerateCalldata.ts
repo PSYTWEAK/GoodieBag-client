@@ -21,23 +21,20 @@ async function generateTokenSwapCalldata(token: any, index: number, setTokens: a
     return [...prevState];
   });
 
-  try {
 
-    if (slippage < 50) {
-      success = await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
-    }
-
-    if (!success && token.protocol === "Uniswap V3") {
-
-      success = await uniswap(provider, token, amountPerTrade, slippage, setTxObject);
-    }
-    if (!success && token.protocol === "Sushiswap") {
-
-      success = await sushi(provider, token, amountPerTrade, slippage, setTxObject);
-    }
-  } catch (error) {
-    console.log(error);
+  if (slippage < 50) {
+    success = await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
   }
+
+  if (!success && token.protocol === "Uniswap V3") {
+
+    success = await uniswap(provider, token, amountPerTrade, slippage, setTxObject);
+  }
+  if (!success && token.protocol === "Sushiswap") {
+
+    success = await sushi(provider, token, amountPerTrade, slippage, setTxObject);
+  }
+
 
   setTokens((prevState: any) => {
     prevState[index].hasCalldata = success.toString();
