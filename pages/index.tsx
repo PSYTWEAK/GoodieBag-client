@@ -50,11 +50,7 @@ const Home: NextPage = () => {
 
 
 
-          {!stratergy && !settingsActive && (
-            <>
-              <SelectStratergy stratergy={stratergy} setStratergy={setStratergy} />
-            </>
-          )}
+
 
         </div>
       </main>
