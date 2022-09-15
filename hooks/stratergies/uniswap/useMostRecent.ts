@@ -109,7 +109,7 @@ function formatUni(pools: any): any {
       volumeUSD: pools[i].volumeUSD,
       protocol: "Uniswap V3",
       stratergySpecificDataDes: `Added to DEX at`,
-      stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,
+      stratergySpecificData: `${pools[i].createdAtTimestamp}`,
       createdAtTimestamp: pools[i].createdAtTimestamp,
       hasCalldata: "null"
     };
