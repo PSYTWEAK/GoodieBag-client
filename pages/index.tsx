@@ -35,23 +35,24 @@ const Home: NextPage = () => {
         <div className={styles.card}>
           <CardHeader stratergy={stratergy} setStratergy={setStratergy} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
 
-          {stratergy && (
+
+
+          {!stratergy && !settingsActive && (
             <>
-              {" "}
-              {!settingsActive && !settingsActive && (
-                <>
-                  <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
-                  <BuyTokens tokens={tokens} setTokens={setTokens} loading={loading} slippage={slippage} amountETHIn={amountETHIn} generatingCalldata={generatingCalldata} setGeneratingCalldata={setGeneratingCalldata} />
-                  <Tokens tokens={tokens} loading={loading} setTokens={setTokens} />
-                </>
-              )}
+              <SelectStratergy stratergy={stratergy} setStratergy={setStratergy} />
             </>
           )}
-
-
-
-
-
+          {settingsActive && (
+            <Settings
+              setSettingsActive={setSettingsActive}
+              tokensLength={tokensLength}
+              setTokensLength={setTokensLength}
+              slippage={slippage}
+              setSlippage={setSlippage}
+              config={config}
+              setConfig={setConfig}
+            />
+          )}
         </div>
       </main>
     </div>
