@@ -5,7 +5,7 @@ import { weth, arbiGoodieBagAddress, arbiUniswapRouterAddress } from "../../../g
 
 export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
 
-  //  const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
+  const router = new AlphaRouter({ chainId: 42161, provider: provider });
 
   const WETH = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
 
