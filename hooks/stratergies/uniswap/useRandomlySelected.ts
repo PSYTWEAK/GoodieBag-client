@@ -4,9 +4,10 @@ import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from ".././globals";
 import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
+import moment from "moment";
 
-var start: any = new Date();
-start.setUTCHours(0, 0, 0, 0);
+// get unix time from moment
+var start: any = "1663200000"
 
 const uniQuery = `
 query {
