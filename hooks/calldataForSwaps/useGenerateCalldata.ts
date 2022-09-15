@@ -22,6 +22,7 @@ async function generateTokenSwapCalldata(token: any, index: number, setTokens: a
   });
 
 
+
   setTokens((prevState: any) => {
     prevState[index].hasCalldata = success.toString();
     return [...prevState];
@@ -40,8 +41,31 @@ export default function useGenerateCalldata() {
   });
 
 
+  async function generateCallData(data: any) {
 
-  return { txObject, setTxObject };
+    setTxObject({
+      router: [],
+      callData: [],
+      tokenId: [],
+      value: JSBI.BigInt(0),
+      completed: false,
+    });
+
+    const amountPerTrade = amountInPerTrade(ethers.utils.parseEther(data.amountETHIn.toString()), data.tokens);
+
+    for (let i = 0; i < data.tokens.length; i++) {
+
+      await generateTokenSwapCalldata(data.tokens[i], i, data.setTokens, data.slippage, data.provider, amountPerTrade, setTxObject);
+    }
+
+    setTxObject((prevState: any) => ({
+      ...prevState,
+      completed: true,
+    }));
+  }
+
+
+  return { txObject, setTxObject, generateCallData };
 }
 
 
