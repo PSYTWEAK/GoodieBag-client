@@ -24,7 +24,7 @@ export function TokenLogo({ tokenAddress }: { tokenAddress: string }) {
                 setLogo(token.logoURI);
             }
         }
-    }, [oneInchTokenList]);
+    }, [oneInchTokenList, tokenAddress]);
 
     return (
         // div is needed to center the image

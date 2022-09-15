@@ -1,7 +1,8 @@
 import image from "../public/logo.png";
+import Image from "next/image";
 
 const Logo = () => {
-  return <img src={image.src} height={150} />;
+  return <Image src={image.src} height={150} />;
 };
 
 export default Logo;

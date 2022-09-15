@@ -1,7 +1,8 @@
 import image from "../../public/crown.png";
+import Image from "next/image";
 
 const Crown = () => {
-  return <img src={image.src} height={150} />;
+  return <Image src={image.src} height={150} />;
 };
 
 export default Crown;
