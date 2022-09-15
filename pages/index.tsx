@@ -48,6 +48,22 @@ const Home: NextPage = () => {
             </>
           )}
 
+
+
+          {!stratergy && !settingsActive && (
+
+          )}
+          {settingsActive && (
+            <Settings
+              setSettingsActive={setSettingsActive}
+              tokensLength={tokensLength}
+              setTokensLength={setTokensLength}
+              slippage={slippage}
+              setSlippage={setSlippage}
+              config={config}
+              setConfig={setConfig}
+            />
+          )}
         </div>
       </main>
     </div>
