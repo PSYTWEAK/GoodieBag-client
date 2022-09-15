@@ -21,7 +21,13 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
 
   const handleClick = async () => {
     if (tokens) {
-
+      generateCallData({
+        provider,
+        tokens,
+        setTokens,
+        slippage,
+        amountETHIn,
+      })
     }
   };
 
@@ -33,17 +39,6 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
     }
   }, [amountETHIn, tokens]);
 
-  useEffect(() => {
-    if (txObject.completed === true) {
-      write({
-        args: [txObject.router, txObject.tokenId, txObject.callData],
-        overrides: {
-          value: txObject.value.toString(),
-          gasLimit: "30000000",
-        },
-      });
-    }
-  }, [txObject.completed]);
 
   return (
     <div>
