@@ -21,7 +21,12 @@ async function generateTokenSwapCalldata(token: any, index: number, setTokens: a
     return [...prevState];
   });
 
+  try {
 
+
+  } catch (error) {
+    console.log(error);
+  }
 
   setTokens((prevState: any) => {
     prevState[index].hasCalldata = success.toString();
