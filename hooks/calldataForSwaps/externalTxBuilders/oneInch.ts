@@ -30,10 +30,9 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
       tokenId: [...prevState.tokenId, token.id],
       value: JSBI.add(amountPerTrade, prevState.value),
     }));
-    return true;
-  } else {
-    return false;
+
   }
+  return !!calldata;
 }
 
 async function buildTxForSwap(swapParams: any) {

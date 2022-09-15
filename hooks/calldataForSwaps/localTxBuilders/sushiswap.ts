@@ -42,10 +42,8 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
       tokenId: [...prevState.tokenId, token.id],
       value: JSBI.add(amountPerTrade, prevState.value),
     }));
-    return true;
-  } else {
-    return false;
   }
+  return !!calldata;
 }
 
 function _minimumAmountOut(contractQuote: string, slippage: number) {

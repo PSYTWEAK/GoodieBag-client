@@ -1,4 +1,3 @@
-import { BigNumber } from "ethers";
 import { CurrencyAmount, Token, TradeType, Percent } from "@uniswap/sdk-core";
 import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
@@ -17,22 +16,8 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
   const TokenB = new Token(provider._network.chainId, token.id, 18, token.symbol, token.name);
 
 
-  const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
-    recipient: arbiGoodieBagAddress,
-    slippageTolerance: percentSlippage,
-    deadline: Math.floor(Date.now() / 1000 + 10800),
-  });
+  const route: any = false;
 
-  if (route) {
-    setTxObject((prevState: any) => ({
-      router: [...prevState.router, arbiUniswapRouterAddress],
-      callData: [...prevState.callData, route.methodParameters.calldata],
-      tokenId: [...prevState.tokenId, token.id],
-      value: JSBI.add(amountPerTrade, prevState.value),
-    }));
-    return true;
-  } else {
-    return false;
-  }
+  return !!route;
 
 }
