@@ -24,7 +24,7 @@ const UserList = (users: any, address: any) => {
                 <p>#{i + 1}</p>
                 <p>&nbsp;</p>
                 <a target="_blank" rel="noreferrer" href={`https://arbiscan.io/address/${data.id}`}>
-                  <p className={data.id.toLowerCase() === address.toLowerCase() ? styles.rainbow : ""}>{readableAddress(data)}</p>
+                  {newFunction(data, address)}
                 </a>
                 <p>&nbsp;</p>
                 <p>{readableEthAmount(data)}</p>
@@ -42,6 +42,14 @@ const UserList = (users: any, address: any) => {
     </>
   );
 };
+
+function newFunction(data: any, address: any) {
+  let style = address && data.id.toLowerCase() === address.toLowerCase() ? styles.rainbow : "";
+
+  return <p className={style}>{readableAddress(data)}</p>;
+
+
+}
 
 function readableAddress(data: any): React.ReactNode {
   return `${data.id.slice(0, 5)}...${data.id.substr(data.id.length - 4)}`;

@@ -1,16 +1,13 @@
 import { CardHeader } from "./../components/CardHeader";
 import { Settings } from "./../components/Settings";
 import { SelectStratergy } from "./../components/SelectStratergy";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
-import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useStratergy from "../hooks/useStratergy";
 import { EtherInput } from "../components/EtherInput/EtherInput";
 import Tokens from "../components/Tokens";
 import { BuyTokens } from "../components/BuyTokens";
-import { SettingsButton } from "../components/SettingsButton";
 import Logo from "../components/Logo";
 import useTokens from "../hooks/useTokens";
 
