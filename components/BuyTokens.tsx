@@ -4,6 +4,7 @@ import { useProvider, useContract, useContractWrite, useSendTransaction } from "
 import GoodieBagABI from "../contracts/GoodieBagABI.json";
 import { arbiGoodieBagAddress } from "../globals";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
+import JSBI from "jsbi";
 
 
 export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, generatingCalldata, setGeneratingCalldata }: { tokens: any; setTokens: any; loading: any; slippage: number; amountETHIn: any, generatingCalldata: string, setGeneratingCalldata: any }) {
@@ -17,19 +18,13 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
 
   const [disabled, setDisabled] = useState(true);
 
-  const { txObject, setTxObject, generateCallData } = useGenerateCalldata();
-
-  const handleClick = async () => {
-    if (tokens) {
-      generateCallData({
-        provider,
-        tokens,
-        setTokens,
-        slippage,
-        amountETHIn,
-      })
-    }
-  };
+  const [txObject, setTxObject] = useState({
+    router: [],
+    callData: [],
+    tokenId: [],
+    value: JSBI.BigInt(0),
+    completed: false,
+  });
 
   useEffect(() => {
     if (amountETHIn > 0 && loading === "done" && tokens.length > 0) {
@@ -53,7 +48,7 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClick} disabled={disabled}>
+      <Button variant="contained" disabled={disabled}>
         Buy Tokens
       </Button>
     </div>

@@ -58,6 +58,7 @@ export default function useGenerateCalldata() {
 
 
   async function generateCallData(data: any) {
+
     setTxObject({
       router: [],
       callData: [],
@@ -67,9 +68,11 @@ export default function useGenerateCalldata() {
     });
 
     const amountPerTrade = amountInPerTrade(ethers.utils.parseEther(data.amountETHIn.toString()), data.tokens);
+
     for (let i = 0; i < data.tokens.length; i++) {
       await generateTokenSwapCalldata(data.tokens[i], i, data.setTokens, data.slippage, data.provider, amountPerTrade, setTxObject);
     }
+
     setTxObject((prevState: any) => ({
       ...prevState,
       completed: true,
