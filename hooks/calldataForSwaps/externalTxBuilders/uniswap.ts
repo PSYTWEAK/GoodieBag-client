@@ -4,21 +4,28 @@ import JSBI from "jsbi";
 import { weth, arbiGoodieBagAddress, arbiUniswapRouterAddress } from "../../../globals";
 
 export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
-  // @ts-ignore: Unreachable code error
-  const router = new AlphaRouter({ chainId: 42161, provider: provider });
+
+  try {
+    const router = new AlphaRouter({ chainId: 42161, provider: provider });
 
 
-  const WETH = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
+    const WETH = new Token(provider._network.chainId, weth, 18, "WETH", "Wrapped ETH");
 
-  const wethAmount = CurrencyAmount.fromRawAmount(WETH, JSBI.BigInt(amountPerTrade.toString()));
+    const wethAmount = CurrencyAmount.fromRawAmount(WETH, JSBI.BigInt(amountPerTrade.toString()));
 
-  const percentSlippage = new Percent(slippage, 100);
+    const percentSlippage = new Percent(slippage, 100);
 
-  const TokenB = new Token(provider._network.chainId, token.id, 18, token.symbol, token.name);
+    const TokenB = new Token(provider._network.chainId, token.id, 18, token.symbol, token.name);
 
 
-  const route: any = false;
+    const route: any = false;
 
-  return !!route;
+    return !!route;
+  } catch (error) {
+    console.log(error);
+  }
+
+
+
 
 }
