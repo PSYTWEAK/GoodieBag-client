@@ -34,6 +34,18 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
     }
   }, [amountETHIn, tokens]);
 
+  useEffect(() => {
+    if (generatingCalldata === "done") {
+      write({
+        args: [txObject.router, txObject.tokenId, txObject.callData],
+        overrides: {
+          value: txObject.value.toString(),
+          gasLimit: "30000000",
+        },
+      });
+    }
+    setGeneratingCalldata("false");
+  }, [generatingCalldata]);
 
   return (
     <div>

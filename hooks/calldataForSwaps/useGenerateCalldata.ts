@@ -59,22 +59,7 @@ export default function useGenerateCalldata(provider: any, tokens: any, setToken
     value: JSBI.BigInt(0),
   });
 
-  useEffect(() => {
-    if (generating === "true") {
-      setTxObject({
-        router: [],
-        callData: [],
-        tokenId: [],
-        value: JSBI.BigInt(0),
-      });
-      _gen()
-    }
-    async function _gen() {
-      const amountPerTrade = amountInPerTrade(ethers.utils.parseEther(totalAmountIn.toString()), tokens);
-      await generateCallData(tokens, setTokens, slippage, provider, amountPerTrade, setTxObject);
-      setGenerating("done");
-    }
-  }, [generating]);
+
 
 
   return txObject;
