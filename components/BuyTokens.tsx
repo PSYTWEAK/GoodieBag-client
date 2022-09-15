@@ -17,7 +17,7 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
 
   const [disabled, setDisabled] = useState(true);
 
-
+  const txObject = useGenerateCalldata(provider, tokens, setTokens, slippage, amountETHIn, generatingCalldata, setGeneratingCalldata);
 
 
   const handleClick = async () => {
