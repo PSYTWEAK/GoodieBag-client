@@ -50,9 +50,7 @@ const Home: NextPage = () => {
 
 
 
-          {!stratergy && !settingsActive && (
 
-          )}
           {settingsActive && (
             <Settings
               setSettingsActive={setSettingsActive}
