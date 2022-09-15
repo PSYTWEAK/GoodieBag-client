@@ -27,9 +27,9 @@ async function generateTokenSwapCalldata(token: any, index: number, setTokens: a
       success = await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
     }
 
-    if (!success && token.protocol === "Uniswap V3") {
+    if (!success && token.protocol === "Sushiswap") {
 
-      success = await uniswap(provider, token, amountPerTrade, slippage, setTxObject);
+      success = await sushi(provider, token, amountPerTrade, slippage, setTxObject);
     }
   } catch (error) {
     console.log(error);
