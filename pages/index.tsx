@@ -33,6 +33,20 @@ const Home: NextPage = () => {
           <Logo />
         </h1>
         <div className={styles.card}>
+          <CardHeader stratergy={stratergy} setStratergy={setStratergy} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
+
+          {stratergy && (
+            <>
+              {" "}
+              {!settingsActive && !settingsActive && (
+                <>
+                  <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
+                  <BuyTokens tokens={tokens} setTokens={setTokens} loading={loading} slippage={slippage} amountETHIn={amountETHIn} generatingCalldata={generatingCalldata} setGeneratingCalldata={setGeneratingCalldata} />
+                  <Tokens tokens={tokens} loading={loading} setTokens={setTokens} />
+                </>
+              )}
+            </>
+          )}
 
         </div>
       </main>
