@@ -11,41 +11,6 @@ import { useEffect, useState } from "react";
 
 
 
-
-async function generateTokenSwapCalldata(token: any, index: number, setTokens: any, slippage: number, provider: any, amountPerTrade: JSBI, setTxObject: any) {
-
-  let success: boolean = false;
-
-  setTokens((prevState: any) => {
-    prevState[index].hasCalldata = "loading";
-    return [...prevState];
-  });
-
-  try {
-
-    if (slippage < 50) {
-      success = await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
-    }
-
-    if (!success && token.protocol === "Uniswap V3") {
-
-      success = await uniswap(provider, token, amountPerTrade, slippage, setTxObject);
-    }
-    if (!success && token.protocol === "Sushiswap") {
-
-      success = await sushi(provider, token, amountPerTrade, slippage, setTxObject);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-
-  setTokens((prevState: any) => {
-    prevState[index].hasCalldata = success.toString();
-    return [...prevState];
-  });
-
-}
-
 export default function useGenerateCalldata() {
 
   const [txObject, setTxObject] = useState({
@@ -57,35 +22,6 @@ export default function useGenerateCalldata() {
   });
 
 
-  async function generateCallData(data: any) {
 
-    setTxObject({
-      router: [],
-      callData: [],
-      tokenId: [],
-      value: JSBI.BigInt(0),
-      completed: false,
-    });
-
-    const amountPerTrade = amountInPerTrade(ethers.utils.parseEther(data.amountETHIn.toString()), data.tokens);
-
-    for (let i = 0; i < data.tokens.length; i++) {
-      await generateTokenSwapCalldata(data.tokens[i], i, data.setTokens, data.slippage, data.provider, amountPerTrade, setTxObject);
-    }
-
-    setTxObject((prevState: any) => ({
-      ...prevState,
-      completed: true,
-    }));
-  }
-
-
-  return { txObject, setTxObject, generateCallData };
-}
-
-
-function amountInPerTrade(totalAmountIn: any, tokens: any) {
-  const totalAmountInBN = JSBI.BigInt(totalAmountIn.toString());
-  const amountPerTrade = JSBI.divide(totalAmountInBN, JSBI.BigInt(tokens.length));
-  return amountPerTrade;
+  return { txObject, setTxObject };
 }
