@@ -25,7 +25,7 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
   const minimumAmountOut = _minimumAmountOut(contractQuote[1].toString(), slippage);
 
   // get the deadline
-  const deadline = Math.floor(1000000000000) + 60 * 20;
+  const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
 
   const calldata = await sushiContract.interface.encodeFunctionData("swapExactTokensForTokens", [
     amountPerTrade.toString(),

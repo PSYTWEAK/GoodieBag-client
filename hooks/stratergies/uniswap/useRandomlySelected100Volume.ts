@@ -3,16 +3,15 @@ import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from ".././globals";
 import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume, removeLowVolume } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
-import moment from "moment";
 
-// get unix time from moment
-var start: any = moment().startOf('day').unix();
-console.log(start)
+
+var start: any = new Date();
+start.setUTCHours(0, 0, 0, 0);
 
 const uniQuery = `
 query {
   
-  tokenDayDatas(first: 1000 where: {date: ${start} } orderBy:volumeUSD orderDirection:desc) {
+  tokenDayDatas(first: 1000 where: {date: ${start / 1000} } orderBy:volumeUSD orderDirection:desc) {
       date
       volumeUSD
     priceUSD
