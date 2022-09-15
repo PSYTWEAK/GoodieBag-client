@@ -9,11 +9,7 @@ import { useEffect, useState } from "react";
 // It also checks if the slippage is too high and if so, it will use the localTxBuilders
 // The localTxBuilders are used to generate the calldata for the swaps for tokens that are not supported by 1inch or have a slippage too high
 
-async function generateCallData(tokens: any, setTokens: any, slippage: number, provider: any, amountPerTrade: JSBI, setTxObject: any) {
-  for (let i = 0; i < tokens.length; i++) {
-    await generateTokenSwapCalldata(tokens[i], i, setTokens, slippage, provider, amountPerTrade, setTxObject);
-  }
-}
+
 
 
 async function generateTokenSwapCalldata(token: any, index: number, setTokens: any, slippage: number, provider: any, amountPerTrade: JSBI, setTxObject: any) {
@@ -50,34 +46,38 @@ async function generateTokenSwapCalldata(token: any, index: number, setTokens: a
 
 }
 
-export default function useGenerateCalldata(provider: any, tokens: any, setTokens: any, slippage: number, totalAmountIn: BigNumber, generating: string, setGenerating: any) {
+export default function useGenerateCalldata() {
 
   const [txObject, setTxObject] = useState({
     router: [],
     callData: [],
     tokenId: [],
     value: JSBI.BigInt(0),
+    completed: false,
   });
 
-  useEffect(() => {
-    if (generating === "true") {
-      setTxObject({
-        router: [],
-        callData: [],
-        tokenId: [],
-        value: JSBI.BigInt(0),
-      });
-      _gen()
+
+  async function generateCallData(data: any) {
+    setTxObject({
+      router: [],
+      callData: [],
+      tokenId: [],
+      value: JSBI.BigInt(0),
+      completed: false,
+    });
+
+    const amountPerTrade = amountInPerTrade(ethers.utils.parseEther(data.amountETHIn.toString()), data.tokens);
+    for (let i = 0; i < data.tokens.length; i++) {
+      await generateTokenSwapCalldata(data.tokens[i], i, data.setTokens, data.slippage, data.provider, amountPerTrade, setTxObject);
     }
-    async function _gen() {
-      const amountPerTrade = amountInPerTrade(ethers.utils.parseEther(totalAmountIn.toString()), tokens);
-      await generateCallData(tokens, setTokens, slippage, provider, amountPerTrade, setTxObject);
-      setGenerating("done");
-    }
-  }, [generating]);
+    setTxObject((prevState: any) => ({
+      ...prevState,
+      completed: true,
+    }));
+  }
 
 
-  return txObject;
+  return { txObject, setTxObject, generateCallData };
 }
 
 
