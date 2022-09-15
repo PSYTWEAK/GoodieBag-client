@@ -50,18 +50,12 @@ const Home: NextPage = () => {
 
 
 
-
-          {settingsActive && (
-            <Settings
-              setSettingsActive={setSettingsActive}
-              tokensLength={tokensLength}
-              setTokensLength={setTokensLength}
-              slippage={slippage}
-              setSlippage={setSlippage}
-              config={config}
-              setConfig={setConfig}
-            />
+          {!stratergy && !settingsActive && (
+            <>
+              <SelectStratergy stratergy={stratergy} setStratergy={setStratergy} />
+            </>
           )}
+
         </div>
       </main>
     </div>
