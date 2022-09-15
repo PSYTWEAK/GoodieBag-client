@@ -3,7 +3,10 @@ import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { weth } from ".././globals";
 import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, sortTokensByCreatedAt } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
+import moment from "moment";
 
+// get unix time from moment
+var start: any = "1663200000"
 const uniQuery = `
 query {
   pools(first: 100 orderBy:createdAtTimestamp orderDirection:desc) {
