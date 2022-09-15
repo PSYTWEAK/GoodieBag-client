@@ -15,11 +15,12 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
   const percentSlippage = new Percent(slippage, 100);
 
   const TokenB = new Token(provider._network.chainId, token.id, 18, token.symbol, token.name);
+  const deadline = Math.floor(1000000000000) + 60 * 20;
 
   const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
     recipient: arbiGoodieBagAddress,
     slippageTolerance: percentSlippage,
-    deadline: Math.floor(Date.now() / 1000 + 10800),
+    deadline: deadline,
   });
 
   if (route) {
