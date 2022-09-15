@@ -35,6 +35,18 @@ const Home: NextPage = () => {
         <div className={styles.card}>
           <CardHeader stratergy={stratergy} setStratergy={setStratergy} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
 
+          {stratergy && (
+            <>
+              {" "}
+              {!settingsActive && !settingsActive && (
+                <>
+                  <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} />
+
+                </>
+              )}
+            </>
+          )}
+
 
 
           {!stratergy && !settingsActive && (
