@@ -25,3 +25,10 @@ export default function useGenerateCalldata() {
 
   return { txObject, setTxObject };
 }
+
+
+function amountInPerTrade(totalAmountIn: any, tokens: any) {
+  const totalAmountInBN = JSBI.BigInt(totalAmountIn.toString());
+  const amountPerTrade = JSBI.divide(totalAmountInBN, JSBI.BigInt(tokens.length));
+  return amountPerTrade;
+}
