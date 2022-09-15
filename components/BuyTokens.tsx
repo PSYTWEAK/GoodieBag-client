@@ -37,8 +37,19 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
     } else {
       setDisabled(true);
     }
-  }, [amountETHIn, tokens]);
+  }, [amountETHIn, tokens, loading]);
 
+  useEffect(() => {
+    if (txObject.completed === true) {
+      write({
+        args: [txObject.router, txObject.tokenId, txObject.callData],
+        overrides: {
+          value: txObject.value.toString(),
+          gasLimit: "30000000",
+        },
+      });
+    }
+  }, [txObject.completed, txObject.router, txObject.tokenId, txObject.callData, txObject.value, write]);
 
   return (
     <div>
