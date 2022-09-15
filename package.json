@@ -14,7 +14,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.2",
     "@rainbow-me/rainbowkit": "^0.4.4",
-    "@uniswap/smart-order-router": "^2.8.0",
+    "@uniswap/smart-order-router": "^2.10.0",
     "@uniswap/v3-periphery": "^1.4.1",
     "big-integer": "^1.6.51",
     "bigdecimal": "^0.6.1",
