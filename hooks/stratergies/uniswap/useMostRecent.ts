@@ -70,9 +70,7 @@ async function querySubgraphs(config: any) {
     try {
       let result = await uniswapSubgraph(uniQuery);
 
-
       result = removeNoneEthPools(result.data.pools);
-
 
       result ? tokens.push(...formatUni(result)) : null;
     } catch (err) {
@@ -84,9 +82,7 @@ async function querySubgraphs(config: any) {
     try {
       let result = await sushiswapSubgraph(sushiQuery);
 
-
       result = removeNoneEthPools(result.data.pairs);
-
 
       result ? tokens.push(...formatSushi(result)) : null;
     } catch (err) {

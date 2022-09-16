@@ -1,14 +1,16 @@
+import { CalldataBuildFeedback } from './calldataBuildFeedback';
+import { TokenName } from './TokenName';
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import styles from "../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { DeleteTokenButton } from "./DeleteTokenButton";
-import useOneInchTokenList from "../hooks/useOneInchTokenList";
 import { TokenLogo } from "./TokenLogo";
 import { Token } from "graphql";
 import DoneIcon from '@mui/icons-material/Done';
 import { Done } from "@mui/icons-material";
 import ErrorIcon from '@mui/icons-material/Error';
+import { StratergySpecificData, stratergySpecificData } from './stratergySpecificData';
 
 export default function Tokens({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
 
@@ -37,15 +39,13 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
             <Grid item xs={8} width="max">
               <div className={styles.div}>
                 <TokenLogo tokenAddress={data.id} />
-                <a target="_blank" rel="noreferrer" href={`https://arbiscan.io/address/${data.id}`}>
-                  <p>{data.name}</p>
-                </a>
+                <TokenName data={data} />
                 <p>&nbsp;</p>
                 <p>{data.symbol}</p>
-                {data.hasCalldata === "null" ? <DeleteTokenButton removeToken={() => handleRemoveToken(data.id)} /> : <></>}
-                {calldataBuildFeedback(data)}
+                <DeleteTokenButton data={data} removeToken={() => handleRemoveToken(data.id)} />
+                <CalldataBuildFeedback token={data} />
               </div>{" "}
-              {stratergySpecificData(data.stratergySpecificData)}
+              <StratergySpecificData data={data} />
             </Grid>
           );
         } catch (err) {
@@ -56,30 +56,7 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
   );
 };
 
-function calldataBuildFeedback(token: any) {
-  if (token.hasCalldata === "loading") {
-    return (
-      <div className={styles.tokenCalldataBuildFeedback}>
-        <CircularProgress />
-      </div>
-    );
-  } else if (token.hasCalldata === "true") {
-    return (
-      <div className={styles.tokenCalldataBuildFeedback}>
-        <DoneIcon />
-      </div>
 
-    );
-  } else if (token.hasCalldata === "false") {
-    return (
-      <div className={styles.tokenCalldataBuildFeedback}>
-        <ErrorIcon />
-      </div>
-    );
-  } else {
-    return <></>;
-  }
-}
 
 function error(i: number, err: any) {
   console.log("Couldn't show token " + i + err);
@@ -94,14 +71,4 @@ function loadingAllTokensProgress() {
   );
 }
 
-function stratergySpecificData(data: string) {
-  if (data) {
-    return (
-      <div className={styles.smolstratergySpecificData}>
-        <p>{data}</p>
-      </div>
-    );
-  } else {
-    return <></>;
-  }
-}
+
