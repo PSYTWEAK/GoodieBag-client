@@ -3,8 +3,8 @@
 
 import { useState, useEffect } from "react";
 import useOneInchTokenList from "../../hooks/useOneInchTokenList";
-import DefaultTokenLogo from "../public/DefaultTokenLogo.png";
-import styles from "../styles/Home.module.css";
+import DefaultTokenLogo from "../../public/DefaultTokenLogo.png";
+import styles from "../../styles/Home.module.css";
 
 
 export function TokenLogo({ tokenAddress }: { tokenAddress: string }) {

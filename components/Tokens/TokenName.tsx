@@ -1,6 +1,7 @@
 import React from "react";
-export function TokenName({ data }: { data: any }) {
-    return <a target="_blank" rel="noreferrer" href={`https://arbiscan.io/address/${data.id}`}>
-        <p>{data.name}</p>
+
+export function TokenName({ token }: { token: any }) {
+    return <a target="_blank" rel="noreferrer" href={`https://arbiscan.io/address/${token.id}`}>
+        <p>{token.name}</p>
     </a>;
 }

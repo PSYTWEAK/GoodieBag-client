@@ -1,7 +1,7 @@
 
 
 import * as React from "react";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import DoneIcon from '@mui/icons-material/Done';
 import ErrorIcon from '@mui/icons-material/Error';

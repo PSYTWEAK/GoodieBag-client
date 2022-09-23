@@ -1,12 +1,15 @@
-import { CalldataBuildFeedback } from './calldataBuildFeedback';
+import { TokenContractData } from './TokenContractData';
+
+import { CalldataBuildFeedback } from './CalldataBuildFeedback';
 import { TokenName } from './TokenName';
 import * as React from "react";
 import Grid from "@mui/material/Grid";
-import styles from "../styles/Home.module.css";
+import styles from "../../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { DeleteTokenButton } from "./DeleteTokenButton";
 import { TokenLogo } from "./TokenLogo";
-import { StratergySpecificData } from './stratergySpecificData';
+import { StratergySpecificData } from './StratergySpecificData';
+import { TokenPrice } from './TokenPrice';
 
 export default function Tokens({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
 
@@ -32,18 +35,18 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
   return (
     <>
       {titleOfStratSpecificData}
-      {tokens.map((data: any, i: number) => {
+      {tokens.map((token: any, i: number) => {
         return (
           <Grid item xs={8} width="max">
             <div className={styles.div}>
-              <TokenLogo tokenAddress={data.id} />
-              <TokenName data={data} />
-              <p>&nbsp;</p>
-              <p>{data.symbol}</p>
-              <DeleteTokenButton data={data} removeToken={() => handleRemoveToken(data.id)} />
-              <CalldataBuildFeedback token={data} />
+              <TokenContractData token={token} />
+              <DeleteTokenButton token={token} removeToken={() => handleRemoveToken(token.id)} />
+              <CalldataBuildFeedback token={token} />
             </div>{" "}
-            <StratergySpecificData data={data} />
+            <div className={styles.lowerTokenCard}>
+              <TokenPrice token={token} />
+            </div>{" "}
+            <StratergySpecificData token={token} />
           </Grid>
         );
       })}

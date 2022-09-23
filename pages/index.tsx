@@ -6,7 +6,7 @@ import styles from "../styles/Home.module.css";
 import { useState } from "react";
 import useStratergy from "../hooks/useStratergy";
 import { EtherInput } from "../components/EtherInput/EtherInput";
-import Tokens from "../components/Tokens";
+import Tokens from "../components/Tokens/Tokens";
 import { BuyTokens } from "../components/BuyTokens";
 import Logo from "../components/Logo";
 import useTokens from "../hooks/useTokens";

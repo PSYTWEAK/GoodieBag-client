@@ -264,3 +264,21 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
+
+/* the same as .div but called .lowerTokenCard and make the theme grey but match the existing colours */
+.lowerTokenCard {
+  padding: 2px;
+  color: #c1c4c5;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border: 1px solid #c5ced8;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  display: flex;
+  align-items: center;
+  max-width: 300px;
+  background: rgb(228, 239, 244);
+  /* push items inside div to the left */
+  justify-content: flex-start;
+
+}

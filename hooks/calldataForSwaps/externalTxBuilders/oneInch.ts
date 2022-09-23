@@ -23,7 +23,7 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
       burnChi: false,
     };
 
-    const calldata = await buildTxForSwap(swapParams);
+    const calldata = await getTxCalldataForSwap(swapParams);
 
     if (calldata) {
       setTxObject((prevState: any) => ({
@@ -42,7 +42,7 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
 
 }
 
-async function buildTxForSwap(swapParams: any) {
+async function getTxCalldataForSwap(swapParams: any) {
   const url = apiRequestUrl("/swap", swapParams);
   return axios
     .get(url)
