@@ -3,28 +3,41 @@ import styles from "../../styles/Home.module.css";
 import { TextField } from "@mui/material";
 import ETHIcon from "../ETHIcon";
 import useGenerateCalldata from "../../hooks/calldataForSwaps/useGenerateCalldata";
-export function EtherInput({ amountETHIn, setAmountETHIn }: { amountETHIn: any; setAmountETHIn: any }) {
+import { useProvider } from "wagmi";
+
+export function EtherInput({ amountETHIn, setAmountETHIn, tokens, setTokens, slippage }: { amountETHIn: any; setAmountETHIn: any; tokens: any; setTokens: any; slippage: any; }) {
+  const provider = useProvider();
+
   const { txObject, generateCallData } = useGenerateCalldata();
 
   const [storedAmountETHIn, setStoredAmountETHIn] = useState("");
 
+
+  // when amountETHIn is updated the useEffect waits 1 second before updating the storedAmountETHIn
+  // this creates a delay between when the user types and when the calldata is generated
+
   useEffect(() => {
-    // wait 1 second and then do something
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       setStoredAmountETHIn(amountETHIn);
-    } // 1 second
+    }
       , 1000);
 
   }, [amountETHIn]);
 
   useEffect(() => {
+    if (storedAmountETHIn === amountETHIn && tokens) {
+      generateCallData({
+        provider,
+        tokens,
+        setTokens,
+        slippage,
+        amountETHIn,
+      })
 
-    if (storedAmountETHIn === amountETHIn) {
-      console.log(storedAmountETHIn)
     }
-
-
   }, [storedAmountETHIn]);
+
+
 
 
   return (

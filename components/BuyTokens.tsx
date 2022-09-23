@@ -20,28 +20,6 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
   const { txObject, generateCallData } = useGenerateCalldata();
 
   const handleClick = async () => {
-    if (tokens) {
-      generateCallData({
-        provider,
-        tokens,
-        setTokens,
-        slippage,
-        amountETHIn,
-      })
-    }
-  };
-
-  useEffect(() => {
-    if (amountETHIn > 0
-      && loading === "done"
-      && tokens.length > 0) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-  }, [amountETHIn, tokens, loading]);
-
-  useEffect(() => {
     if (txObject.completed === true) {
       write({
         args: [txObject.router, txObject.tokenId, txObject.callData],
@@ -51,7 +29,18 @@ export function BuyTokens({ tokens, setTokens, loading, slippage, amountETHIn, g
         },
       });
     }
-  }, [txObject.completed, txObject.router, txObject.tokenId, txObject.callData, txObject.value, write]);
+  };
+
+  useEffect(() => {
+    if (amountETHIn > 0
+      && loading === "done"
+      && tokens.length > 0
+      && txObject.completed === true) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [amountETHIn, tokens, loading]);
 
   return (
     <div>
