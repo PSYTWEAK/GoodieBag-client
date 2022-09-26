@@ -14,7 +14,8 @@ export function EtherInput({ amountETHIn, setAmountETHIn, tokens, setTokens, sli
 
 
   // when amountETHIn is updated the useEffect waits 1 second before updating the storedAmountETHIn
-  // this creates a delay between when the user types and when the calldata is generated
+  // when they wait for storedAmountETHIn === amountETHIn to be true, it means that the user has stopped typing for 1 second
+  // this creates a delay between when the user types and when the calldata is generated so we dont spam the user with calldata generation every keystroke
 
   useEffect(() => {
     setTimeout(() => {
@@ -25,7 +26,7 @@ export function EtherInput({ amountETHIn, setAmountETHIn, tokens, setTokens, sli
   }, [amountETHIn]);
 
   useEffect(() => {
-    if (storedAmountETHIn === amountETHIn && tokens) {
+    if (storedAmountETHIn === amountETHIn && tokens && amountETHIn > 0) {
       generateCallData({
         provider,
         tokens,
@@ -36,7 +37,6 @@ export function EtherInput({ amountETHIn, setAmountETHIn, tokens, setTokens, sli
 
     }
   }, [storedAmountETHIn]);
-
 
 
 

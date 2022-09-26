@@ -6,7 +6,7 @@ import { CircularProgress } from "@mui/material";
 import DoneIcon from '@mui/icons-material/Done';
 import ErrorIcon from '@mui/icons-material/Error';
 
-export function CalldataBuildFeedback(token: any) {
+export function CalldataBuildFeedback({ token }: { token: any }) {
     if (token.hasCalldata === "loading") {
         return <div className={styles.tokenCalldataBuildFeedback}>
             <CircularProgress />
