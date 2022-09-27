@@ -11,7 +11,7 @@ import { TokenLogo } from "./TokenLogo";
 import { StratergySpecificData } from './StratergySpecificData';
 import { TokenPrice } from './TokenPrice';
 
-export default function Tokens({ tokens, loading, setTokens }: { tokens: any; loading: any; setTokens: any }) {
+export default function Tokens({ tokens, loading, setTokens, amountETHIn }: { tokens: any; loading: any; setTokens: any; amountETHIn: any; }) {
 
   const handleRemoveToken = (token: string) => {
     setTokens(tokens.filter((item: any) => item.id !== token));
@@ -22,13 +22,13 @@ export default function Tokens({ tokens, loading, setTokens }: { tokens: any; lo
       {loading === "false" ? <></> :
         loading === "null" ? <h1>No Tokens Found</h1> :
           loading === "true" ? loadingAllTokensProgress() :
-            loading === "done" && tokens.length > 0 ? <>{TokenList(tokens, handleRemoveToken)}</> :
+            loading === "done" && tokens.length > 0 ? <>{TokenList(tokens, handleRemoveToken, amountETHIn)}</> :
               <></>}
     </Grid>
   );
 }
 
-const TokenList = (tokens: any, handleRemoveToken: any) => {
+const TokenList = (tokens: any, handleRemoveToken: any, amountETHIn: any) => {
   const titleOfStratSpecificData = <div className={styles.smolstratergySpecificData}>
     <p>{tokens[0].stratergySpecificDataDes}</p>
   </div>;
@@ -38,13 +38,16 @@ const TokenList = (tokens: any, handleRemoveToken: any) => {
       {tokens.map((token: any, i: number) => {
         return (
           <Grid item xs={8} width="max">
-            <div className={styles.div}>
-              <TokenContractData token={token} />
-              <DeleteTokenButton token={token} removeToken={() => handleRemoveToken(token.id)} />
-              <CalldataBuildFeedback token={token} />
-            </div>{" "}
-            <div className={styles.lowerTokenCard}>
-              <TokenPrice token={token} />
+            <div className={styles.tokenCard}>
+              <div className={styles.upperTokenCard}>
+                <TokenLogo tokenAddress={token.id} />
+                <TokenContractData token={token} />
+                <DeleteTokenButton token={token} removeToken={() => handleRemoveToken(token.id)} />
+                <CalldataBuildFeedback token={token} />
+              </div>{" "}
+              <div className={styles.lowerTokenCard}>
+                <TokenPrice token={token} numberOfTokens={tokens.length} amountETHIn={amountETHIn} />
+              </div>{" "}
             </div>{" "}
             <StratergySpecificData token={token} />
           </Grid>

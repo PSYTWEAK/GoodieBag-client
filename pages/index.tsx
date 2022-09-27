@@ -10,6 +10,7 @@ import Tokens from "../components/Tokens/Tokens";
 import { BuyTokens } from "../components/BuyTokens";
 import Logo from "../components/Logo";
 import useTokens from "../hooks/useTokens";
+import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
@@ -21,7 +22,8 @@ const Home: NextPage = () => {
   const [amountETHIn, setAmountETHIn] = useState(null);
   const [settingsActive, setSettingsActive] = useState(false);
 
-  const [generatingCalldata, setGeneratingCalldata] = useState("false");
+
+  const { txObject, generateCallData } = useGenerateCalldata();
 
 
   return (
@@ -40,9 +42,9 @@ const Home: NextPage = () => {
               {" "}
               {!settingsActive && !settingsActive && (
                 <>
-                  <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} tokens={tokens} setTokens={setTokens} slippage={slippage} />
-                  <BuyTokens tokens={tokens} loading={loading} amountETHIn={amountETHIn} />
-                  <Tokens tokens={tokens} loading={loading} setTokens={setTokens} />
+                  <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} tokens={tokens} setTokens={setTokens} slippage={slippage} generateCallData={generateCallData} />
+                  <BuyTokens tokens={tokens} loading={loading} amountETHIn={amountETHIn} txObject={txObject} />
+                  <Tokens tokens={tokens} loading={loading} setTokens={setTokens} amountETHIn={amountETHIn} />
                 </>
               )}
             </>

@@ -2,7 +2,7 @@ import React from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { statergys } from "../globals";
 
-var selection = Array.from(Array(50).keys());
+var selection = Array.from(Array(100).keys());
 
 export function SelectTokenListLength({ tokensLength, setTokensLength }: { tokensLength: any; setTokensLength: any }) {
   return (

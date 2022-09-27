@@ -6,7 +6,7 @@ import { arbiGoodieBagAddress } from "../globals";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 
 
-export function BuyTokens({ tokens, loading, amountETHIn }: { tokens: any; loading: any; amountETHIn: any }) {
+export function BuyTokens({ tokens, loading, amountETHIn, txObject }: { tokens: any; loading: any; amountETHIn: any, txObject: any }) {
 
   const { data, isLoading, isSuccess, write } = useContractWrite({
     addressOrName: arbiGoodieBagAddress,
@@ -16,15 +16,13 @@ export function BuyTokens({ tokens, loading, amountETHIn }: { tokens: any; loadi
 
   const [disabled, setDisabled] = useState(true);
 
-  const { txObject, generateCallData } = useGenerateCalldata();
-
   const handleClick = async () => {
     if (txObject.completed === true) {
       write({
         args: [txObject.router, txObject.tokenId, txObject.callData],
         overrides: {
           value: txObject.value.toString(),
-          gasLimit: "30000000",
+          gasLimit: "60000000",
         },
       });
     }
@@ -39,7 +37,7 @@ export function BuyTokens({ tokens, loading, amountETHIn }: { tokens: any; loadi
     } else {
       setDisabled(true);
     }
-  }, [amountETHIn, tokens, loading]);
+  }, [amountETHIn, tokens, loading, txObject.completed]);
 
   return (
     <div>
