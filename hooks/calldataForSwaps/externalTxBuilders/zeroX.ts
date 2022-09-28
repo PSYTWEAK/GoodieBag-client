@@ -8,7 +8,7 @@ const chainUrl = new Map()
 
 chainUrl.set(42161, "https://arbitrum.api.0x.org/swap/v1/")
 
-export async function zeroXApi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
+export async function zeroX(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
 
   try {
 
@@ -42,15 +42,16 @@ export async function zeroXApi(provider: any, token: any, amountPerTrade: JSBI, 
 
 }
 
-async function getTxCalldataForSwap(swapParams: any) {
-  const url = apiRequestUrl("/quote", swapParams);
+async function getTxCalldataForSwap(quoteParams: any) {
+  const url = apiRequestUrl("/quote", quoteParams);
   return axios
     .get(url)
     .then((res: any) => {
-      return res.data.tx.data;
+      console.log(res)
+      return res.data.data;
     })
     .catch((err) => {
-      console.log(err);
+      console.log('err', err);
     });
 }
 
