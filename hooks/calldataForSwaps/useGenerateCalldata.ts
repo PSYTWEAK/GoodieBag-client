@@ -1,6 +1,6 @@
 import JSBI from "jsbi";
 import { BigNumber, ethers } from "ethers";
-import { oneInch } from "./externalTxBuilders/oneInch";
+import { zeroX } from "./externalTxBuilders/zeroX";
 import { uniswap } from "./externalTxBuilders/uniswap";
 import { sushi } from "./localTxBuilders/sushiswap";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 
 
 
-async function generateTokenSwapCalldata(token: any, index: number, setTokens: any, slippage: number, provider: any, amountPerTrade: JSBI, setTxObject: any) {
+async function generateTokenSwapCalldata(token: any, index: number, setTokens: any, slippage: number, provider: any, address: string, amountPerTrade: JSBI, setTxObject: any) {
 
   let success: boolean = false;
 
@@ -23,16 +23,16 @@ async function generateTokenSwapCalldata(token: any, index: number, setTokens: a
 
 
   if (slippage < 50) {
-    success = await oneInch(provider, token, amountPerTrade, slippage, setTxObject);
+    success = await zeroX(provider, token, amountPerTrade, slippage, setTxObject, address);
   }
 
   if (!success && token.protocol === "Uniswap V3") {
 
-    success = await uniswap(provider, token, amountPerTrade, slippage, setTxObject);
+    success = await uniswap(provider, token, amountPerTrade, slippage, setTxObject, address);
   }
   if (!success && token.protocol === "Sushiswap") {
 
-    success = await sushi(provider, token, amountPerTrade, slippage, setTxObject);
+    success = await sushi(provider, token, amountPerTrade, slippage, setTxObject, address);
   }
 
 
@@ -68,7 +68,7 @@ export default function useGenerateCalldata() {
 
     for (let i = 0; i < data.tokens.length; i++) {
 
-      await generateTokenSwapCalldata(data.tokens[i], i, data.setTokens, data.slippage, data.provider, amountPerTrade, setTxObject);
+      await generateTokenSwapCalldata(data.tokens[i], i, data.setTokens, data.slippage, data.provider, data.address, amountPerTrade, setTxObject);
     }
 
     setTxObject((prevState: any) => ({

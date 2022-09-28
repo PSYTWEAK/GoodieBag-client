@@ -1,9 +1,9 @@
 import { BigNumber, ethers } from "ethers";
 import JSBI from "jsbi";
-import { weth, arbiGoodieBagAddress, arbiSushiswapRouterAddress } from "../../../globals";
+import { weth, arbiSwapperAddress, arbiSushiswapRouterAddress } from "../../../globals";
 
 
-export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
+export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
   try {
     // sushiswap contract instance
     const sushiContract = new ethers.Contract(
@@ -32,7 +32,7 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
       amountPerTrade.toString(),
       minimumAmountOut.toString(),
       path,
-      arbiGoodieBagAddress,
+      address,
       deadline,
     ]);
 

@@ -4,12 +4,13 @@ import { styled, TextField } from "@mui/material";
 import ETHIcon from "../ETHIcon";
 import { useProvider } from "wagmi";
 import { makeStyles } from "@mui/material";
+import { useAccount } from 'wagmi'
 
 
 
 export function EtherInput({ amountETHIn, setAmountETHIn, tokens, setTokens, slippage, generateCallData }: { amountETHIn: any; setAmountETHIn: any; tokens: any; setTokens: any; slippage: any; generateCallData: any }) {
   const provider = useProvider();
-
+  const { address, isConnecting, isDisconnected } = useAccount()
 
   const [storedAmountETHIn, setStoredAmountETHIn] = useState("");
   // when amountETHIn is updated the useEffect waits 1 second before updating the storedAmountETHIn
@@ -32,6 +33,7 @@ export function EtherInput({ amountETHIn, setAmountETHIn, tokens, setTokens, sli
         setTokens,
         slippage,
         amountETHIn,
+        address
       })
 
     }

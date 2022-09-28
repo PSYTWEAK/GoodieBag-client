@@ -2,12 +2,11 @@
 import { CurrencyAmount, Token, TradeType, Percent } from "@uniswap/sdk-core";
 import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
-import { weth, arbiGoodieBagAddress, arbiUniswapRouterAddress } from "../../../globals";
+import { weth, arbiSwapperAddress, arbiUniswapRouterAddress } from "../../../globals";
 
-export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any) {
+export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
 
   try {
-
 
     const router = new AlphaRouter({ chainId: provider._network.chainId, provider: provider });
 
@@ -21,7 +20,7 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
 
 
     const route: any = await router.route(wethAmount, TokenB, TradeType.EXACT_INPUT, {
-      recipient: arbiGoodieBagAddress,
+      recipient: address,
       slippageTolerance: percentSlippage,
       deadline: Math.floor(Date.now() / 1000 + 10800),
     });
@@ -40,7 +39,4 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
     console.log(e);
     return false;
   }
-
-
-
 }

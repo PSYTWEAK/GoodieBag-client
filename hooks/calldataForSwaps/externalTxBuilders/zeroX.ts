@@ -4,26 +4,26 @@ import { weth, arbiSwapperAddress, oneInchAddress } from "../../../globals";
 
 export let apiBaseUrl: string = "";
 
-export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
+const chainUrl = new Map()
+
+chainUrl.set(42161, "https://arbitrum.api.0x.org/swap/v1/")
+
+export async function zeroXApi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
 
   try {
 
     const chainId = provider._network.chainId;
 
-    apiBaseUrl = "https://api.1inch.io/v4.0/" + chainId;
+    apiBaseUrl = chainUrl.get(chainId);
 
-    const swapParams = {
-      fromTokenAddress: weth,
-      toTokenAddress: token.id,
-      amount: amountPerTrade,
-      fromAddress: address,
-      slippage: slippage,
-      disableEstimate: true,
-      allowPartialFill: false,
-      burnChi: false,
+
+    const quoteParams = {
+      sellToken: token.id,
+      buyToken: weth,
+      sellAmount: amountPerTrade,
     };
 
-    const calldata = await getTxCalldataForSwap(swapParams);
+    const calldata = await getTxCalldataForSwap(quoteParams);
 
     if (calldata) {
       setTxObject((prevState: any) => ({
@@ -43,7 +43,7 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
 }
 
 async function getTxCalldataForSwap(swapParams: any) {
-  const url = apiRequestUrl("/swap", swapParams);
+  const url = apiRequestUrl("/quote", swapParams);
   return axios
     .get(url)
     .then((res: any) => {

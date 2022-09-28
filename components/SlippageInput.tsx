@@ -20,6 +20,7 @@ export function SlippageInput({ slippage, setSlippage }: { slippage: any; setSli
         onChange={(e: any) => {
           setSlippage(e.target.value);
         }}
+        className={styles.select}
       />
     </div>
   );
