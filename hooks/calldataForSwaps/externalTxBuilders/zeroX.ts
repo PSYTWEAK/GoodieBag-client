@@ -1,6 +1,6 @@
 import axios from "axios";
 import JSBI from "jsbi";
-import { weth, arbiSwapperAddress, oneInchAddress } from "../../../globals";
+import { weth, arbiSwapperAddress, zeroXAddress } from "../../../globals";
 
 export let apiBaseUrl: string = "";
 
@@ -27,7 +27,7 @@ export async function zeroX(provider: any, token: any, amountPerTrade: JSBI, sli
 
     if (calldata) {
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, oneInchAddress],
+        router: [...prevState.router, zeroXAddress],
         callData: [...prevState.callData, calldata],
         tokenId: [...prevState.tokenId, token.id],
         value: JSBI.add(amountPerTrade, prevState.value),
