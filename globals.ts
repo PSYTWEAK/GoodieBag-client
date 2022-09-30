@@ -18,5 +18,6 @@ export const arbiSushiswapRouterAddress = "0x1b02dA8Cb0d097eB8D57A175b88c7D8b479
 // inch contracts
 export const oneInchAddress = "0x1111111254fb6c44bac0bed2854e76f90643097d";
 export const zeroXAddress = "0xdef1c0ded9bec7f1a1670819833240f027b25eff";
-
+// arbitrum address table
+export const arbiAddressTable = "0x0000000000000000000000000000000000000064";
 

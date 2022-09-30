@@ -27,9 +27,9 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
 
     if (route) {
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, arbiUniswapRouterAddress],
+        router: [...prevState.router, getAddressIndex(arbiUniswapRouterAddress, provider)],
         callData: [...prevState.callData, route.methodParameters.calldata],
-        tokenId: [...prevState.tokenId, token.id],
+        tokenId: [...prevState.tokenId, getAddressIndex(token.id, provider)],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }

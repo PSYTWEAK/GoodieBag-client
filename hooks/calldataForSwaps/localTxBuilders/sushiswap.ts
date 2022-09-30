@@ -1,6 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import JSBI from "jsbi";
 import { weth, arbiSwapperAddress, arbiSushiswapRouterAddress } from "../../../globals";
+import { getAddressIndex } from "../arbAddressTable";
 
 
 export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
@@ -38,9 +39,9 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
 
     if (calldata) {
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, arbiSushiswapRouterAddress],
+        router: [...prevState.router, getAddressIndex(arbiSushiswapRouterAddress, provider)],
         callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, token.id],
+        tokenId: [...prevState.tokenId, getAddressIndex(token.id, provider)],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }

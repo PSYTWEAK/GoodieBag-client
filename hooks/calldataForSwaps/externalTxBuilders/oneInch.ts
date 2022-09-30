@@ -1,6 +1,7 @@
 import axios from "axios";
 import JSBI from "jsbi";
 import { weth, arbiSwapperAddress, oneInchAddress } from "../../../globals";
+import { getAddressIndex } from "../arbAddressTable";
 
 export let apiBaseUrl: string = "";
 
@@ -27,9 +28,9 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
 
     if (calldata) {
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, oneInchAddress],
+        router: [...prevState.router, getAddressIndex(oneInchAddress, provider)],
         callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, token.id],
+        tokenId: [...prevState.tokenId, getAddressIndex(token.id, provider)],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }
@@ -57,4 +58,5 @@ async function getTxCalldataForSwap(swapParams: any) {
 function apiRequestUrl(methodName: any, queryParams: any) {
   return apiBaseUrl + methodName + "?" + new URLSearchParams(queryParams).toString();
 }
+
 

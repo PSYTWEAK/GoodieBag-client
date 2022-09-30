@@ -1,6 +1,7 @@
 import axios from "axios";
 import JSBI from "jsbi";
 import { weth, arbiSwapperAddress, zeroXAddress } from "../../../globals";
+import { getAddressIndex } from "../arbAddressTable";
 
 export let apiBaseUrl: string = "";
 
@@ -27,9 +28,9 @@ export async function zeroX(provider: any, token: any, setTokens: any, amountPer
 
     if (calldata) {
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, zeroXAddress],
+        router: [...prevState.router, getAddressIndex(zeroXAddress, provider)],
         callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, token.id],
+        tokenId: [...prevState.tokenId, getAddressIndex(token.id, provider)],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }
