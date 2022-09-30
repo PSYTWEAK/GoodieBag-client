@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useContractRead, useProvider } from "wagmi";
 import useTokenPrice from "../../hooks/tokenPrice/useTokenPrice";
 import { BigNumber, ethers } from "ethers";
+import styles from "../../styles/Home.module.css";
 
 export function TokenPrice({ token, numberOfTokens, amountETHIn }: { token: any; numberOfTokens: number; amountETHIn: any }) {
     const provider = useProvider();
@@ -29,14 +30,8 @@ export function TokenPrice({ token, numberOfTokens, amountETHIn }: { token: any;
     }, [numberOfTokens, amountETHIn]);
 
     return (<>
-        <div>
-            <p>In:</p>
-            <p>&nbsp;</p>
-            <p>{amountInThisToken}</p>
-            <p>&nbsp;</p>
-            <p>ETH</p></div>
-        <br />
-        <div>
+
+        <div className={styles.dataGrid}>
             <p>Out: </p>
             <p>&nbsp;</p>
             <p>{amountOutThisToken} </p>
