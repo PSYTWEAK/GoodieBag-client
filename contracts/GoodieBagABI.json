@@ -1,5 +1,10 @@
 [
   {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -19,16 +24,29 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "getSwapper",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
-        "internalType": "address[]",
+        "internalType": "uint256[]",
         "name": "router",
-        "type": "address[]"
+        "type": "uint256[]"
       },
       {
-        "internalType": "address[]",
+        "internalType": "uint256[]",
         "name": "tokens",
-        "type": "address[]"
+        "type": "uint256[]"
       },
       {
         "internalType": "bytes[]",
@@ -39,6 +57,19 @@
     "name": "multiBuy",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "swapper",
+    "outputs": [
+      {
+        "internalType": "contract Swapper",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
