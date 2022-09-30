@@ -23,7 +23,7 @@ async function generateTokenSwapCalldata(token: any, index: number, setTokens: a
 
 
   if (slippage < 50) {
-    success = await zeroX(provider, token, amountPerTrade, slippage, setTxObject, address);
+    success = await zeroX(provider, token, setTokens, amountPerTrade, slippage, setTxObject, address);
   }
 
   if (!success && token.protocol === "Uniswap V3") {

@@ -3,41 +3,45 @@
 import { useState, useEffect } from "react";
 import { useContractRead, useProvider } from "wagmi";
 import useTokenPrice from "../../hooks/tokenPrice/useTokenPrice";
+import { BigNumber, ethers } from "ethers";
 
 export function TokenPrice({ token, numberOfTokens, amountETHIn }: { token: any; numberOfTokens: number; amountETHIn: any }) {
     const provider = useProvider();
 
-    const { tokenPrice, getTokenPrice } = useTokenPrice();
-
     const [amountInThisToken, setAmountInThisToken] = useState(0);
-    const [amountOutThisToken, setAmountOutThisToken] = useState(0);
+    const [amountOutThisToken, setAmountOutThisToken] = useState("0");
+    // use ethers to format units of token
 
     useEffect(() => {
-        getTokenPrice(provider, token);
+        if (token.buyAmount) {
+            let formattedAmountInThisToken = ethers.utils.formatUnits(token.buyAmount, token.decimals);
+            setAmountOutThisToken(formattedAmountInThisToken);
+        } else if (token.hasCalldata === "true") {
 
-    }, [token]);
+            setAmountOutThisToken("?");
+        }
+
+    }, [token.buyAmount]);
 
     useEffect(() => {
         setAmountInThisToken(amountETHIn / numberOfTokens);
 
     }, [numberOfTokens, amountETHIn]);
 
-    useEffect(() => {
-        if (tokenPrice) {
-
-            setAmountOutThisToken((1 / amountInThisToken) * tokenPrice);
-
-        }
-
-    }, [amountOutThisToken, tokenPrice]);
-
     return (<>
-        <p>In:</p>
-        <p>&nbsp;</p>
-        <p>{amountInThisToken}</p>
-        <p>&nbsp;</p>
-        <p>ETH</p>
-        {/*         <br />
-        <p>Out: {amountOutThisToken} </p> */}
+        <div>
+            <p>In:</p>
+            <p>&nbsp;</p>
+            <p>{amountInThisToken}</p>
+            <p>&nbsp;</p>
+            <p>ETH</p></div>
+        <br />
+        <div>
+            <p>Out: </p>
+            <p>&nbsp;</p>
+            <p>{amountOutThisToken} </p>
+            <p>&nbsp;</p>
+            <p>{token.symbol} </p>
+        </div>
     </>);
 }

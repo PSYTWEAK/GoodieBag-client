@@ -8,8 +8,8 @@ export const UNISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/benjami
 export const SUSHISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/sushiswap/sushiswap-arbitrum";
 export const LEADERBOARD_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/psytweak/goodiebag-leaderboard";
 // goodiebag contract
-export const arbiGoodieBagAddress = "0xA9C044A2AB010f0A1E69BC33a478c46d36C7035e";
-export const arbiSwapperAddress = "0x54d73c1Ba6372178695eE6763C0537057f72EbBa";
+export const arbiGoodieBagAddress = "0x9BdCDA2c28A89FBE08b2Ddd59C25f468Cc572F0E";
+export const arbiSwapperAddress = "0xf666Ec920A9Bae9A140CF9dffc44eeB3a78be6Bb";
 // uniswap contracts
 export const arbiUniswapQuoterAddress = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
 export const arbiUniswapRouterAddress = "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45";

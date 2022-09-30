@@ -8,7 +8,7 @@ const chainUrl = new Map()
 
 chainUrl.set(42161, "https://arbitrum.api.0x.org/swap/v1/")
 
-export async function zeroX(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
+export async function zeroX(provider: any, token: any, setTokens: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
 
   try {
 
@@ -23,7 +23,7 @@ export async function zeroX(provider: any, token: any, amountPerTrade: JSBI, sli
       sellAmount: amountPerTrade,
     };
 
-    const calldata = await getTxCalldataForSwap(quoteParams);
+    const [calldata, buyAmount] = await getTxCalldataForSwap(quoteParams);
 
     if (calldata) {
       setTxObject((prevState: any) => ({
@@ -34,6 +34,18 @@ export async function zeroX(provider: any, token: any, amountPerTrade: JSBI, sli
       }));
     }
 
+    if (buyAmount) {
+      setTokens((prevState: any) => {
+        const newState = [...prevState];
+        newState.forEach((token: any) => {
+          if (token.id === quoteParams.sellToken) {
+            token.buyAmount = buyAmount;
+          }
+        });
+        return newState;
+      });
+    }
+
     return !!calldata;
   } catch (e) {
     console.log(e);
@@ -42,16 +54,17 @@ export async function zeroX(provider: any, token: any, amountPerTrade: JSBI, sli
 
 }
 
-async function getTxCalldataForSwap(quoteParams: any) {
+async function getTxCalldataForSwap(quoteParams: any): Promise<any> {
   const url = apiRequestUrl("/quote", quoteParams);
   return axios
     .get(url)
     .then((res: any) => {
       console.log(res)
-      return res.data.data;
+      return [res.data.data, res.data.buyAmount];
     })
     .catch((err) => {
       console.log('err', err);
+      return ["", ""];
     });
 }
 
