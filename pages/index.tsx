@@ -12,6 +12,7 @@ import Logo from "../components/Logo";
 import useTokens from "../hooks/useTokens";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 
+
 const Home: NextPage = () => {
   const [stratergy, setStratergy] = useState("");
   const [tokensLength, setTokensLength] = useState(10);
@@ -68,6 +69,7 @@ const Home: NextPage = () => {
               setConfig={setConfig}
             />
           )}
+
         </div>
       </main>
     </div>

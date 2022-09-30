@@ -1,9 +1,10 @@
+import { TxResponse } from './TxResponse';
 import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { useProvider, useContract, useContractWrite, useSendTransaction } from "wagmi";
 import GoodieBagABI from "../contracts/GoodieBagABI.json";
 import { arbiGoodieBagAddress } from "../globals";
-import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
+
 
 
 export function BuyTokens({ tokens, loading, amountETHIn, txObject }: { tokens: any; loading: any; amountETHIn: any, txObject: any }) {
@@ -40,11 +41,14 @@ export function BuyTokens({ tokens, loading, amountETHIn, txObject }: { tokens: 
   }, [amountETHIn, tokens, loading, txObject.completed]);
 
   return (
-    <div>
-      <Button variant="contained" onClick={handleClick} disabled={disabled}>
-        Buy Tokens
-      </Button>
-    </div>
+    <>
+      <div>
+        <Button variant="contained" onClick={handleClick} disabled={disabled}>
+          Buy Tokens
+        </Button>
+      </div>
+      <TxResponse isSuccess={isSuccess} data={data} />
+    </>
   );
 
 }
