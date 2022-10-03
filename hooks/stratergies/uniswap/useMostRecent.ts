@@ -3,6 +3,7 @@ import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { weth } from ".././globals";
 import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, sortTokensByCreatedAt } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
+import { formatUniswapSubgraphVolume } from ".././helpers";
 
 const uniQuery = `
 query {
@@ -102,7 +103,7 @@ function formatUni(pools: any): any {
       id: pools[i].token0.id === weth ? pools[i].token1.id : pools[i].token0.id,
       name: pools[i].token0.id === weth ? pools[i].token1.name : pools[i].token0.name,
       symbol: pools[i].token0.id === weth ? pools[i].token1.symbol : pools[i].token0.name,
-      volumeUSD: pools[i].volumeUSD,
+      volumeUSD: formatUniswapSubgraphVolume(pools[i].volumeUSD),
       protocol: "Uniswap V3",
       stratergySpecificDataDes: `Added to DEX at`,
       stratergySpecificData: `${date(pools[i].createdAtTimestamp)}`,

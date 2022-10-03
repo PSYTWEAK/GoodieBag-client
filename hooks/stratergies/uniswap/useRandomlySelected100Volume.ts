@@ -3,7 +3,7 @@ import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from ".././globals";
 import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume, removeLowVolume } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
-
+import { formatUniswapSubgraphVolume } from "../helpers"
 
 var start: any = new Date();
 start.setUTCHours(0, 0, 0, 0);
@@ -18,7 +18,8 @@ query {
     token{id
           name
           symbol
-    decimals}
+          decimals
+  }
       
         
   }
@@ -59,6 +60,8 @@ async function querySubgraphs(config: any) {
     try {
       let result = await uniswapSubgraph(uniQuery);
 
+      console.log("uniswap", formatUni(result.data));
+
       result ? tokens.push(...formatUni(result.data)) : null;
     } catch (err) {
       console.log(err);
@@ -83,11 +86,10 @@ function formatUni(data: any): any {
       id: data.tokenDayDatas[i].token.id,
       name: data.tokenDayDatas[i].token.name,
       symbol: data.tokenDayDatas[i].token.symbol,
-      volumeUSD: data.tokenDayDatas[i].volumeUSD,
+      /*   this subgraph data is broken so have to do 
+      data.tokenDayDatas[i].volumeUSD / 10^30 * 1.7   */
+      volumeUSD: formatUniswapSubgraphVolume(data.tokenDayDatas[i].volumeUSD),
       protocol: "Uniswap V3",
-      /* to get the volume of ETH from the broken subgraph its 
-    a = volume / tokenPrice
-    b = a / 10^18 */
       stratergySpecificDataDes: "",
       stratergySpecificData: "",
       hasCalldata: "null"

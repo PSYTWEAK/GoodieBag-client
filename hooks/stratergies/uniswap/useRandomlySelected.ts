@@ -4,6 +4,7 @@ import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from ".././globals";
 import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
+import { formatUniswapSubgraphVolume } from "../helpers"
 
 
 var start: any = new Date();
@@ -108,7 +109,7 @@ function formatSushi(data: any): any {
       id: data.tokenDaySnapshots[i].token.id,
       name: data.tokenDaySnapshots[i].token.name,
       symbol: data.tokenDaySnapshots[i].token.symbol,
-      volumeUSD: data.tokenDaySnapshots[i].volumeUSD,
+      volumeUSD: formatUniswapSubgraphVolume(data.tokenDaySnapshots[i].volumeUSD),
       protocol: "Sushiswap",
       /* to get the volume of ETH from the broken subgraph its 
       a = volume / tokenPrice
