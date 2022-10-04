@@ -2,7 +2,7 @@
 // weth 
 export const weth = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1";
 // strats
-export const statergys = [/* "Custom",  */"Tokens with highest volume", "Tokens most recently added", "Randomly selected tokens with minimum $100 volume", "Randomly selected tokens with $0 volume", "Randomly selected tokens all"];
+export const statergys = [/* "Custom",  */"24 hour highest volume", "Recently added to a DEX", "Randomly selected", "Minimum $100 24 hour volume", "Maximum $0 24 hour volume"];
 // subgraphs
 export const UNISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/benjaminlu/arbitrum-one-uniswap-v3";
 export const SUSHISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/sushiswap/sushiswap-arbitrum";

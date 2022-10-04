@@ -365,3 +365,24 @@
   flex-direction: column;
   z-index: 100;
 }
+
+.stratCard {
+  padding: 2px;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  max-width: 300px;
+  margin: 0px 10px 10px 0px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.stratCard:hover {
+  background-color: rgba(210, 238, 255, 1);
+  cursor: pointer;
+}
