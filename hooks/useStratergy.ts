@@ -7,17 +7,16 @@ import RandomlySelected from "./stratergies/uniswap/useRandomlySelected";
 import HighestVolume from "./stratergies/uniswap/useHighestVolume";
 
 async function findStratergy(stratergy: string, config: any) {
-  console.log("stratergy", stratergy);
   switch (stratergy) {
-    case "Tokens with highest volume":
+    case "24 hour highest volume 💪":
       return await HighestVolume(config);
-    case "Tokens most recently added":
+    case "Recently added to a DEX 👶":
       return await MostRecent(config);
-    case "Randomly selected tokens with minimum $100 volume":
+    case "Randomly selected 🎲":
       return await RandomlySelected100Volume(config);
-    case "Randomly selected tokens with $0 volume":
+    case "Minimum $100 24 hour volume 🎲":
       return await RandomlySelected0Volume(config);
-    case "Randomly selected tokens all":
+    case "Maximum $0 24 hour volume 🤪🎲":
       return await RandomlySelected(config);
     default:
   }

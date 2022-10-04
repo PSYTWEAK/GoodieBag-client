@@ -2,7 +2,14 @@
 // weth 
 export const weth = "0x82af49447d8a07e3bd95bd0d56f35241523fbab1";
 // strats
-export const statergys = [/* "Custom",  */"24 hour highest volume", "Recently added to a DEX", "Randomly selected", "Minimum $100 24 hour volume", "Maximum $0 24 hour volume"];
+export const statergys = [/* "Custom",  */"24 hour highest volume 💪", "Recently added to a DEX 👶", "Randomly selected 🎲", "Minimum $100 24 hour volume 🎲", "Maximum $0 24 hour volume 🤪🎲"];
+export const statergyDescriptions = new Map()
+
+statergyDescriptions.set("24 hour highest volume 💪", "List of tokens ordered from highest to lowest 24 hour volume")
+statergyDescriptions.set("Recently added to a DEX 👶", "List of tokens in order of most recently added to a DEX")
+statergyDescriptions.set("Randomly selected 🎲", "List of all tokens found in daily data, in a random order")
+statergyDescriptions.set("Minimum $100 24 hour volume 🎲", "List of tokens randomly selected with a minimum 24 hour volume of $100")
+statergyDescriptions.set("Maximum $0 24 hour volume 🤪🎲", "List of tokens randomly selected with $0 in 24 hour volume")
 // subgraphs
 export const UNISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/benjaminlu/arbitrum-one-uniswap-v3";
 export const SUSHISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/sushiswap/sushiswap-arbitrum";

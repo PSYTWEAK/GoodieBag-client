@@ -367,22 +367,60 @@
 }
 
 .stratCard {
-  padding: 2px;
+  padding: 6px;
   color: inherit;
+  font-size: 1.1rem;
   text-decoration: none;
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 300px;
   margin: 0px 10px 10px 0px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 
 }
 
 .stratCard:hover {
   background-color: rgba(210, 238, 255, 1);
   cursor: pointer;
+}
+
+.lowerStratCard {
+  padding: 5px;
+  color: inherit;
+  font-size: 0.8rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  max-width: 300px;
+  background-color: rgba(210, 238, 255, 1);
+  border-radius: 10px;
+
+
+}
+
+.upperStratCard {
+  padding: 5px;
+  color: inherit;
+  font-size: 1.1rem;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+
+}
+
+.cardTitleText {
+  background-color: #ecdfcf;
+  border-radius: 10px;
+  padding: 10px
 }
