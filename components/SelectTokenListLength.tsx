@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css';
 
 const selection = Array.from(Array(61).keys()).slice(1);
 
-export function SelectTokenListLength({ tokensLength, setTokensLength }: { tokensLength: any; setTokensLength: any }) {
+export function SelectTokenListLength({ tokensLength, setConfig }: { tokensLength: any; setConfig: any }) {
   return (
     <div>
       <FormControl
@@ -15,7 +15,9 @@ export function SelectTokenListLength({ tokensLength, setTokensLength }: { token
         }}
       >
         <InputLabel id="demo-multiple-name-label">Number of Tokens</InputLabel>
-        <Select labelId="demo-simple-select-label" id="demo-simple-select" label="Number of tokens" value={tokensLength} onChange={(e) => setTokensLength(e.target.value)} className={styles.select}>
+        <Select labelId="demo-simple-select-label" id="demo-simple-select" label="Number of tokens" value={tokensLength}
+          onChange={(e) => setConfig((prevState: any) => { return { ...prevState, tokensLength: e.target.value } })}
+          className={styles.select}>
           {selection.map((num: number, i: number) => {
             return <MenuItem key={i} value={num}>{num}</MenuItem>;
           })}

@@ -14,12 +14,18 @@ import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 
 
 const Home: NextPage = () => {
-  const [stratergy, setStratergy] = useState("");
-  const [tokensLength, setTokensLength] = useState(10);
-  const [slippage, setSlippage] = useState(10);
-  const [config, setConfig] = useState({ uniswap: true, sushiswap: true });
-  const [stratResult, loading] = useStratergy(stratergy, config);
-  const [tokens, setTokens] = useTokens(stratergy, stratResult, tokensLength, loading);
+
+  const [config, setConfig] = useState({
+    stratergy: "",
+    subgraphs: { uniswap: true, sushiswap: true },
+    tokensLength: 10,
+    slippage: 10,
+    minVolume: 0,
+    maxVolume: 0,
+  });
+
+  const [stratResult, loading] = useStratergy(config.stratergy, config);
+  const [tokens, setTokens] = useTokens(config.stratergy, stratResult, config.tokensLength, loading);
   const [amountETHIn, setAmountETHIn] = useState(null);
   const [settingsActive, setSettingsActive] = useState(false);
 
@@ -36,14 +42,14 @@ const Home: NextPage = () => {
           <Logo />
         </h1>
         <div className={styles.card}>
-          <CardHeader stratergy={stratergy} setStratergy={setStratergy} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
+          <CardHeader stratergy={config.stratergy} setConfig={setConfig} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
 
-          {stratergy && (
+          {config.stratergy && (
             <>
               {" "}
               {!settingsActive && !settingsActive && (
                 <>
-                  <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} tokens={tokens} setTokens={setTokens} slippage={slippage} generateCallData={generateCallData} />
+                  <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} tokens={tokens} setTokens={setTokens} slippage={config.slippage} generateCallData={generateCallData} />
                   <BuyTokens tokens={tokens} loading={loading} amountETHIn={amountETHIn} txObject={txObject} />
                   <Tokens tokens={tokens} loading={loading} setTokens={setTokens} amountETHIn={amountETHIn} />
                 </>
@@ -53,18 +59,14 @@ const Home: NextPage = () => {
 
 
 
-          {!stratergy && !settingsActive && (
+          {!config.stratergy && !settingsActive && (
             <>
-              <SelectStratergy stratergy={stratergy} setStratergy={setStratergy} />
+              <SelectStratergy stratergy={config.stratergy} setConfig={setConfig} />
             </>
           )}
           {settingsActive && (
             <Settings
               setSettingsActive={setSettingsActive}
-              tokensLength={tokensLength}
-              setTokensLength={setTokensLength}
-              slippage={slippage}
-              setSlippage={setSlippage}
               config={config}
               setConfig={setConfig}
             />
