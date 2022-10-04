@@ -117,7 +117,7 @@
 .cardHeader {
   display: flex;
   justify-content: space-between;
-  width: 17rem;
+  width: 300px;
 }
 
 .remove {
@@ -415,7 +415,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 10px;
+
 
 }
 

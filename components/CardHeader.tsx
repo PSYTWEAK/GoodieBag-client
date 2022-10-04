@@ -20,9 +20,14 @@ export function CardHeader({ stratergy, setConfig, settingsActive, setSettingsAc
         </div>
       )}{" "}
       {!settingsActive && (
-        <div className={styles.settingsButton}>
-          <SettingsButton setSettingsActive={setSettingsActive} />
-        </div>
+        <>
+          <div className={styles.cardTitle}>
+            <p className={styles.cardTitleText}>{stratergy ? stratergy : "Select Stratergy"}</p>
+          </div>
+
+          <div className={styles.settingsButton}>
+            <SettingsButton setSettingsActive={setSettingsActive} />
+          </div></>
       )}{" "}
     </div>
   );

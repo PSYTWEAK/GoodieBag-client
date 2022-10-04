@@ -15,9 +15,6 @@ export function SelectStratergy({ stratergy, setConfig }: { stratergy: any; setC
 const StatergysList = (setConfig: any) => {
   return (
     <>
-      <div className={styles.cardTitle}>
-        <p className={styles.cardTitleText}>Select Stratergy</p>
-      </div>
 
       {statergys.map((strat: any, i: number) => {
         return (
