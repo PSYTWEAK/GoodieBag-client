@@ -7,6 +7,7 @@ import RandomlySelected from "./stratergies/uniswap/useRandomlySelected";
 import HighestVolume from "./stratergies/uniswap/useHighestVolume";
 
 async function findStratergy(stratergy: string, config: any) {
+  console.log("stratergy", stratergy);
   switch (stratergy) {
     case "Tokens with highest volume":
       return await HighestVolume(config);

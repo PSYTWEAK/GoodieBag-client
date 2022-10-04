@@ -24,11 +24,13 @@ export function removeDuplicates(tokens: any): any {
 
 // look throught tokens array and any tokens that are the same, combine theire volumeUSD then delete the duplicate
 export function combineUSDVolumeThenRemoveDuplicates(tokens: any): any {
-  tokens.filter((value: any, index: number, self: any) => {
-    self.findIndex((t: any) => {
+  return tokens.filter((value: any, index: number, self: any) => {
+    return self.findIndex((t: any) => {
       if (t.id === value.id) {
         t.volumeUSD = t.volumeUSD + value.volumeUSD;
         return true;
+      } else {
+        return false;
       }
 
     });

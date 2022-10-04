@@ -57,7 +57,7 @@ export default async function useRandomlySelected(config: any) {
 async function querySubgraphs(config: any) {
   let tokens: any = [];
 
-  if (config.uniswap) {
+  if (config.subgraphs.uniswap) {
     try {
       let result = await uniswapSubgraph(uniQuery);
 
@@ -66,7 +66,7 @@ async function querySubgraphs(config: any) {
       console.log(err);
     }
   }
-  if (config.sushiswap) {
+  if (config.subgraphs.sushiswap) {
     try {
       let result = await sushiswapSubgraph(sushiQuery);
 
