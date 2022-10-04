@@ -1,7 +1,7 @@
 
 import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from ".././globals";
-import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume, removeLowVolume } from ".././filters";
+import { removeDuplicates, combineUSDVolumeThenRemoveDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume, removeLowVolume } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
 import { formatUniswapSubgraphVolume } from "../helpers"
 
@@ -46,7 +46,7 @@ export default async function useRandomlySelected(config: any) {
   tokens = removeBlueChips(tokens);
   tokens = removeStables(tokens);
   tokens = removeSignOfDerivInTokenName(tokens);
-  tokens = removeDuplicates(tokens);
+  tokens = combineUSDVolumeThenRemoveDuplicates(tokens);
   tokens = removeLowVolume(tokens);
   tokens = shuffleTokens(tokens);
 

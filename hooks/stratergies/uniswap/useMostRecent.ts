@@ -1,7 +1,7 @@
 
 import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { weth } from ".././globals";
-import { removeLowVolume, removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, sortTokensByCreatedAt } from ".././filters";
+import { removeLowVolume, combineUSDVolumeThenRemoveDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, sortTokensByCreatedAt } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
 import { formatUniswapSubgraphVolume } from ".././helpers";
 
@@ -55,7 +55,7 @@ export default async function useMostRecent(config: any) {
   const result = await querySubgraphs(config);
 
   let tokens: any = result;
-  tokens = removeDuplicates(tokens);
+  tokens = combineUSDVolumeThenRemoveDuplicates(tokens);
   tokens = removeBlueChips(tokens);
   tokens = removeStables(tokens);
   tokens = removeSignOfDerivInTokenName(tokens);

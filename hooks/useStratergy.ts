@@ -4,9 +4,12 @@ import RandomlySelected100Volume from "./stratergies/uniswap/useRandomlySelected
 import MostRecent from "./stratergies/uniswap/useMostRecent";
 import RandomlySelected0Volume from "./stratergies/uniswap/useRandomlySelected0Volume";
 import RandomlySelected from "./stratergies/uniswap/useRandomlySelected";
+import HighestVolume from "./stratergies/uniswap/useHighestVolume";
 
 async function findStratergy(stratergy: string, config: any) {
   switch (stratergy) {
+    case "Tokens with highest volume":
+      return await HighestVolume(config);
     case "Tokens most recently added":
       return await MostRecent(config);
     case "Randomly selected tokens with minimum $100 volume":

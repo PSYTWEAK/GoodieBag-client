@@ -14,8 +14,25 @@ export function shuffleTokens(array: any) {
   return array;
 }
 
+export function sortByVolume(array: any) {
+  return array.sort((a: any, b: any) => b.volumeUSD - a.volumeUSD);
+}
+
 export function removeDuplicates(tokens: any): any {
   return tokens.filter((value: any, index: number, self: any) => index === self.findIndex((t: any) => t.id === value.id));
+}
+
+// look throught tokens array and any tokens that are the same, combine theire volumeUSD then delete the duplicate
+export function combineUSDVolumeThenRemoveDuplicates(tokens: any): any {
+  tokens.filter((value: any, index: number, self: any) => {
+    self.findIndex((t: any) => {
+      if (t.id === value.id) {
+        t.volumeUSD = t.volumeUSD + value.volumeUSD;
+        return true;
+      }
+
+    });
+  });
 }
 
 

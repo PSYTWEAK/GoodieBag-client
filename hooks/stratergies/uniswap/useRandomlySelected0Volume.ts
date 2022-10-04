@@ -1,6 +1,6 @@
 import uniswapSubgraph from "../../subgraphs/uniswapSubgraph";
 import { blueChips, lowVolume, weth, stables } from ".././globals";
-import { removeDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from ".././filters";
+import { combineUSDVolumeThenRemoveDuplicates, removeBlueChips, removeStables, removeSignOfDerivInTokenName, removeNoneEthPools, shuffleTokens, removeVolume } from ".././filters";
 import sushiswapSubgraph from "../../subgraphs/sushiswapSubgraph";
 import { formatUniswapSubgraphVolume } from "../helpers"
 
@@ -44,7 +44,7 @@ export default async function useRandomlySelected(config: any) {
 
   let tokens: any = result;
 
-  tokens = removeDuplicates(tokens);
+  tokens = combineUSDVolumeThenRemoveDuplicates(tokens);
   tokens = removeBlueChips(tokens);
   tokens = removeStables(tokens);
   tokens = removeVolume(tokens);
