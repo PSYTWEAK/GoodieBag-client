@@ -3,13 +3,18 @@ import Grid from "@mui/material/Grid";
 import styles from "../../styles/Home.module.css";
 import { CircularProgress } from "@mui/material";
 import { ethers, BigNumber } from "ethers";
+import Crown from "./Crown";
 
 export function Users({ users, loading, address }: { users: any; loading: any; address: any }) {
 
-  return (
+  return (<>
+    <h1 className={styles.crown}>
+      <Crown />
+    </h1>
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 1 }} direction="column" marginTop={1.5}>
+
       {loading === "false" ? <></> : loading === "null" ? <h1>No Users Found</h1> : loading === "true" ? <LoadingProcess /> : <>{UserList(users, address)}</>}
-    </Grid>
+    </Grid></>
   );
 }
 

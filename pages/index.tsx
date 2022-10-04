@@ -11,6 +11,7 @@ import { BuyTokens } from "../components/BuyTokens";
 import Logo from "../components/Logo";
 import useTokens from "../hooks/useTokens";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 
 const Home: NextPage = () => {
@@ -36,11 +37,6 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        {" "}
-        <h1 className={styles.title}>
-          {" "}
-          <Logo />
-        </h1>
         <div className={styles.card}>
           <CardHeader stratergy={config.stratergy} setConfig={setConfig} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
 
@@ -49,8 +45,14 @@ const Home: NextPage = () => {
               {" "}
               {!settingsActive && !settingsActive && (
                 <>
-                  <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} tokens={tokens} setTokens={setTokens} slippage={config.slippage} generateCallData={generateCallData} />
-                  <BuyTokens tokens={tokens} loading={loading} amountETHIn={amountETHIn} txObject={txObject} />
+                  <div className={styles.swapInput}>
+                    <EtherInput amountETHIn={amountETHIn} setAmountETHIn={setAmountETHIn} tokens={tokens} setTokens={setTokens} slippage={config.slippage} generateCallData={generateCallData} />
+                    <BuyTokens tokens={tokens} loading={loading} amountETHIn={amountETHIn} txObject={txObject} />
+                  </div>
+                  <div className={styles.downArrow}>
+                    <ArrowDownwardIcon />
+                  </div>
+
                   <Tokens tokens={tokens} loading={loading} setTokens={setTokens} amountETHIn={amountETHIn} />
                 </>
               )}

@@ -43,7 +43,7 @@ export function BuyTokens({ tokens, loading, amountETHIn, txObject }: { tokens: 
   return (
     <>
       <div>
-        <Button variant="contained" onClick={handleClick} disabled={disabled}>
+        <Button style={{ width: '300px', borderRadius: '10px', backgroundColor: "rgb(137, 207, 251)", color: 'black', boxShadow: "none" }} variant="contained" onClick={handleClick} disabled={disabled}>
           Buy Tokens
         </Button>
       </div>

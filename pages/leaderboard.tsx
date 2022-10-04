@@ -2,7 +2,6 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import Logo from "../components/Logo";
 import Crown from "../components/leaderboard/Crown";
 import { Users } from "../components/leaderboard/Users";
 import useLeaderboard from "../hooks/leaderboard/useLeaderboard";
@@ -13,12 +12,8 @@ const LeaderBoard: NextPage = () => {
   const { address, isConnected } = useAccount()
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-      </header>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          <Crown />
-        </h1>
+
         <div className={styles.card}>
           <Users users={users} loading={loading} address={address} />
         </div>

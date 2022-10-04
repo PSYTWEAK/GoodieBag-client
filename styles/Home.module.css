@@ -74,6 +74,7 @@
 
 .card {
   margin: 1rem;
+  margin-top: 4rem;
   padding: 1.5rem;
   color: inherit;
   text-decoration: none;
@@ -239,8 +240,7 @@
   justify-content: space-between;
   align-items: center;
   width: fit-content;
-  padding: 20px;
-  margin-left: 40px;
+
 }
 
 .navLinks a {
@@ -339,6 +339,7 @@
   margin-bottom: 1rem;
   margin-top: 1rem;
   padding: 0.3rem;
+  width: 300px;
 
 }
 
@@ -423,4 +424,24 @@
   background-color: #ecdfcf;
   border-radius: 10px;
   padding: 10px
+}
+
+.crown {
+  padding: 0px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swapInput {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.downArrow {
+  background-color: rgba(210, 238, 255, 1);
+  border-radius: 10px;
+  padding: 5px;
+  padding-bottom: 1px;
 }
