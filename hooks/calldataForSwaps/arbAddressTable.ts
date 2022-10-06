@@ -3,7 +3,7 @@ import { arbiAddressTable } from "../../globals";
 
 // this is a gas optimisation for Arbitrum. 
 // looking up the address index in the Arbitrum address table is cheaper than putting the entire address in data in the transaction
-export function getAddressIndex(address: string, provider: any) {
+export async function getAddressIndex(address: string, provider: any) {
     const arbAddressTableContract = new ethers.Contract(
         arbiAddressTable,
         [
@@ -12,7 +12,7 @@ export function getAddressIndex(address: string, provider: any) {
         provider
     );
 
-
-    return arbAddressTableContract.lookup(address);
+    let addressIndex = await arbAddressTableContract.lookup(address)
+    return addressIndex.toString();
 
 }

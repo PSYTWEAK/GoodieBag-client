@@ -3,6 +3,7 @@ import { CurrencyAmount, Token, TradeType, Percent } from "@uniswap/sdk-core";
 import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
 import { weth, arbiSwapperAddress, arbiUniswapRouterAddress } from "../../../globals";
+import { getAddressIndex } from "../arbAddressTable";
 
 export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
 
@@ -26,10 +27,11 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
     });
 
     if (route) {
+      let { addressIndex, tokenIndex } = await getIndexes(provider, token);
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, getAddressIndex(arbiUniswapRouterAddress, provider)],
+        router: [...prevState.router, addressIndex],
         callData: [...prevState.callData, route.methodParameters.calldata],
-        tokenId: [...prevState.tokenId, getAddressIndex(token.id, provider)],
+        tokenId: [...prevState.tokenId, tokenIndex],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }
@@ -40,3 +42,10 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
     return false;
   }
 }
+
+async function getIndexes(provider: any, token: any) {
+  let addressIndex = await getAddressIndex(arbiUniswapRouterAddress, provider);
+  let tokenIndex = await getAddressIndex(token.id, provider);
+  return { addressIndex, tokenIndex };
+}
+

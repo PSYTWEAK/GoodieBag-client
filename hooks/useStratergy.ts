@@ -5,6 +5,7 @@ import MostRecent from "./stratergies/uniswap/useMostRecent";
 import RandomlySelected0Volume from "./stratergies/uniswap/useRandomlySelected0Volume";
 import RandomlySelected from "./stratergies/uniswap/useRandomlySelected";
 import HighestVolume from "./stratergies/uniswap/useHighestVolume";
+import ArbitrumOdyssey from "./stratergies/uniswap/useArbitrumOdyssey";
 
 async function findStratergy(stratergy: string, config: any) {
   switch (stratergy) {
@@ -18,6 +19,8 @@ async function findStratergy(stratergy: string, config: any) {
       return await RandomlySelected0Volume(config);
     case "Maximum $0 24 hour volume 🤪🎲":
       return await RandomlySelected(config);
+    case "The Arbitrum Odyssey 🧑‍🚀":
+      return await ArbitrumOdyssey();
     default:
   }
 }

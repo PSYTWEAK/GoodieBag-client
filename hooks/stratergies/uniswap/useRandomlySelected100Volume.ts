@@ -34,6 +34,7 @@ const sushiQuery = `
         id
         name
         symbol
+        decimals
       }
       volumeUSD
     }

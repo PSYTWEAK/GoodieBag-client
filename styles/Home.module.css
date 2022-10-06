@@ -421,7 +421,7 @@
 }
 
 .cardTitleText {
-  background-color: #ecdfcf;
+  background-color: rgb(231, 244, 250);
   border-radius: 10px;
   padding: 10px
 }
@@ -440,7 +440,7 @@
 }
 
 .downArrow {
-  background-color: rgba(210, 238, 255, 1);
+  background-color: rgb(231, 244, 250);
   border-radius: 10px;
   padding: 5px;
   padding-bottom: 1px;

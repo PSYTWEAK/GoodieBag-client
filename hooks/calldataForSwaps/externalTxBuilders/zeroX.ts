@@ -24,23 +24,24 @@ export async function zeroX(provider: any, token: any, setTokens: any, amountPer
       sellAmount: amountPerTrade,
     };
 
-    const [calldata, buyAmount] = await getTxCalldataForSwap(quoteParams);
+    const [calldata, guaranteedPrice] = await getTxCalldataForSwap(quoteParams);
 
     if (calldata) {
+      let { addressIndex, tokenIndex } = await getIndexes(provider, token);
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, getAddressIndex(zeroXAddress, provider)],
+        router: [...prevState.router, addressIndex],
         callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, getAddressIndex(token.id, provider)],
+        tokenId: [...prevState.tokenId, tokenIndex],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }
 
-    if (buyAmount) {
+    if (guaranteedPrice) {
       setTokens((prevState: any) => {
         const newState = [...prevState];
         newState.forEach((token: any) => {
           if (token.id === quoteParams.sellToken) {
-            token.buyAmount = buyAmount;
+            token.guaranteedPrice = guaranteedPrice;
           }
         });
         return newState;
@@ -61,7 +62,7 @@ async function getTxCalldataForSwap(quoteParams: any): Promise<any> {
     .get(url)
     .then((res: any) => {
       console.log(res)
-      return [res.data.data, res.data.buyAmount];
+      return [res.data.data, res.data.guaranteedPrice];
     })
     .catch((err) => {
       console.log('err', err);
@@ -73,3 +74,9 @@ function apiRequestUrl(methodName: any, queryParams: any) {
   return apiBaseUrl + methodName + "?" + new URLSearchParams(queryParams).toString();
 }
 
+
+async function getIndexes(provider: any, token: any) {
+  let addressIndex = await getAddressIndex(zeroXAddress, provider);
+  let tokenIndex = await getAddressIndex(token.id, provider);
+  return { addressIndex, tokenIndex };
+}

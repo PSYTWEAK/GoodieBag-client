@@ -14,15 +14,15 @@ export function TokenPrice({ token, numberOfTokens, amountETHIn }: { token: any;
     // use ethers to format units of token
 
     useEffect(() => {
-        if (token.buyAmount) {
-            let formattedAmountInThisToken = ethers.utils.formatUnits(token.buyAmount, token.decimals);
-            setAmountOutThisToken(formattedAmountInThisToken);
+        if (token.guaranteedPrice) {
+            let amountOut = (amountETHIn / token.guaranteedPrice).toLocaleString("fullwide", { maximumFractionDigits: 6 });
+            setAmountOutThisToken(amountOut);
         } else if (token.hasCalldata === "true") {
 
             setAmountOutThisToken("?");
         }
 
-    }, [token.buyAmount]);
+    }, [token.guaranteedPrice]);
 
     useEffect(() => {
         setAmountInThisToken(amountETHIn / numberOfTokens);
