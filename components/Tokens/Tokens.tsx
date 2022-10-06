@@ -1,8 +1,7 @@
 import { TokenMoreData } from './TokenMoreData';
-import { TokenContractData } from './TokenContractData';
+import { TokenName } from './TokenName';
 
 import { CalldataBuildFeedback } from './CalldataBuildFeedback';
-import { TokenName } from './TokenName';
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import styles from "../../styles/Home.module.css";
@@ -32,19 +31,15 @@ export default function Tokens({ tokens, loading, setTokens, amountETHIn }: { to
 }
 
 const TokenList = (tokens: any, handleRemoveToken: any, amountETHIn: any, tokenIdHovered: any, setTokenIdHovered: any) => {
-  const titleOfStratSpecificData = <div className={styles.smolstratergySpecificData}>
-    <p>{tokens[0].stratergySpecificDataDes}</p>
-  </div>;
   return (
     <>
-      {titleOfStratSpecificData}
       {tokens.map((token: any, i: number) => {
         return (
           <Grid item xs={8} width="max">
             <div className={styles.tokenCard} onMouseEnter={() => setTokenIdHovered(token.id)} onMouseLeave={() => setTokenIdHovered("")}>
               <div className={styles.upperTokenCard}>
                 <TokenLogo tokenAddress={token.id} />
-                <TokenContractData token={token} />
+                <TokenName token={token} />
                 <DeleteTokenButton token={token} removeToken={() => handleRemoveToken(token.id)} />
                 <CalldataBuildFeedback token={token} />
               </div>{" "}
@@ -53,7 +48,6 @@ const TokenList = (tokens: any, handleRemoveToken: any, amountETHIn: any, tokenI
                 <TokenPrice token={token} numberOfTokens={tokens.length} amountETHIn={amountETHIn} />
               </div>{" "}
             </div>{" "}
-            <StratergySpecificData token={token} />
           </Grid>
         );
       })}
