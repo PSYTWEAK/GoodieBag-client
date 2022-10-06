@@ -442,3 +442,18 @@
   padding: 5px;
   padding-bottom: 1px;
 }
+
+.tokenMoreData {
+  padding: 5px;
+  color: inherit;
+  font-size: 0.8rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  max-width: 300px;
+  background-color: rgba(210, 238, 255, 1);
+  border-radius: 10px;
+
+
+}
