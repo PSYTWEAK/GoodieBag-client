@@ -19,8 +19,8 @@ export async function zeroX(provider: any, token: any, setTokens: any, amountPer
 
 
     const quoteParams = {
-      sellToken: token.id,
-      buyToken: weth,
+      sellToken: weth,
+      buyToken: token.id,
       sellAmount: amountPerTrade,
     };
 

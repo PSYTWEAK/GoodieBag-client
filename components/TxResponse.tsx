@@ -8,12 +8,11 @@ export function TxResponse({ isSuccess, data }: { isSuccess: boolean; data: any 
     const [alertComp, setAlertComp] = useState(<></>);
 
     useEffect(() => {
-        console.log(data)
         if (data && data.hash) {
             setAlertComp(
                 <Alert severity={isSuccess ? "success" : "error"}>
                     <AlertTitle>{isSuccess ? "Success" : "Error"}</AlertTitle>
-                    <a href={`https://arbiscan.io/tx/${hash}`} target="_blank" rel="noreferrer">
+                    <a href={`https://arbiscan.io/tx/${data.hash}`} target="_blank" rel="noreferrer">
                         View on Etherscan
                     </a>
                 </Alert>
