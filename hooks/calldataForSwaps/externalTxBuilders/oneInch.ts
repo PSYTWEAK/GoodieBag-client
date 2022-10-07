@@ -1,6 +1,6 @@
 import axios from "axios";
 import JSBI from "jsbi";
-import { weth, arbiSwapperAddress, oneInchAddress } from "../../../globals";
+import { weth, oneInchAddress } from "../../../globals";
 import { getAddressIndex } from "../arbAddressTable";
 
 export let apiBaseUrl: string = "";

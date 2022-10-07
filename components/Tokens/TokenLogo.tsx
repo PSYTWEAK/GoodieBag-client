@@ -7,7 +7,7 @@ import DefaultTokenLogo from "../../public/DefaultTokenLogo.png";
 import styles from "../../styles/Home.module.css";
 
 
-export function TokenLogo({ tokenAddress }: { tokenAddress: string }) {
+export function TokenLogo({ token }: { token: any; }) {
 
     const [oneInchTokenList, loading] = useOneInchTokenList();
 
@@ -18,13 +18,13 @@ export function TokenLogo({ tokenAddress }: { tokenAddress: string }) {
     useEffect(() => {
         // check if tokenAddress is found in tokenlist
         if (oneInchTokenList) {
-
-            const token = oneInchTokenList[`${tokenAddress}`];
-            if (token) {
-                setLogo(token.logoURI);
+            const data = oneInchTokenList[`${token.id}`];
+            if (data) {
+                setLogo(data.logoURI);
             }
         }
-    }, [oneInchTokenList, tokenAddress]);
+    }, [oneInchTokenList, token]);
+
 
     return (
         // div is needed to center the image

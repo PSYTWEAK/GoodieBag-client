@@ -1,10 +1,5 @@
 [
   {
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
     "anonymous": false,
     "inputs": [
       {
@@ -24,8 +19,14 @@
     "type": "event"
   },
   {
-    "inputs": [],
-    "name": "getSwapper",
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "_address",
     "outputs": [
       {
         "internalType": "address",
@@ -39,19 +40,80 @@
   {
     "inputs": [
       {
-        "internalType": "uint256[]",
-        "name": "router",
-        "type": "uint256[]"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "accountConfigs",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "usingVault",
+        "type": "bool"
       },
       {
-        "internalType": "uint256[]",
+        "internalType": "address",
+        "name": "vault",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "arbAddressTable",
+    "outputs": [
+      {
+        "internalType": "contract ArbAddressTable",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getVault",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64[]",
+        "name": "router",
+        "type": "uint64[]"
+      },
+      {
+        "internalType": "uint64[]",
         "name": "tokens",
-        "type": "uint256[]"
+        "type": "uint64[]"
       },
       {
         "internalType": "bytes[]",
         "name": "swapCalldatas",
         "type": "bytes[]"
+      },
+      {
+        "internalType": "bool",
+        "name": "usingVault",
+        "type": "bool"
       }
     ],
     "name": "multiBuy",
@@ -60,16 +122,37 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "swapper",
-    "outputs": [
+    "inputs": [
       {
-        "internalType": "contract Swapper",
-        "name": "",
+        "internalType": "uint256",
+        "name": "router",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "token",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "swapCalldata",
+        "type": "bytes"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
         "type": "address"
       }
     ],
-    "stateMutability": "view",
+    "name": "swap",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

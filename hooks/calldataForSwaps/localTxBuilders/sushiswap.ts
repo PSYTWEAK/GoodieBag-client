@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from "ethers";
 import JSBI from "jsbi";
-import { weth, arbiSwapperAddress, arbiSushiswapRouterAddress } from "../../../globals";
+import { weth, arbiSushiswapRouterAddress } from "../../../globals";
 import { getAddressIndex } from "../arbAddressTable";
 
 

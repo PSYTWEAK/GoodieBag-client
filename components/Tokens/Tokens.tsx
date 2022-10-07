@@ -38,7 +38,7 @@ const TokenList = (tokens: any, handleRemoveToken: any, amountETHIn: any, tokenI
           <Grid item xs={8} width="max">
             <div className={styles.tokenCard} onMouseEnter={() => setTokenIdHovered(token.id)} onMouseLeave={() => setTokenIdHovered("")}>
               <div className={styles.upperTokenCard}>
-                <TokenLogo tokenAddress={token.id} />
+                <TokenLogo token={token} />
                 <TokenName token={token} />
                 <DeleteTokenButton token={token} removeToken={() => handleRemoveToken(token.id)} />
                 <CalldataBuildFeedback token={token} />

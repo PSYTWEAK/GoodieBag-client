@@ -2,7 +2,7 @@
 import { CurrencyAmount, Token, TradeType, Percent } from "@uniswap/sdk-core";
 import { AlphaRouter } from "@uniswap/smart-order-router";
 import JSBI from "jsbi";
-import { weth, arbiSwapperAddress, arbiUniswapRouterAddress } from "../../../globals";
+import { weth, arbiUniswapRouterAddress } from "../../../globals";
 import { getAddressIndex } from "../arbAddressTable";
 
 export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {

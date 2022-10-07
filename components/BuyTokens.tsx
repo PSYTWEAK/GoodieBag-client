@@ -20,7 +20,7 @@ export function BuyTokens({ tokens, loading, amountETHIn, txObject }: { tokens: 
   const handleClick = async () => {
     if (txObject.completed === true) {
       write({
-        args: [txObject.router, txObject.tokenId, txObject.callData],
+        args: [txObject.router, txObject.tokenId, txObject.callData, false],
         overrides: {
           value: txObject.value.toString(),
           gasLimit: "60000000",

@@ -16,8 +16,7 @@ export const UNISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/benjami
 export const SUSHISWAP_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/sushiswap/sushiswap-arbitrum";
 export const LEADERBOARD_SUBGRAPH = "https://api.thegraph.com/subgraphs/name/psytweak/goodiebag-leaderboard";
 // goodiebag contract
-export const arbiGoodieBagAddress = "0x3dB2E1a45b23dc19F89F0D0f801Af7e2ED1f59Ed";
-export const arbiSwapperAddress = "0x2ac42f6b800C1A32f84CC47E68B52eFDb2523356";
+export const arbiGoodieBagAddress = "0x7fF347c304c667FE1CF8a98bddA3e2684cEE2D5D";
 // uniswap contracts
 export const arbiUniswapQuoterAddress = "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6";
 export const arbiUniswapRouterAddress = "0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45";

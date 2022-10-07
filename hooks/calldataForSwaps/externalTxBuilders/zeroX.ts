@@ -1,6 +1,6 @@
 import axios from "axios";
 import JSBI from "jsbi";
-import { weth, arbiSwapperAddress, zeroXAddress } from "../../../globals";
+import { weth, zeroXAddress } from "../../../globals";
 import { getAddressIndex } from "../arbAddressTable";
 
 export let apiBaseUrl: string = "";
@@ -22,9 +22,10 @@ export async function zeroX(provider: any, token: any, setTokens: any, amountPer
       sellToken: weth,
       buyToken: token.id,
       sellAmount: amountPerTrade,
+      slippagePercentage: slippage / 100,
     };
 
-    const [calldata, guaranteedPrice] = await getTxCalldataForSwap(quoteParams);
+    const [calldata, buyAmount] = await getTxCalldataForSwap(quoteParams);
 
     if (calldata) {
       let { addressIndex, tokenIndex } = await getIndexes(provider, token);
@@ -36,12 +37,12 @@ export async function zeroX(provider: any, token: any, setTokens: any, amountPer
       }));
     }
 
-    if (guaranteedPrice) {
+    if (buyAmount) {
       setTokens((prevState: any) => {
         const newState = [...prevState];
         newState.forEach((token: any) => {
           if (token.id === quoteParams.sellToken) {
-            token.guaranteedPrice = guaranteedPrice;
+            token.buyAmount = buyAmount;
           }
         });
         return newState;
@@ -62,7 +63,7 @@ async function getTxCalldataForSwap(quoteParams: any): Promise<any> {
     .get(url)
     .then((res: any) => {
       console.log(res)
-      return [res.data.data, res.data.guaranteedPrice];
+      return [res.data.data, res.data.buyAmount];
     })
     .catch((err) => {
       console.log('err', err);
