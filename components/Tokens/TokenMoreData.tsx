@@ -8,7 +8,7 @@ export function TokenMoreData({ token, tokenIdHovered }: { token: any; tokenIdHo
 
         if (tokenIdHovered === token.id) {
             setResult(<div className={styles.tokenMoreData}>
-                <p>Volume USD: {token.volumeUSD}</p>
+                <p>Volume USD: ${parseFloat(token.volumeUSD).toLocaleString("en-US", { maximumFractionDigits: 2 })}</p>
             </div>);
 
         } else {

@@ -24,17 +24,24 @@ export function removeDuplicates(tokens: any): any {
 
 // look throught tokens array and any tokens that are the same, combine theire volumeUSD then delete the duplicate
 export function combineUSDVolumeThenRemoveDuplicates(tokens: any): any {
-  return tokens.filter((value: any, index: number, self: any) => {
-    return self.findIndex((t: any) => {
-      if (t.id === value.id) {
-        t.volumeUSD = t.volumeUSD + value.volumeUSD;
-        return true;
-      } else {
-        return false;
-      }
+  let uniqueTokens: any = []; // array to hold the unique tokens
 
-    });
-  });
+  // loop through tokens array
+  for (let i = 0; i < tokens.length; i++) {
+    let token = tokens[i]; // get the current token
+
+    // if the token is not in the uniqueTokens array
+    if (!uniqueTokens.includes(token.id)) {
+      uniqueTokens.push(token); // add the token to the uniqueTokens array
+    } else {
+      // if the token is in the uniqueTokens array
+      let index = uniqueTokens.indexOf(token.id); // get the index of the token in the uniqueTokens array
+      uniqueTokens[index].volumeUSD = (parseFloat(uniqueTokens[index].volumeUSD) + parseFloat(token.volumeUSD)).toString(); // add the volumeUSD of the current token to the volumeUSD of the token in the combinedTokens array
+    }
+  }
+
+  return uniqueTokens;
+
 }
 
 
