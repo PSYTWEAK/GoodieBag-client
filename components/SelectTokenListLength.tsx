@@ -1,9 +1,9 @@
 import React from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
-import { statergys } from "../globals";
+import { globalSettings } from "../globals";
 import styles from '../styles/Home.module.css';
 
-const selection = Array.from(Array(61).keys()).slice(1);
+const selection = Array.from(Array(globalSettings.maximumTokens).keys()).slice(1);
 
 export function SelectTokenListLength({ tokensLength, setConfig }: { tokensLength: any; setConfig: any }) {
   return (

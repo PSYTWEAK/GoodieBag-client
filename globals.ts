@@ -28,3 +28,8 @@ export const zeroXAddress = "0xdef1c0ded9bec7f1a1670819833240f027b25eff";
 // arbitrum address table
 export const arbiAddressTable = "0x0000000000000000000000000000000000000066";
 
+// global settings
+export const globalSettings = {
+    maximumTokens: 60,
+}
+
