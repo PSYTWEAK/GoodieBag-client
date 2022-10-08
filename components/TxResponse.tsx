@@ -9,18 +9,10 @@ export function TxResponse({ isSuccess, data }: { isSuccess: boolean; data: any 
 
     useEffect(() => {
         if (data && data.hash) {
-            setAlertComp(
-                <Alert severity={isSuccess ? "success" : "error"}>
-                    <AlertTitle>{isSuccess ? "Success" : "Error"}</AlertTitle>
-                    <a href={`https://arbiscan.io/tx/${data.hash}`} target="_blank" rel="noreferrer">
-                        View on Etherscan
-                    </a>
-                </Alert>
-            );
-            // wait 10 seconds then set alertComp to <></>
-            setTimeout(() => {
-                setAlertComp(<></>);
-            }, 10000);
+            transactionExecuted(setAlertComp, isSuccess, data);
+        }
+        if (data && !data.hash) {
+            transactionCancelled(setAlertComp, isSuccess, data);
         }
 
     }, [isSuccess, data]);
@@ -32,4 +24,30 @@ export function TxResponse({ isSuccess, data }: { isSuccess: boolean; data: any 
             {alertComp}
         </div>
     );
+}
+function transactionExecuted(setAlertComp: React.Dispatch<React.SetStateAction<JSX.Element>>, isSuccess: boolean, data: any) {
+    setAlertComp(
+        <Alert severity={isSuccess ? "success" : "error"}>
+            <AlertTitle>{isSuccess ? "Success" : "Error"}</AlertTitle>
+            <a href={`https://arbiscan.io/tx/${data.hash}`} target="_blank" rel="noreferrer">
+                View on Etherscan
+            </a>
+        </Alert>
+    );
+    // wait 10 seconds then set alertComp to <></>
+    setTimeout(() => {
+        setAlertComp(<></>);
+    }, 10000);
+}
+
+function transactionCancelled(setAlertComp: React.Dispatch<React.SetStateAction<JSX.Element>>, isSuccess: boolean, data: any) {
+    setAlertComp(
+        <Alert severity={"error"}>
+            <AlertTitle>{"Transaction Cancelled"}</AlertTitle>
+        </Alert>
+    );
+    // wait 10 seconds then set alertComp to <></>
+    setTimeout(() => {
+        setAlertComp(<></>);
+    }, 10000);
 }
