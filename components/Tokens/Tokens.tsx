@@ -35,7 +35,7 @@ const TokenList = (tokens: any, handleRemoveToken: any, amountETHIn: any, tokenI
     <>
       {tokens.map((token: any, i: number) => {
         return (
-          <Grid item xs={8} width="max">
+          <Grid key={token.id} item xs={8} width="max">
             <div className={styles.tokenCard} onMouseEnter={() => setTokenIdHovered(token.id)} onMouseLeave={() => setTokenIdHovered("")}>
               <div className={styles.upperTokenCard}>
                 <TokenLogo token={token} />

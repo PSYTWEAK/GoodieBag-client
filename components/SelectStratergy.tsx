@@ -18,7 +18,7 @@ const StatergysList = (setConfig: any) => {
 
       {statergys.map((strat: any, i: number) => {
         return (
-          <Grid item xs={8} width="max">
+          <Grid key={strat} item xs={8} width="max">
             <div className={styles.stratCard} onClick={(e) => setConfig((prevState: any) => {
               return { ...prevState, stratergy: strat }
             })}>

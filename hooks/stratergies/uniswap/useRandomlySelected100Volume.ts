@@ -42,14 +42,13 @@ const sushiQuery = `
   `;
 export default async function useRandomlySelected(config: any) {
   const result = await querySubgraphs(config);
-  console.log("result", result);
+
   let tokens: any = result;
 
   tokens = removeBlueChips(tokens);
   tokens = removeStables(tokens);
-  tokens = removeSignOfDerivInTokenName(tokens); console.log("before", tokens)
+  tokens = removeSignOfDerivInTokenName(tokens);
   tokens = combineUSDVolumeThenRemoveDuplicates(tokens);
-  console.log("after", tokens)
   tokens = removeLowVolume(tokens);
   tokens = shuffleTokens(tokens);
 
