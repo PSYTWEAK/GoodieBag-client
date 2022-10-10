@@ -25,7 +25,7 @@ export default function Tokens({ state, loading, setState }: { state: any; loadi
       {loading === "false" ? <></> :
         loading === "null" ? <h1>No Tokens Found</h1> :
           loading === "true" ? loadingAllTokensProgress() :
-            loading === "done" && state.tokens.length > 0 ? <>{TokenList(state.tokens, handleRemoveToken, state.amountETHIn, tokenIdHovered, setTokenIdHovered)}</> :
+            loading === "done" && state.tokens && state.tokens.length > 0 ? <>{TokenList(state.tokens, handleRemoveToken, state.amountETHIn, tokenIdHovered, setTokenIdHovered)}</> :
               <></>}
     </Grid>
   );

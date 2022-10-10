@@ -4,10 +4,11 @@ import { Button } from "@mui/material";
 import { useProvider, useContract, useContractWrite, useSendTransaction } from "wagmi";
 import GoodieBagABI from "../contracts/GoodieBagABI.json";
 import { arbiGoodieBagAddress } from "../globals";
+import styles from '../styles/Home.module.css';
 
 
 
-export function BuyTokens({ tokens, loading, amountETHIn, txObject }: { tokens: any; loading: any; amountETHIn: any, txObject: any }) {
+export function BuyTokens({ state, loading, txObject }: { state: any; loading: any; txObject: any }) {
 
   const { data, isLoading, isSuccess, write } = useContractWrite({
     addressOrName: arbiGoodieBagAddress,
@@ -30,20 +31,21 @@ export function BuyTokens({ tokens, loading, amountETHIn, txObject }: { tokens: 
   };
 
   useEffect(() => {
-    if (amountETHIn > 0
+    if (state.amountETHIn > 0
       && loading === "done"
-      && tokens.length > 0
+      && state.tokens
+      && state.tokens.length > 0
       && txObject.completed === true) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-  }, [amountETHIn, tokens, loading, txObject.completed]);
+  }, [state.amountETHIn, state.tokens, loading, txObject.completed]);
 
   return (
     <>
       <div>
-        <Button style={{ width: '300px', borderRadius: '10px', backgroundColor: "rgb(137, 207, 251)", color: 'black', boxShadow: "none" }} variant="contained" onClick={handleClick} disabled={disabled}>
+        <Button className={styles.button} variant="contained" onClick={handleClick} disabled={disabled}>
           Buy Tokens
         </Button>
       </div>

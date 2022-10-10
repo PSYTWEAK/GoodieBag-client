@@ -26,7 +26,7 @@ export function EtherInput({ state, setState, slippage, generateCallData }: { st
   }, [state.amountETHIn]);
 
   useEffect(() => {
-    if (storedAmountETHIn === state.amountETHIn && state.tokens.length > 0 && state.amountETHIn > 0) {
+    if (storedAmountETHIn === state.amountETHIn && state.tokens && state.tokens.length > 0 && state.amountETHIn > 0) {
       generateCallData({
         provider,
         state,

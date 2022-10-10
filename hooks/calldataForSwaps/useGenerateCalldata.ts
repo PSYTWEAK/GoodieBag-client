@@ -63,7 +63,7 @@ export default function useGenerateCalldata({ state, config }: { state: any; con
       completed: false,
     });
 
-  }, [state.amountETHIn, state.tokens.length, config]);
+  }, [state.amountETHIn, state.tokens, config]);
 
 
   async function generateCallData(data: any) {
