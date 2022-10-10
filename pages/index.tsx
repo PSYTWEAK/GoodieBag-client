@@ -11,6 +11,7 @@ import Tokens from "../components/Tokens/Tokens";
 import { BuyTokens } from "../components/BuyTokens";
 import useTokens from "../hooks/useTokens";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
+import { Alert } from '@mui/material';
 
 
 const Home: NextPage = () => {
@@ -46,6 +47,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
+      <Alert severity="warning" className={styles.warningAlert}>Goodiebag is still in development and has not been audited</Alert>
       <main className={styles.main}>
         <div className={styles.card}>
           <CardHeader stratergy={config.stratergy} setConfig={setConfig} setState={setState} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
@@ -84,7 +86,7 @@ const Home: NextPage = () => {
 
         </div>
       </main>
-    </div>
+    </div >
   );
 };
 

@@ -15,7 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: min(20rem, 50%);
+  padding-bottom: min(10rem, 20%);
 }
 
 .footer {
@@ -456,4 +456,8 @@
   border-radius: 10px;
 
 
+}
+
+.warningAlert {
+  background-color: rgba(210, 238, 255, 1);
 }

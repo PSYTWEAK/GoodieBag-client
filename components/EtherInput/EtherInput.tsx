@@ -29,10 +29,9 @@ export function EtherInput({ state, setState, slippage, generateCallData }: { st
     if (storedAmountETHIn === state.amountETHIn && state.tokens.length > 0 && state.amountETHIn > 0) {
       generateCallData({
         provider,
-        state.tokens,
+        state,
         setState,
         slippage,
-        state.amountETHIn,
         address
       })
 
