@@ -35,7 +35,7 @@ const Home: NextPage = () => {
 
   const [settingsActive, setSettingsActive] = useState(false);
 
-  const { txObject, generateCallData } = useGenerateCalldata();
+  const { txObject, generateCallData } = useGenerateCalldata({ state, config });
 
   useEffect(() => {
 

@@ -11,12 +11,13 @@ import { TokenLogo } from "./TokenLogo";
 import { StratergySpecificData } from './StratergySpecificData';
 import { TokenPrice } from './TokenPrice';
 
-export default function Tokens({ tokens, loading, setTokens, amountETHIn }: { tokens: any; loading: any; setTokens: any; amountETHIn: any; }) {
+export default function Tokens({ state, loading, setState }: { state: any; loading: any; setState: any; }) {
 
   const [tokenIdHovered, setTokenIdHovered] = React.useState("");
 
   const handleRemoveToken = (token: string) => {
-    setTokens(tokens.filter((item: any) => item.id !== token));
+    const newTokens = state.tokens.filter((t: any) => t.id !== token);
+    setState((prevState: any) => { return { ...prevState, tokens: newTokens } });
   };
 
   return (
@@ -24,7 +25,7 @@ export default function Tokens({ tokens, loading, setTokens, amountETHIn }: { to
       {loading === "false" ? <></> :
         loading === "null" ? <h1>No Tokens Found</h1> :
           loading === "true" ? loadingAllTokensProgress() :
-            loading === "done" && tokens.length > 0 ? <>{TokenList(tokens, handleRemoveToken, amountETHIn, tokenIdHovered, setTokenIdHovered)}</> :
+            loading === "done" && state.tokens.length > 0 ? <>{TokenList(state.tokens, handleRemoveToken, state.amountETHIn, tokenIdHovered, setTokenIdHovered)}</> :
               <></>}
     </Grid>
   );

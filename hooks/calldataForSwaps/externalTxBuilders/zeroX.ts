@@ -9,7 +9,7 @@ const chainUrl = new Map()
 
 chainUrl.set(42161, "https://arbitrum.api.0x.org/swap/v1/")
 
-export async function zeroX(provider: any, token: any, setTokens: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
+export async function zeroX(provider: any, token: any, setState: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
 
   try {
 
@@ -38,15 +38,12 @@ export async function zeroX(provider: any, token: any, setTokens: any, amountPer
     }
 
     if (buyAmount) {
-      setTokens((prevState: any) => {
-        const newState = [...prevState];
-        newState.forEach((token: any) => {
-          if (token.id === quoteParams.sellToken) {
-            token.buyAmount = buyAmount;
-          }
-        });
-        return newState;
-      });
+      setState((prevState: any) => {
+        const tokenIndex = prevState.tokens.findIndex((t: any) => t.id === token.id);
+        prevState.tokens[tokenIndex].buyAmount = buyAmount;
+        return prevState;
+      }
+      )
     }
 
     return !!calldata;

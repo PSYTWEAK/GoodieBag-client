@@ -12,18 +12,18 @@ import { useEffect, useState } from "react";
 
 
 
-async function generateTokenSwapCalldata(token: any, index: number, setTokens: any, slippage: number, provider: any, address: string, amountPerTrade: JSBI, setTxObject: any) {
+async function generateTokenSwapCalldata(token: any, index: number, setState: any, slippage: number, provider: any, address: string, amountPerTrade: JSBI, setTxObject: any) {
 
   let success: boolean = false;
 
-  setTokens((prevState: any) => {
-    prevState[index].hasCalldata = "loading";
+  setState((prevState: any) => {
+    prevState.tokens[index].hasCalldata = "loading";
     return [...prevState];
   });
 
 
   if (slippage < 50) {
-    success = await zeroX(provider, token, setTokens, amountPerTrade, slippage, setTxObject, address);
+    success = await zeroX(provider, token, setState, amountPerTrade, slippage, setTxObject, address);
   }
 
   if (!success && token.protocol === "Uniswap V3") {
@@ -36,14 +36,14 @@ async function generateTokenSwapCalldata(token: any, index: number, setTokens: a
   }
 
 
-  setTokens((prevState: any) => {
-    prevState[index].hasCalldata = success.toString();
+  setState((prevState: any) => {
+    prevState.tokens[index].hasCalldata = success.toString();
     return [...prevState];
   });
 
 }
 
-export default function useGenerateCalldata() {
+export default function useGenerateCalldata({ state, config }: { state: any; config: any; }) {
 
   const [txObject, setTxObject] = useState({
     router: [],
@@ -52,6 +52,18 @@ export default function useGenerateCalldata() {
     value: JSBI.BigInt(0),
     completed: false,
   });
+
+  useEffect(() => {
+
+    setTxObject({
+      router: [],
+      callData: [],
+      tokenId: [],
+      value: JSBI.BigInt(0),
+      completed: false,
+    });
+
+  }, [state.amountETHIn, state.tokens.length, config]);
 
 
   async function generateCallData(data: any) {
@@ -68,7 +80,7 @@ export default function useGenerateCalldata() {
 
     for (let i = 0; i < data.tokens.length; i++) {
 
-      await generateTokenSwapCalldata(data.tokens[i], i, data.setTokens, data.slippage, data.provider, data.address, amountPerTrade, setTxObject);
+      await generateTokenSwapCalldata(data.state.tokens[i], i, data.setState, data.slippage, data.provider, data.address, amountPerTrade, setTxObject);
     }
 
     setTxObject((prevState: any) => ({

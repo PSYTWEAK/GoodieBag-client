@@ -8,7 +8,7 @@ import { useAccount } from 'wagmi'
 
 
 
-export function EtherInput({ amountETHIn, setAmountETHIn, tokens, setTokens, slippage, generateCallData }: { amountETHIn: any; setAmountETHIn: any; tokens: any; setTokens: any; slippage: any; generateCallData: any }) {
+export function EtherInput({ state, setState, slippage, generateCallData }: { state: any; setState: any; slippage: any; generateCallData: any }) {
   const provider = useProvider();
   const { address, isConnecting, isDisconnected } = useAccount()
 
@@ -19,20 +19,20 @@ export function EtherInput({ amountETHIn, setAmountETHIn, tokens, setTokens, sli
 
   useEffect(() => {
     setTimeout(() => {
-      setStoredAmountETHIn(amountETHIn);
+      setStoredAmountETHIn(state.amountETHIn);
     }
       , 1000);
 
-  }, [amountETHIn]);
+  }, [state.amountETHIn]);
 
   useEffect(() => {
-    if (storedAmountETHIn === amountETHIn && tokens.length > 0 && amountETHIn > 0) {
+    if (storedAmountETHIn === state.amountETHIn && state.tokens.length > 0 && state.amountETHIn > 0) {
       generateCallData({
         provider,
-        tokens,
-        setTokens,
+        state.tokens,
+        setState,
         slippage,
-        amountETHIn,
+        state.amountETHIn,
         address
       })
 
@@ -53,9 +53,9 @@ export function EtherInput({ amountETHIn, setAmountETHIn, tokens, setTokens, sli
               disableUnderline: true,
             }}
             placeholder="0.00"
-            value={amountETHIn}
+            value={state.amountETHIn}
             onChange={(e: any) => {
-              setAmountETHIn(e.target.value);
+              setState({ amountETHIn: e.target.value });
             }}
           />
         </div>
