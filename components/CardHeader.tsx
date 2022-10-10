@@ -4,7 +4,7 @@ import { SettingsButton } from "./SettingsButton";
 
 import styles from "../styles/Home.module.css";
 import { CloseSettingsButton } from "./CloseSettingsButton";
-export function CardHeader({ stratergy, setConfig, settingsActive, setSettingsActive }: { stratergy: any; setConfig: any; settingsActive: Boolean; setSettingsActive: any }) {
+export function CardHeader({ stratergy, setConfig, setState, settingsActive, setSettingsActive }: { stratergy: any; setConfig: any; setState: any; settingsActive: Boolean; setSettingsActive: any }) {
   return (
     <div className={styles.cardHeader}>
       {" "}
@@ -16,7 +16,7 @@ export function CardHeader({ stratergy, setConfig, settingsActive, setSettingsAc
       {stratergy && !settingsActive && (
         <div className={styles.backButton}>
           {" "}
-          <BackToSelectStratButton setConfig={setConfig} />
+          <BackToSelectStratButton setConfig={setConfig} setState={setState} />
         </div>
       )}{" "}
       {!settingsActive && (

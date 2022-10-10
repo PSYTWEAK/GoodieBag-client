@@ -48,7 +48,7 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.card}>
-          <CardHeader stratergy={config.stratergy} setConfig={setConfig} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
+          <CardHeader stratergy={config.stratergy} setConfig={setConfig} setState={setState} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
 
           {config.stratergy && (
             <>
