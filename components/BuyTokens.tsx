@@ -45,7 +45,7 @@ export function BuyTokens({ state, loading, txObject }: { state: any; loading: a
   return (
     <>
       <div>
-        <Button className={styles.button} variant="contained" onClick={handleClick} disabled={disabled}>
+        <Button className={styles.buyButton} variant="contained" onClick={handleClick} disabled={disabled}>
           Buy Tokens
         </Button>
       </div>

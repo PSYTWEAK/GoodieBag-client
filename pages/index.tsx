@@ -47,7 +47,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <Alert severity="warning" className={styles.warningAlert}>Only use what you're willing to lose. Goodiebag is still in development, has not been audited yet.</Alert>
+      <Alert severity="warning" className={styles.warningAlert}>Only trade what you're willing to lose. Goodiebag is still in development, has not been audited yet.</Alert>
       <main className={styles.main}>
         <div className={styles.card}>
           <CardHeader stratergy={config.stratergy} setConfig={setConfig} setState={setState} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />

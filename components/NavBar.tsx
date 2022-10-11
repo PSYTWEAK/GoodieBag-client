@@ -20,6 +20,9 @@ export function NavBar() {
                 <Link href="/leaderboard">
                     <a className={styles.link}>Leaderboard</a>
                 </Link>
+                <Link href="https://goodiebag.gitbook.io/untitled/">
+                    <a className={styles.link}>About</a>
+                </Link>
             </div>
             <ConnectButton />
 
