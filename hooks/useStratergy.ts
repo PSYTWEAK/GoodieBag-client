@@ -43,6 +43,8 @@ export default function useStratergy(stratergy: string, config: any) {
         } catch (error) {
           setLoading("null");
         }
+      } else {
+        setStratResult([])
       }
     }
   }, [stratergy]);

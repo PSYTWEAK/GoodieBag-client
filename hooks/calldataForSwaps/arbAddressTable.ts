@@ -13,6 +13,7 @@ export async function getAddressIndex(address: string, provider: any) {
     );
 
     let addressIndex = await arbAddressTableContract.lookup(address)
+
     return addressIndex.toString();
 
 }

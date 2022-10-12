@@ -57,8 +57,6 @@ export default function useGenerateCalldata(state: any, setState: any, config: a
 
   useEffect(() => {
 
-
-
     setTxObject({
       router: [],
       callData: [],
@@ -66,7 +64,6 @@ export default function useGenerateCalldata(state: any, setState: any, config: a
       value: JSBI.BigInt(0),
       completed: false,
     });
-
 
   }, [state.amountETHIn, state.tokens.length, config]);
 
@@ -84,14 +81,16 @@ export default function useGenerateCalldata(state: any, setState: any, config: a
     const amountPerTrade = amountInPerTrade(ethers.utils.parseEther(state.amountETHIn.toString()), state.tokens);
 
     for (let i = 0; i < state.tokens.length; i++) {
-
       await generateTokenSwapCalldata(i, state, setState, config, amountPerTrade, setTxObject);
+
     }
+
 
     setTxObject((prevState: any) => ({
       ...prevState,
       completed: true,
     }));
+
   }
 
 

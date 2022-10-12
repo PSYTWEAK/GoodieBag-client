@@ -19,7 +19,7 @@ export function EtherInput({ state, setState, slippage, generateCallData }: { st
     setTimeout(() => {
       setStoredAmountETHIn(state.amountETHIn);
     }
-      , 1000);
+      , 2000);
 
   }, [state.amountETHIn]);
 

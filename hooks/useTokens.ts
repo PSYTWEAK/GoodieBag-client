@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 export default function useTokens(config: any, stratResult: any, loading: any, setState: any) {
-  const [tokens, setTokens] = useState([]);
 
   useEffect(() => {
     if (loading === "done") {
@@ -18,5 +17,5 @@ export default function useTokens(config: any, stratResult: any, loading: any, s
     });
   }, [config.stratergy]);
 
-  return [tokens, setTokens];
+
 }
