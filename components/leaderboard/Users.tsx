@@ -32,11 +32,11 @@ const UserList = (users: any, address: any) => {
                   {newFunction(data, address)}
                 </a>
                 <p>&nbsp;</p>
+
                 <p>{readableEthAmount(data)}</p>
                 <p>&nbsp;</p>
+                <p> ETH</p>   </div>
 
-                <p> ETH</p>
-              </div>{" "}
 
             </Grid>
           );
