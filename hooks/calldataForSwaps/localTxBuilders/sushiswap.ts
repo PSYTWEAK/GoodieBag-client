@@ -4,7 +4,7 @@ import { weth, arbiSushiswapRouterAddress } from "../../../globals";
 import { getAddressIndex } from "../arbAddressTable";
 
 
-export async function sushi(provider: any, token: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
+export async function sushi(provider: any, token: any, setState: any, amountPerTrade: JSBI, slippage: number, setTxObject: any, address: string) {
   try {
     // sushiswap contract instance
     const sushiContract = new ethers.Contract(
@@ -38,13 +38,22 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
     ]);
 
     if (calldata) {
-
       setTxObject((prevState: any) => ({
         router: [...prevState.router, arbiSushiswapRouterAddress],
         callData: [...prevState.callData, calldata],
         tokenId: [...prevState.tokenId, token.id],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
+    }
+    console.log("sushi", calldata);
+
+    if (minimumAmountOut) {
+      setState((prevState: any) => {
+        const tokenIndex = prevState.tokens.findIndex((t: any) => t.id === token.id);
+        console.log(minimumAmountOut.toString())
+        prevState.tokens[tokenIndex].buyAmount = minimumAmountOut.toString();
+        return prevState;
+      })
     }
     return !!calldata;
   } catch (e) {

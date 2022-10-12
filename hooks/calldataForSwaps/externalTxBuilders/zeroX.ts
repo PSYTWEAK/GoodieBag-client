@@ -37,6 +37,7 @@ export async function zeroX(provider: any, token: any, setState: any, amountPerT
     }
 
     if (buyAmount) {
+      console.log(token.name, buyAmount)
       setState((prevState: any) => {
         const tokenIndex = prevState.tokens.findIndex((t: any) => t.id === token.id);
         prevState.tokens[tokenIndex].buyAmount = buyAmount;
@@ -57,7 +58,6 @@ async function getTxCalldataForSwap(quoteParams: any): Promise<any> {
   return axios
     .get(url)
     .then((res: any) => {
-      console.log(res)
       return [res.data.data, res.data.buyAmount];
     })
     .catch((err) => {

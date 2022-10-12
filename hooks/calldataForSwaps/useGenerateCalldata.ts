@@ -9,9 +9,6 @@ import { useEffect, useState } from "react";
 // It also checks if the slippage is too high and if so, it will use the localTxBuilders
 // The localTxBuilders are used to generate the calldata for the swaps for tokens that are not supported by 1inch or have a slippage too high
 
-
-
-
 async function generateTokenSwapCalldata(index: number, state: any, setState: any, config: any, amountPerTrade: JSBI, setTxObject: any) {
 
   let token: any = state.tokens[index];
@@ -34,7 +31,7 @@ async function generateTokenSwapCalldata(index: number, state: any, setState: an
 
   if (!success && token.protocol === "Sushiswap") {
 
-    success = await sushi(state.provider, token, amountPerTrade, config.slippage, setTxObject, state.address);
+    success = await sushi(state.provider, token, setState, amountPerTrade, config.slippage, setTxObject, state.address);
   }
 
   setState((prevState: any) => {

@@ -7,7 +7,6 @@ import { BigNumber, ethers } from "ethers";
 import styles from "../../styles/Home.module.css";
 
 export function TokenPrice({ token, numberOfTokens, amountETHIn }: { token: any; numberOfTokens: number; amountETHIn: any }) {
-    const provider = useProvider();
 
     const [amountOutThisToken, setAmountOutThisToken] = useState("0");
     // use ethers to format units of token
@@ -15,7 +14,8 @@ export function TokenPrice({ token, numberOfTokens, amountETHIn }: { token: any;
     useEffect(() => {
         if (token.buyAmount) {
             const buyAmount = Number(ethers.utils.formatUnits(token.buyAmount, 18));
-            setAmountOutThisToken(buyAmount.toLocaleString("en-US", { maximumFractionDigits: 2 }));
+            const formatted = format(buyAmount);
+            setAmountOutThisToken(formatted);
         } else if (token.hasCalldata === "true") {
 
             setAmountOutThisToken("?");
@@ -33,4 +33,15 @@ export function TokenPrice({ token, numberOfTokens, amountETHIn }: { token: any;
             <p>{token.symbol} </p>
         </div>
     </>);
+}
+
+
+function format(num: number) {
+    let i = 2;
+    let formatted = num.toLocaleString("en-US", { maximumFractionDigits: i });
+    while (formatted.endsWith("0")) {
+        i = i + 1;
+        formatted = num.toLocaleString("en-US", { maximumFractionDigits: i });
+    }
+    return num.toLocaleString("en-US", { maximumFractionDigits: i + 2 });
 }
