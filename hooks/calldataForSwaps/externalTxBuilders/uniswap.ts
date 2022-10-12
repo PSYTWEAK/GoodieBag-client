@@ -27,12 +27,10 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
     });
 
     if (route) {
-      let routerAddressIndex = await getAddressIndex(arbiUniswapRouterAddress, provider);
-      let tokenAddressIndex = await getAddressIndex(token.id, provider);
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, routerAddressIndex],
+        router: [...prevState.router, arbiUniswapRouterAddress],
         callData: [...prevState.callData, route.methodParameters.calldata],
-        tokenId: [...prevState.tokenId, tokenAddressIndex],
+        tokenId: [...prevState.tokenId, token.id],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }
@@ -43,10 +41,3 @@ export async function uniswap(provider: any, token: any, amountPerTrade: JSBI, s
     return false;
   }
 }
-
-async function getIndexes(provider: any, token: any) {
-  let addressIndex = await getAddressIndex(arbiUniswapRouterAddress, provider);
-  let tokenIndex = await getAddressIndex(token.id, provider);
-  return { addressIndex, tokenIndex };
-}
-

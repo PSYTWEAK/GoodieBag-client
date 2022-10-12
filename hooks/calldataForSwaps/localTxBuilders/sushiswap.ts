@@ -38,12 +38,11 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
     ]);
 
     if (calldata) {
-      let routerAddressIndex = await getAddressIndex(arbiSushiswapRouterAddress, provider);
-      let tokenAddressIndex = await getAddressIndex(token.id, provider);
+
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, routerAddressIndex],
+        router: [...prevState.router, arbiSushiswapRouterAddress],
         callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, tokenAddressIndex],
+        tokenId: [...prevState.tokenId, token.id],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }
@@ -58,10 +57,4 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
 function _minimumAmountOut(contractQuote: string, slippage: number) {
   // contractQuote - (contractQuote * (slippage / 100))
   return JSBI.subtract(JSBI.BigInt(contractQuote), JSBI.multiply(JSBI.BigInt(contractQuote), JSBI.divide(JSBI.BigInt(slippage), JSBI.BigInt(100))));
-}
-
-async function getIndexes(provider: any, token: any) {
-  let addressIndex = await getAddressIndex(arbiSushiswapRouterAddress, provider);
-  let tokenIndex = await getAddressIndex(token.id, provider);
-  return { addressIndex, tokenIndex };
 }

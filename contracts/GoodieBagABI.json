@@ -21,89 +21,14 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "_address",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "accountConfigs",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "usingVault",
-        "type": "bool"
-      },
-      {
-        "internalType": "address",
-        "name": "vault",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "arbAddressTable",
-    "outputs": [
-      {
-        "internalType": "contract ArbAddressTable",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getVault",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint64[]",
+        "internalType": "address[]",
         "name": "router",
-        "type": "uint64[]"
+        "type": "address[]"
       },
       {
-        "internalType": "uint64[]",
+        "internalType": "address[]",
         "name": "tokens",
-        "type": "uint64[]"
+        "type": "address[]"
       },
       {
         "internalType": "bytes[]",
@@ -124,14 +49,14 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "router",
-        "type": "uint256"
+        "type": "address"
       },
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "token",
-        "type": "uint256"
+        "type": "address"
       },
       {
         "internalType": "bytes",

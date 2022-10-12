@@ -28,12 +28,10 @@ export async function zeroX(provider: any, token: any, setState: any, amountPerT
     const [calldata, buyAmount] = await getTxCalldataForSwap(quoteParams);
 
     if (calldata) {
-      let routerAddressIndex = await getAddressIndex(zeroXAddress, provider);
-      let tokenAddressIndex = await getAddressIndex(token.id, provider);
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, routerAddressIndex],
+        router: [...prevState.router, zeroXAddress],
         callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, tokenAddressIndex],
+        tokenId: [...prevState.tokenId, token.id],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }
@@ -44,7 +42,6 @@ export async function zeroX(provider: any, token: any, setState: any, amountPerT
         prevState.tokens[tokenIndex].buyAmount = buyAmount;
         return prevState;
       })
-
     }
 
     return !!calldata;
