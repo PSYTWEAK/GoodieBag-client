@@ -9,7 +9,7 @@ export function BackToSelectStratButton({ setConfig, setState }: { setConfig: an
       return { ...prevState, stratergy: "" };
     });
     setState((prevState: any) => {
-      return { ...prevState, amountETHin: 0, tokens: [] };
+      return { ...prevState, amountETHIn: null, tokens: [] };
     })
   }
 

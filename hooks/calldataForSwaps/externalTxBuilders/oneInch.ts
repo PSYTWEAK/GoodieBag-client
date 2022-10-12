@@ -27,11 +27,12 @@ export async function oneInch(provider: any, token: any, amountPerTrade: JSBI, s
     const calldata = await getTxCalldataForSwap(swapParams);
 
     if (calldata) {
-      let { addressIndex, tokenIndex } = await getIndexes(provider, token);
+      let routerAddressIndex = await getAddressIndex(oneInchAddress, provider);
+      let tokenAddressIndex = await getAddressIndex(token.id, provider);
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, addressIndex],
+        router: [...prevState.router, routerAddressIndex],
         callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, tokenIndex],
+        tokenId: [...prevState.tokenId, tokenAddressIndex],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }
@@ -58,11 +59,4 @@ async function getTxCalldataForSwap(swapParams: any) {
 
 function apiRequestUrl(methodName: any, queryParams: any) {
   return apiBaseUrl + methodName + "?" + new URLSearchParams(queryParams).toString();
-}
-
-
-async function getIndexes(provider: any, token: any) {
-  let addressIndex = await getAddressIndex(oneInchAddress, provider);
-  let tokenIndex = await getAddressIndex(token.id, provider);
-  return { addressIndex, tokenIndex };
 }

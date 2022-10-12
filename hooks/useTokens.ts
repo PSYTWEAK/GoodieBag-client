@@ -5,13 +5,17 @@ export default function useTokens(config: any, stratResult: any, loading: any, s
 
   useEffect(() => {
     if (loading === "done") {
-      setState({ tokens: stratResult.slice(0, config.tokensLength) })
+      setState((prevState: any) => {
+        return { ...prevState, tokens: stratResult.slice(0, config.tokensLength) };
+      });
     }
   }, [stratResult, config.tokensLength, loading]);
 
   useEffect(() => {
 
-    setState({ tokens: [] })
+    setState((prevState: any) => {
+      return { ...prevState, tokens: [] };
+    });
   }, [config.stratergy]);
 
   return [tokens, setTokens];

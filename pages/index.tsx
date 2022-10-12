@@ -12,9 +12,13 @@ import { BuyTokens } from "../components/BuyTokens";
 import useTokens from "../hooks/useTokens";
 import useGenerateCalldata from "../hooks/calldataForSwaps/useGenerateCalldata";
 import { Alert } from '@mui/material';
+import { useAccount, useProvider } from 'wagmi';
 
 
 const Home: NextPage = () => {
+
+  const provider = useProvider();
+  const { address, isConnecting, isDisconnected } = useAccount()
 
   const [config, setConfig] = useState({
     stratergy: "",
@@ -28,7 +32,9 @@ const Home: NextPage = () => {
   const [stratResult, loading] = useStratergy(config.stratergy, config);
 
   const [state, setState] = useState({
-    amountETHIn: 0,
+    provider: provider,
+    address: address,
+    amountETHIn: null,
     tokens: [],
   })
 
@@ -36,7 +42,7 @@ const Home: NextPage = () => {
 
   const [settingsActive, setSettingsActive] = useState(false);
 
-  const { txObject, generateCallData } = useGenerateCalldata({ state, config });
+  const { txObject, generateCallData } = useGenerateCalldata(state, setState, config);
 
   useEffect(() => {
 
@@ -47,7 +53,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <Alert severity="warning" className={styles.warningAlert}>Only trade what you're willing to lose. Goodiebag is still in development, has not been audited yet.</Alert>
+      <Alert severity="warning" className={styles.warningAlert}>Only trade what you're willing to lose. Goodiebag is still in development and has not been audited.</Alert>
       <main className={styles.main}>
         <div className={styles.card}>
           <CardHeader stratergy={config.stratergy} setConfig={setConfig} setState={setState} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />

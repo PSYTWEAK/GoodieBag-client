@@ -38,11 +38,12 @@ export async function sushi(provider: any, token: any, amountPerTrade: JSBI, sli
     ]);
 
     if (calldata) {
-      let { addressIndex, tokenIndex } = await getIndexes(provider, token);
+      let routerAddressIndex = await getAddressIndex(arbiSushiswapRouterAddress, provider);
+      let tokenAddressIndex = await getAddressIndex(token.id, provider);
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, addressIndex],
+        router: [...prevState.router, routerAddressIndex],
         callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, tokenIndex],
+        tokenId: [...prevState.tokenId, tokenAddressIndex],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }

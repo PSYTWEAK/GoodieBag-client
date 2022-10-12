@@ -28,11 +28,12 @@ export async function zeroX(provider: any, token: any, setState: any, amountPerT
     const [calldata, buyAmount] = await getTxCalldataForSwap(quoteParams);
 
     if (calldata) {
-      let { addressIndex, tokenIndex } = await getIndexes(provider, token);
+      let routerAddressIndex = await getAddressIndex(zeroXAddress, provider);
+      let tokenAddressIndex = await getAddressIndex(token.id, provider);
       setTxObject((prevState: any) => ({
-        router: [...prevState.router, addressIndex],
+        router: [...prevState.router, routerAddressIndex],
         callData: [...prevState.callData, calldata],
-        tokenId: [...prevState.tokenId, tokenIndex],
+        tokenId: [...prevState.tokenId, tokenAddressIndex],
         value: JSBI.add(amountPerTrade, prevState.value),
       }));
     }
@@ -42,8 +43,8 @@ export async function zeroX(provider: any, token: any, setState: any, amountPerT
         const tokenIndex = prevState.tokens.findIndex((t: any) => t.id === token.id);
         prevState.tokens[tokenIndex].buyAmount = buyAmount;
         return prevState;
-      }
-      )
+      })
+
     }
 
     return !!calldata;
@@ -70,11 +71,4 @@ async function getTxCalldataForSwap(quoteParams: any): Promise<any> {
 
 function apiRequestUrl(methodName: any, queryParams: any) {
   return apiBaseUrl + methodName + "?" + new URLSearchParams(queryParams).toString();
-}
-
-
-async function getIndexes(provider: any, token: any) {
-  let addressIndex = await getAddressIndex(zeroXAddress, provider);
-  let tokenIndex = await getAddressIndex(token.id, provider);
-  return { addressIndex, tokenIndex };
 }

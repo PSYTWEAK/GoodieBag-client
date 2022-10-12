@@ -9,8 +9,6 @@ import { useAccount } from 'wagmi'
 
 
 export function EtherInput({ state, setState, slippage, generateCallData }: { state: any; setState: any; slippage: any; generateCallData: any }) {
-  const provider = useProvider();
-  const { address, isConnecting, isDisconnected } = useAccount()
 
   const [storedAmountETHIn, setStoredAmountETHIn] = useState("");
   // when amountETHIn is updated the useEffect waits 1 second before updating the storedAmountETHIn
@@ -27,13 +25,7 @@ export function EtherInput({ state, setState, slippage, generateCallData }: { st
 
   useEffect(() => {
     if (storedAmountETHIn === state.amountETHIn && state.tokens && state.tokens.length > 0 && state.amountETHIn > 0) {
-      generateCallData({
-        provider,
-        state,
-        setState,
-        slippage,
-        address
-      })
+      generateCallData()
 
     }
   }, [storedAmountETHIn]);
@@ -54,7 +46,9 @@ export function EtherInput({ state, setState, slippage, generateCallData }: { st
             placeholder="0.00"
             value={state.amountETHIn}
             onChange={(e: any) => {
-              setState({ amountETHIn: e.target.value });
+              setState((prevState: any) => {
+                return { ...prevState, amountETHIn: e.target.value };
+              })
             }}
           />
         </div>

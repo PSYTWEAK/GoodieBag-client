@@ -43,17 +43,13 @@ export default async function useHighestVolume(config: any) {
     const result = await querySubgraphs(config);
 
     let tokens: any = result;
-    console.log("1", tokens)
+
     tokens = removeBlueChips(tokens);
-    console.log("2", tokens)
     tokens = removeStables(tokens);
-    console.log("3", tokens)
     tokens = removeSignOfDerivInTokenName(tokens);
-    console.log("4", tokens)
     tokens = combineUSDVolumeThenRemoveDuplicates(tokens);
-    console.log("5", tokens)
     tokens = sortByVolume(tokens);
-    console.log("6", tokens)
+
 
     return tokens;
 }
@@ -64,8 +60,6 @@ async function querySubgraphs(config: any) {
     if (config.subgraphs.uniswap) {
         try {
             let result = await uniswapSubgraph(uniQuery);
-
-            console.log(result)
 
             result ? tokens.push(...formatUni(result.data)) : null;
         } catch (err) {
