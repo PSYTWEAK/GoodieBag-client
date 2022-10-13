@@ -15,23 +15,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: min(10rem, 20%);
-}
-
-.footer {
-  display: flex;
-  flex: 1;
-  padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
-  justify-content: center;
-  align-items: center;
-}
-
-.footer a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+  padding-bottom: min(8rem, 17%);
 }
 
 .title a {
@@ -81,7 +65,7 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
-  min-width: 300px;
+  min-width: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -486,4 +470,39 @@
   color: black;
   box-shadow: none;
   cursor: pointer;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  background: rgb(240, 251, 255);
+  transition: color 0.15s ease, border-color 0.15s ease;
+  margin-bottom: 0px;
+
+  height: 45px;
+}
+
+/* set footer to always be at the bottom not fixed*/
+
+
+.footerLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: fit-content;
+
+}
+
+.footerLinks a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1.2rem;
+  margin: 20px;
 }

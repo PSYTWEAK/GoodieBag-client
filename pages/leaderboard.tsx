@@ -19,7 +19,7 @@ const LeaderBoard: NextPage = () => {
         </div>
       </main>
 
-      <footer className={styles.footer}></footer>
+
     </div>
   );
 };
