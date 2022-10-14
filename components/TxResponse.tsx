@@ -27,7 +27,9 @@ export function TxResponse({ isSuccess, data }: { isSuccess: boolean; data: any 
 }
 function transactionExecuted(setAlertComp: React.Dispatch<React.SetStateAction<JSX.Element>>, isSuccess: boolean, data: any) {
     setAlertComp(
-        <Alert severity={isSuccess ? "success" : "error"}>
+        <Alert severity={isSuccess ? "success" : "error"} style={{
+            backgroundColor: "white",
+        }}>
             <AlertTitle>{isSuccess ? "Success" : "Error"}</AlertTitle>
             <a href={`https://arbiscan.io/tx/${data.hash}`} target="_blank" rel="noreferrer">
                 View on Etherscan
@@ -42,7 +44,9 @@ function transactionExecuted(setAlertComp: React.Dispatch<React.SetStateAction<J
 
 function transactionCancelled(setAlertComp: React.Dispatch<React.SetStateAction<JSX.Element>>, isSuccess: boolean, data: any) {
     setAlertComp(
-        <Alert severity={"error"}>
+        <Alert severity={"error"} style={{
+            backgroundColor: "white",
+        }}>
             <AlertTitle>{"Transaction Cancelled"}</AlertTitle>
         </Alert>
     );

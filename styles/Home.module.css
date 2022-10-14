@@ -161,7 +161,7 @@
 .leaderboardUser {
   display: flex;
   justify-content: space-between;
-  width: 17rem;
+  width: 19rem;
   border: 1px solid #eaeaea;
   border-radius: 10px;
   padding: 20px;
@@ -444,9 +444,8 @@
 
 }
 
-/* make width fit in */
-.warningAlert {
 
+.warningAlert {
   position: absolute;
   z-index: 100;
   width: 95%;

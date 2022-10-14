@@ -48,12 +48,21 @@ const Home: NextPage = () => {
 
   }, [settingsActive]);
 
-
-
+  const alertStyle = {
+    backgroundColor: "rgba(210, 238, 255, 1)",
+    margin: "0px",
+    width: "95%",
+    position: "absolute",
+  }
 
   return (
     <div className={styles.container}>
-      <Alert severity="warning" className={styles.warningAlert}>Only trade what you&apos;re willing to lose. Goodiebag is still in development and has not been audited.</Alert>
+      <Alert severity="warning" style={{
+        backgroundColor: "rgba(210, 238, 255, 1)",
+        margin: "0px",
+        width: "95%",
+        position: "absolute",
+      }} >Only trade what you&apos;re willing to lose. Goodiebag is still in development and has not been audited.</Alert>
       <main className={styles.main}>
         <div className={styles.card}>
           <CardHeader stratergy={config.stratergy} setConfig={setConfig} setState={setState} settingsActive={settingsActive} setSettingsActive={setSettingsActive} />
