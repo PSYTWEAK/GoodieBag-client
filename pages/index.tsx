@@ -48,17 +48,13 @@ const Home: NextPage = () => {
 
   }, [settingsActive]);
 
-  const alertStyle = {
-    backgroundColor: "rgba(210, 238, 255, 1)",
-    margin: "0px",
-    width: "95%",
-    position: "absolute",
-  }
+
 
   return (
     <div className={styles.container}>
       <Alert severity="warning" style={{
-        backgroundColor: "rgba(210, 238, 255, 1)",
+        backgroundColor: "rgba(43,49,49,255)",
+        color: "rgba(118,126,141,255)",
         margin: "0px",
         width: "95%",
         position: "absolute",

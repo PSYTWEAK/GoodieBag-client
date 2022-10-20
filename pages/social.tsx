@@ -1,32 +1,28 @@
+import { SocialCard } from './../components/social/SocialCard';
 
 import type { NextPage } from "next";
 import { TokenLogo } from "../components/Tokens/TokenLogo";
 import styles from "../styles/Home.module.css";
-import DefaultTokenLogo from "../../public/DefaultTokenLogo.png";
+import DefaultTokenLogo from "../public/DefaultTokenLogo.png";
+import { TextField } from '@mui/material';
 
 const Social: NextPage = () => {
     return (
         <div className={styles.container}>
             <main className={styles.main}>
-                <div className={styles.socialGrid}>
-                    <div className={styles.socialCard}>
-                        <p>DogCoins</p>
-                        <p>by 0x7347..548485</p>
-                        <p>tokens</p>
-                        <img src={DefaultTokenLogo.src} height={30} />
-                        <TokenLogo token={{ id: "null" }}></TokenLogo>
-                        <TokenLogo token={{ id: "null" }}></TokenLogo>
-                        <TokenLogo token={{ id: "null" }}></TokenLogo>
-                        <TokenLogo token={{ id: "null" }}></TokenLogo>
+                <div className={styles.socialSearch}>
+                    <div className={styles.textField}>
+                        <TextField
+                            id="outlined-basic"
+                            variant="standard"
+                            InputProps={{
+                                disableUnderline: true,
+                            }}
+                            placeholder="Search.."
+                        />
                     </div>
-                    <div className={styles.socialCard}></div>
-                    <div className={styles.socialCard}></div>
-                    <div className={styles.socialCard}></div>
-                    <div className={styles.socialCard}></div>
-                    <div className={styles.socialCard}></div>
-
-                </div>
-
+                </div>{" "}
+                <SocialCard />
             </main>
 
 

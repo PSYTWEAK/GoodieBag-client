@@ -17,6 +17,9 @@ export function NavBar() {
                 <Link href="/">
                     <a className={styles.link}>Home</a>
                 </Link>
+                <Link href="/Social">
+                    <a className={styles.link}>Social</a>
+                </Link>
                 <Link href="/leaderboard">
                     <a className={styles.link}>Leaderboard</a>
                 </Link>
