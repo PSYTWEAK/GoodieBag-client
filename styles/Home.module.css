@@ -69,7 +69,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(21, 26, 26, 255);
+  background: rgba(40, 42, 54, 255);
 }
 
 .div {
@@ -161,17 +161,15 @@
 .leaderboardUser {
   display: flex;
   justify-content: space-between;
-  width: 19rem;
   border: 1px solid rgba(45, 50, 49, 255);
   border-radius: 10px;
   padding: 20px;
-
-  background-color: rgba(43, 50, 50, 255);
+  background-color: rgba(68, 72, 91, 255);
 }
 
 .leaderboardUser:hover {
 
-  background-color: rgba(43, 50, 50, 255);
+  background-color: rgba(68, 72, 91, 255);
   cursor: pointer;
 }
 
@@ -215,7 +213,7 @@
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
-  background: rgba(21, 26, 26, 255);
+  background: rgba(40, 42, 54, 255);
   border: 1px solid rgba(45, 50, 49, 255);
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
@@ -246,7 +244,7 @@
 
 /* have links with a background back with borded edges when hovered  */
 .link:hover {
-  background: rgba(43, 50, 50, 255);
+  background: rgba(68, 72, 91, 255);
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
@@ -254,7 +252,7 @@
 /* the same as .div but called .lowerTokenCard and make the theme grey but match the existing colours */
 .lowerTokenCard {
   padding: 5px;
-  color: rgba(118, 126, 141, 255);
+  color: rgba(229, 230, 225, 255);
   font-size: 0.8rem;
   text-decoration: none;
   display: flex;
@@ -277,13 +275,14 @@
 
 .upperTokenCard {
   padding: 2px;
-  color: inherit;
+  color: #7dd2e4;
   font-size: 1.1rem;
   text-decoration: none;
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 300px;
+  color: #e66db2;
 
 }
 
@@ -299,7 +298,7 @@
 }
 
 .tokenCard:hover {
-  background-color: rgba(43, 50, 50, 255);
+  background-color: rgba(68, 72, 91, 255);
   cursor: pointer;
 }
 
@@ -365,13 +364,13 @@
 }
 
 .stratCard:hover {
-  background-color: rgba(43, 50, 50, 255);
+  background-color: rgba(68, 72, 91, 255);
   cursor: pointer;
 }
 
 .lowerStratCard {
   padding: 5px;
-  color: rgba(118, 126, 141, 255);
+  color: rgba(229, 230, 225, 255);
   font-size: 0.8rem;
   text-decoration: none;
   display: flex;
@@ -392,7 +391,7 @@
   justify-content: center;
   align-items: center;
   max-width: 300px;
-
+  color: #e66db2;
 }
 
 .cardTitle {
@@ -404,9 +403,10 @@
 }
 
 .cardTitleText {
-  background-color: rgba(43, 50, 50, 255);
+  background-color: rgba(68, 72, 91, 255);
   border-radius: 10px;
-  padding: 10px
+  padding: 10px;
+  color: #7dd2e4;
 }
 
 .crown {
@@ -423,7 +423,7 @@
 }
 
 .downArrow {
-  background-color: rgba(43, 50, 50, 255);
+  background-color: rgba(68, 72, 91, 255);
   border-radius: 10px;
   padding: 5px;
   padding-bottom: 1px;
@@ -457,7 +457,7 @@
   border-radius: 10px;
   color: black;
   box-shadow: none;
-  background-color: rgba(43, 50, 50, 255);
+  background-color: rgba(68, 72, 91, 255);
   cursor: not-allowed;
 }
 
@@ -478,7 +478,7 @@
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  background: rgba(21, 26, 26, 255);
+  background: rgba(40, 42, 54, 255);
   transition: color 0.15s ease, border-color 0.15s ease;
   margin-bottom: 0px;
 
@@ -517,7 +517,7 @@
   border: 1px solid rgba(45, 50, 49, 255);
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
-  background: rgba(21, 26, 26, 255);
+  background: rgba(40, 42, 54, 255);
   height: 200px;
   width: 200px;
   margin: 20px;
@@ -536,7 +536,7 @@
   margin-top: 1rem;
   padding: 0.3rem;
   width: 300px;
-  background: rgba(21, 26, 26, 255);
+  background: rgba(40, 42, 54, 255);
 
 }
 
