@@ -1,4 +1,4 @@
-import { SocialCard } from './../components/social/SocialCard';
+import { SocialStratergies } from './../components/social/SocialStratergies';
 
 import type { NextPage } from "next";
 import { TokenLogo } from "../components/Tokens/TokenLogo";
@@ -22,7 +22,7 @@ const Social: NextPage = () => {
                         />
                     </div>
                 </div>{" "}
-                <SocialCard />
+                <SocialStratergies />
             </main>
 
 

@@ -35,3 +35,4 @@ export const globalSettings = {
 
 export const arbiVaultAddress = "0x0253A7C16Af792Dd5E8Df6f41902D09E608799E7"
 
+export const socialContract = "0x63324d0b06fe2Ff0055FE9F0ba20fA6Ed0f97660"
