@@ -3,6 +3,9 @@ import type { NextPage } from "next";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
+import SocialABI from "../contracts/SocialABI.json";
+import { arbiSocialAddress } from "../globals";
+import { useContractWrite } from "wagmi";
 
 let inputStyles = {
     'input': {
@@ -16,11 +19,31 @@ let inputStyles = {
 }
 
 
-const CreateSocial: NextPage = () => {
+const CreateSocialStratergy: NextPage = () => {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [tokens, setTokens] = useState(['', '', '']);
     const [fee, setFee] = useState(0);
+
+    const { data, isLoading, isSuccess, write } = useContractWrite({
+        addressOrName: arbiSocialAddress,
+        contractInterface: SocialABI,
+        functionName: "createStratergy",
+    });
+
+    const handleClick = async () => {
+        if (name && description && tokens && fee) {
+            write({
+                args: [tokens, name, description, fee],
+                overrides: {
+                    value: 0,
+                    gasLimit: "60000000",
+                },
+            });
+        }
+
+
+    };
 
     return (
         <div className={styles.container}>
@@ -130,7 +153,7 @@ const CreateSocial: NextPage = () => {
                     </div>
 
 
-                    <Button className={styles.plusButton} >
+                    <Button className={styles.plusButton} onClick={handleClick} >
                         <AddIcon />
                     </Button>
 
@@ -145,6 +168,6 @@ const CreateSocial: NextPage = () => {
     );
 };
 
-export default CreateSocial;
+export default CreateSocialStratergy;
 
 
